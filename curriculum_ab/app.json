@@ -1,5 +1,16 @@
 {
   "pages":[
+    "pages/_label/_label",
+    "pages/_inputt/_inputt",
+    "pages/_from/_from",
+    "pages/_button/_button",
+    "pages/_progress/_progress",
+    "pages/_rich/_rich",
+    "pages/_text/_text",
+    "pages/_icon/_icon",
+    "pages/_swiper/_swiper",
+    "pages/_move/_move",
+    "pages/_scroll/_scroll",
     "pages/index/index",
     "pages/logs/logs"
   ],
