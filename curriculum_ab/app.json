@@ -1,6 +1,10 @@
 {
   "pages":[
     "pages/_label/_label",
+    "pages/_radios/_radios",
+    "pages/_pickerJ/_pickerJ",
+    "pages/_picker/_picker",
+    
     "pages/_inputt/_inputt",
     "pages/_from/_from",
     "pages/_button/_button",
