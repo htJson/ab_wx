@@ -30,7 +30,7 @@
       <text class="f32">课程表</text>
     </view>
     <view class="courseBox">
-      <view class="cItem">
+      <view class="cItem cItemActive">
           <view class="courseLeft">
             <view class="radioBox"></view>
             <view class="line"></view>
