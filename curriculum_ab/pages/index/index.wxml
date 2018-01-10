@@ -1,14 +1,74 @@
 <!--index.wxml-->
 <view class="container">
   <view class="userinfo">
-    <text class="f14">培训中的课程</text>
+    <text class="f32">培训中的课程</text>
   </view>
-  <view class="usermotto column">
-    <view class="">
-      <icon src="http://img02.tooopen.com/images/20150928/tooopen_sy_143912755726.jpg"></icon>
-      <view>sfasklfjsdklfjsdlk</view>
+  <view class="coursesing">
+    <view class="item">
+      <image src="../../images/img.jpg"></image>
+      <view class="f12">保洁</view>
+      <view class="f12">80课时</view>
+      <view class="f12">30学分</view>
+      <view class="f12">2019/09/12~2019/12/09</view>
+      <view class="">
+        <progress percent="20" color="#60a8ef" show-info />
+      </view>
     </view>
-    <view></view>
-    <view></view>
+    <view class="item">
+      <image src="../../images/img.jpg"></image>
+      <view class="f12">保洁</view>
+      <view class="f12">80课时</view>
+      <view class="f12">30学分</view>
+      <view class="f12">2019/09/12~2019/12/09</view>
+      <view class="">
+        <progress percent="20" color="#60a8ef" show-info />
+      </view>
+    </view>
+  </view>
+  <view class="courseList mt30">
+    <view class="userinfo">
+      <text class="f32">课程表</text>
+    </view>
+    <view class="courseBox">
+      <view class="cItem">
+          <view class="courseLeft">
+            <view class="radioBox"></view>
+            <view class="line"></view>
+          </view>
+          <view class="courseRight bgColor">
+            <view class="cTime">2019/12/09 10:10:10</view>
+            <view class="cContent">
+              <view class="courLeftItem">
+                <view>月嫂【面授】</view>
+                <view>第一讲 月嫂的注意事项</view>
+              </view>
+              <view class="courRightItem">
+                <view>智学苑301</view>
+                <view>智学苑北京东城职业大学</view>
+              </view>
+            </view>
+          </view>
+      </view>
+
+      <view class="cItem">
+          <view class="courseLeft">
+            <view class="radioBox"></view>
+            <view class="line"></view>
+          </view>
+          <view class="courseRight bgColor">
+            <view class="cTime">2019/12/09 10:10:10</view>
+            <view class="cContent">
+              <view class="courLeftItem">
+                <view>月嫂【面授】</view>
+                <view>第一讲 月嫂的注意事项</view>
+              </view>
+              <view class="courRightItem">
+                <view>智学苑301</view>
+                <view>智学苑北京东城职业大学</view>
+              </view>
+            </view>
+          </view>
+      </view>
+    </view>
   </view>
 </view>

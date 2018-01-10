@@ -1,1 +1,15 @@
 /**index.wxss**/
+.userinfo{background:#fff; padding:30rpx 40rpx;}
+.abList{background:#fff;}
+.item{padding:0 40rpx 40rpx ; background:#fff;}
+.item view{line-height:40rpx;}
+.item image{width:100px; height:100px; float:left; margin-right:10px;}
+.courseBox{background:#fff; padding-bottom:20rpx}
+.cItem{padding:0 40rpx 20rpx; position:relative; overflow:hidden;}
+.cItem .courseLeft{position:absolute; top:0px; bottom:0px; width:20rpx;overflow: hidden;}
+.cItem .courseLeft .radioBox{width:3rpx; height:100%; margin-left:10rpx; background:#999}
+.cItem .courseLeft .line{background:#666; width:20rpx; height:20rpx; border-radius:10rpx; position:absolute; top:35%;}
+.cItem .courseRight{border:1rpx solid blue; margin-left:40rpx;font-size:24rpx; padding:20rpx}
+.cContent{overflow: hidden;}
+.courLeftItem{float:left; width:50%}
+.courRightItem{float:left; width:50%}
