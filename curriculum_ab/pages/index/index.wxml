@@ -1,33 +1,33 @@
 <!--index.wxml-->
 <view class="container">
   <view class="userinfo">
-    <text class="f32">培训中的课程</text>
+    <text class="f38">培训中的课程</text>
   </view>
   <view class="coursesing">
     <view class="item">
       <image src="../../images/img.jpg"></image>
-      <view class="f12">保洁</view>
-      <view class="f12">80课时</view>
-      <view class="f12">30学分</view>
-      <view class="f12">2019/09/12~2019/12/09</view>
+      <view class="f34">保洁 <text class="borderYellow">面授</text></view>
+      <view class="f22"> <image src="../../images/hour.png" class="iconImg"></image> 80课时</view>
+      <view class="f22"> <image src="../../images/credit.png" class="iconImg"></image> 30学分</view>
+      <view class="f22"> <image src="../../images/time.png" class="iconImg"></image> 2019/09/12~2019/12/09</view>
       <view class="">
         <progress percent="20" color="#60a8ef" show-info />
       </view>
     </view>
     <view class="item">
       <image src="../../images/img.jpg"></image>
-      <view class="f12">保洁</view>
-      <view class="f12">80课时</view>
-      <view class="f12">30学分</view>
-      <view class="f12">2019/09/12~2019/12/09</view>
+      <view class="f34">保洁 <text class="borderBlue">在线</text></view>
+      <view class="f22"> <image src="../../images/hour.png" class="iconImg"></image> 80课时</view>
+      <view class="f22"> <image src="../../images/credit.png" class="iconImg"></image> 30学分</view>
+      <view class="f22"> <image src="../../images/credit.png" class="iconImg"></image> 2019/09/12~2019/12/09</view>
       <view class="">
         <progress percent="20" color="#60a8ef" show-info />
       </view>
     </view>
   </view>
-  <view class="courseList mt30">
+  <view class="courseList mt20">
     <view class="userinfo">
-      <text class="f32">课程表</text>
+      <text class="f38">课程表</text>
     </view>
     <view class="courseBox">
       <view class="cItem cItemActive">

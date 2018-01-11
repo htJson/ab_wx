@@ -1,1 +1,7 @@
 /* pages/minet/minet.wxss */
+.userlogo{padding:40rpx 0;}
+.userImg {width:200rpx; height:200rpx; background:#f00; display:block; border-radius:100rpx; margin:0 auto;}
+.userImg text{margin:0 auto; }
+.userName{text-align: center; color:#fff; margin-top:30rpx}
+.tabs,.mineAttr{line-height: 30rpx; font-size:32rpx}
+.tabs view,.mineAttr view{background:#fff; border-bottom:1px solid #f1f1f1; padding:30rpx 40rpx}

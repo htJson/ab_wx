@@ -1,4 +1,35 @@
 <!--pages/minet/minet.wxml-->
 <view class='container'>
-  fdsfsdf
+  <view class="userlogo bgBlue">
+    <view class="userImg">
+      <image></image>
+    </view>
+    <view class="userName">
+      <text>张阿姨</text>
+    </view>
+  </view>
+  <view class="tabs">
+    <view>
+      <icon></icon>
+      <text>我的考试</text>
+    </view>
+    <view>
+      <icon></icon>
+      <text>我的考试</text>
+    </view>
+    <view>
+      <icon></icon>
+      <text>我的考试</text>
+    </view>
+  </view>
+  <view class="mineAttr mt30">
+    <view>
+      <icon></icon>
+      <text>我的考试</text>
+    </view>
+    <view>
+      <icon></icon>
+      <text>我的考试</text>
+    </view>
+  </view>
 </view>

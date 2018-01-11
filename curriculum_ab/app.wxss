@@ -9,11 +9,16 @@
   background:#f1f1f1;
   box-sizing: border-box;
 } 
+.f38{font-size:38rpx}
 .f32{font-size:32rpx;}
-.f12{font-size:28rpx;}
+.f34{font-size:34rpx;}
+.f22{font-size:22rpx;}
+.f18{font-size:18px;}
 .row{flex-direction:row}
 .column{flex-direction: column}
 .abLeft{float:left}
 .abRight{float:right}
 .mt30{margin-top:30rpx}
-.bgColor{ background:#f1f1f1;}
+.mt20{margin-top:20rpx;}
+.bgColor{ background:#f7f7fa;}
+.bgBlue{background:blue}
