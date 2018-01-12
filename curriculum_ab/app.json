@@ -2,7 +2,6 @@
   "pages":[
     "pages/index/index",
     "pages/mine/mine",
-    
     "pages/_progress/_progress",
     "pages/_pickerJ/_pickerJ",
     "pages/_switch/_switch",
@@ -31,16 +30,20 @@
     "navigationBarTextStyle":"white"
   },
   "tabBar": {
+    "color": "#ff0000",
+    "selectedColor": "#000000",
     "list": [
       {
         "pagePath":"pages/index/index",
-        "iconPath": "./images/default.jpg",
-        "selectedIconPath": "./images/index.png"
+        "text":"课程",
+        "iconPath": "./images/index.png",
+        "selectedIconPath": "./images/indexActive.png"
       },
       {
         "pagePath": "pages/mine/mine",
+        "text":"我的",
         "iconPath": "./images/mine.png",
-        "selectedIconPath": "./images/mine.png"
+        "selectedIconPath": "./images/mineActive.png"
       }
     ]
   }

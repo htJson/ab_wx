@@ -2,26 +2,20 @@
 <view class="container">
   <view class="userinfo">
     <text class="f38">培训中的课程</text>
+    <image src="../../images/more.png"></image>
   </view>
   <view class="coursesing">
-    <view class="item">
-      <image src="../../images/img.jpg"></image>
-      <view class="f34">保洁 <text class="borderYellow">面授</text></view>
-      <view class="f22"> <image src="../../images/hour.png" class="iconImg"></image> 80课时</view>
-      <view class="f22"> <image src="../../images/credit.png" class="iconImg"></image> 30学分</view>
-      <view class="f22"> <image src="../../images/time.png" class="iconImg"></image> 2019/09/12~2019/12/09</view>
-      <view class="">
-        <progress percent="20" color="#60a8ef" show-info />
+    <view class="item" wx:for="{{trainList}}">
+      <image src="{{item.imgUrl}}"></image>
+      <view class="f34">
+        {{item.title}} 
+        <text class="{{item.typeNum?'borderBlue':'borderYellow'}}">{{item.type}}</text>
       </view>
-    </view>
-    <view class="item">
-      <image src="../../images/img.jpg"></image>
-      <view class="f34">保洁 <text class="borderBlue">在线</text></view>
-      <view class="f22"> <image src="../../images/hour.png" class="iconImg"></image> 80课时</view>
-      <view class="f22"> <image src="../../images/credit.png" class="iconImg"></image> 30学分</view>
-      <view class="f22"> <image src="../../images/credit.png" class="iconImg"></image> 2019/09/12~2019/12/09</view>
+      <view class="f22"> <image src="../../images/hour.png" class="iconImg"></image> {{item.hour}}课时</view>
+      <view class="f22"> <image src="../../images/credit.png" class="iconImg"></image> {{item.credit}}学分</view>
+      <view class="f22"> <image src="../../images/time.png" class="iconImg"></image> {{item.startTime}}~{{item.endTime}}</view>
       <view class="">
-        <progress percent="20" color="#60a8ef" show-info />
+        <progress percent="{{item.centum}}" color="#60a8ef" show-info />
       </view>
     </view>
   </view>
@@ -30,36 +24,39 @@
       <text class="f38">课程表</text>
     </view>
     <view class="courseBox">
-      <view class="cItem cItemActive">
+      <view class="cItem {{item.isRead?'cItemActive':''}}" data-id="{{item.id}}" wx:for="{{coursesList}}">
           <view class="courseLeft">
             <view class="radioBox"></view>
             <view class="line"></view>
           </view>
-          <view class="courseRight bgColor">
-            <view class="cTime">2019/12/09 10:10:10</view>
+          <view class="courseRight bgColor" bindtap='toDetail'>
+            <image wx:if="{{item.isRead}}" class="leftSj" src="../../images/trainActive.png"></image>
+            <image wx:else class="leftSj" src="../../images/train.png"></image>
+            <view class="cTime f24">{{item.startTime}}</view>
             <view class="cContent">
               <view class="courLeftItem">
-                <view>月嫂【面授】</view>
-                <view>第一讲 月嫂的注意事项</view>
+                <view class="fbolder">{{item.curTitle}}【{{item.typeName}}】</view>
+                <view>{{item.title}}</view>
               </view>
               <view class="courRightItem">
-                <view>智学苑301</view>
-                <view>智学苑北京东城职业大学</view>
+                <view>{{item.schoolDddress}}</view>
+                <view>{{item.schoolName}}</view>
               </view>
             </view>
           </view>
       </view>
 
-      <view class="cItem">
+      <!-- <view class="cItem">
           <view class="courseLeft">
             <view class="radioBox"></view>
             <view class="line"></view>
           </view>
           <view class="courseRight bgColor">
-            <view class="cTime">2019/12/09 10:10:10</view>
+            <image class="leftSj" src="../../images/train.png"></image>
+            <view class="cTime f24">2019/12/09 10:10:10</view>
             <view class="cContent">
               <view class="courLeftItem">
-                <view>月嫂【面授】</view>
+                <view class="fbolder">月嫂【面授】</view>
                 <view>第一讲 月嫂的注意事项</view>
               </view>
               <view class="courRightItem">
@@ -68,7 +65,7 @@
               </view>
             </view>
           </view>
-      </view>
+      </view> -->
     </view>
   </view>
 </view>

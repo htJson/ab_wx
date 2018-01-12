@@ -9,11 +9,13 @@
   background:#f1f1f1;
   box-sizing: border-box;
 } 
-.f38{font-size:38rpx}
+.f18{font-size:18px;}
+.f22{font-size:22rpx;}
+.f24{font-size:24rpx;}
 .f32{font-size:32rpx;}
 .f34{font-size:34rpx;}
-.f22{font-size:22rpx;}
-.f18{font-size:18px;}
+.f38{font-size:38rpx}
+.fbolder{font-weight: bolder}
 .row{flex-direction:row}
 .column{flex-direction: column}
 .abLeft{float:left}

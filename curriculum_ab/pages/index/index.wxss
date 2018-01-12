@@ -2,10 +2,11 @@
 .borderBlue{border:1px solid #0089ff}
 .borderYellow{border:1px solid #ffba00}
 .userinfo{background:#fff; padding:30rpx 40rpx;}
+.userinfo image{width:35rpx; height:35rpx; float:right; margin-top:8rpx;}
 .abList{background:#fff;}
 .item{padding:0 40rpx 30rpx ; background:#fff;overflow:hidden;}
 .item view{padding-bottom:10rpx;overflow: hidden;}
-.item image{width:240rpx; height:240rpx; float:left; margin-right:10px;}
+.item image{width:240rpx; height:240rpx; float:left; margin-right:30rpx;}
 .item text{display:inline-block; border-radius: 30rpx; height:30rpx; line-height: 30rpx; font-size:18rpx; padding:0 13rpx; margin-left:10rpx}
 .item .iconImg{width:15px; height:15px;}
 .courseBox{background:#fff; padding-bottom:20rpx；}
@@ -13,11 +14,13 @@
 .cItem .courseLeft{position:absolute; top:0px; bottom:0px; width:20rpx;overflow: hidden;}
 .cItem .courseLeft .radioBox{width:3rpx; height:100%; margin-left:10rpx; background:#999}
 .cItem .courseLeft .line{background:#a6a6a7; width:20rpx; height:20rpx; border-radius:10rpx; position:absolute; top:35%;}
-.cItem .courseRight{border:1rpx solid #a6a6a7; position:relative; margin-left:40rpx;font-size:24rpx; padding:20rpx}
 
+.cItem .courseRight{border:1rpx solid #a6a6a7; position:relative; margin-left:70rpx;font-size:24rpx; padding:15rpx 20rpx;}
+.cItem .courseRight .leftSj{width:15px;height:20px; position:absolute; left:-15px; top:22px; }
+.cItem .courseRight .cTime{padding-bottom:10rpx;}
 
-.cContent{overflow: hidden;}
-.courLeftItem{float:left; width:50%}
-.courRightItem{float:left; width:50%}
+.cContent{overflow: hidden; line-height: 35rpx}
+.courLeftItem{float:left; width:49%}
+.courRightItem{float:right; width:49%}
 .cItemActive .courseLeft .line{background:#0f8af4}
-.cItemActive .courseRight {border:1px solid #0f8af4}
+.cItemActive .courseRight {border:2px solid #0f8af4}

@@ -1,7 +1,10 @@
 /* pages/minet/minet.wxss */
-.userlogo{padding:40rpx 0;}
-.userImg {width:200rpx; height:200rpx; background:#f00; display:block; border-radius:100rpx; margin:0 auto;}
+.userlogo{padding:40rpx 0; background: #0089fc}
+.userImg {width:200rpx; overflow: hidden; height:200rpx; display:block; border-radius:100rpx; margin:0 auto;}
 .userImg text{margin:0 auto; }
 .userName{text-align: center; color:#fff; margin-top:30rpx}
-.tabs,.mineAttr{line-height: 30rpx; font-size:32rpx}
-.tabs view,.mineAttr view{background:#fff; border-bottom:1px solid #f1f1f1; padding:30rpx 40rpx}
+.tabs,.mineAttr{font-size:34rpx; font-size:32rpx;}
+.tabs view,.mineAttr view{background:#fff; overflow: hidden; border-bottom:1px solid #f1f1f1; padding:30rpx 40rpx}
+.tabs view text,.mineAttr view text{float:left;}
+.leftIcon{width:35rpx; float:left; height:35rpx; margin-top:8rpx; margin-right:20rpx; display: inline-block;}
+.moreBox{width:35rpx; height:35rpx; display: inline-block; float:right; margin-top:10rpx}

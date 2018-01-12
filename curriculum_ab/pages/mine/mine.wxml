@@ -1,35 +1,38 @@
 <!--pages/minet/minet.wxml-->
 <view class='container'>
-  <view class="userlogo bgBlue">
-    <view class="userImg">
-      <image></image>
-    </view>
+  <view class="userlogo">
+    <image class="userImg" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
     <view class="userName">
-      <text>张阿姨</text>
+      <text>{{userInfo.nickName}}</text>
     </view>
   </view>
   <view class="tabs">
-    <view>
-      <icon></icon>
+    <view bindtap="changeUrl" data-key="exam">
+      <image class="leftIcon" src="../../images/exam.png"></image>
       <text>我的考试</text>
+      <image class="moreBox" src="../../images/more.png"></image>
     </view>
-    <view>
-      <icon></icon>
-      <text>我的考试</text>
+    <view bindtap="changeUrl" data-key="courses">
+      <image class="leftIcon" src="../../images/courses.png"></image>
+      <text>已学课程</text>
+      <image class="moreBox" src="../../images/more.png"></image>
     </view>
-    <view>
-      <icon></icon>
-      <text>我的考试</text>
+    <view bindtap="changeUrl" data-key="records">
+      <image class="leftIcon" src="../../images/records.png"></image>
+      <text>培训记录</text>
+      <image class="moreBox" src="../../images/more.png"></image>
     </view>
   </view>
   <view class="mineAttr mt30">
-    <view>
-      <icon></icon>
-      <text>我的考试</text>
+    <view bindtap="changeUrl" data-key="news">
+      <image class="leftIcon" src="../../images/news.png"></image>
+      <text>我的消息</text>
+      <image class="moreBox" src="../../images/more.png"></image>
     </view>
-    <view>
-      <icon></icon>
-      <text>我的考试</text>
+    <view bindtap="changeUrl" data-key="account">
+      <image class="leftIcon" src="../../images/account.png"></image>
+      <text>我的账户</text>
+      <image class="moreBox" src="../../images/more.png"></image>
     </view>
   </view>
 </view>

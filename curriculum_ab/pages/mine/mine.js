@@ -1,3 +1,4 @@
+var app=getApp();
 // pages/minet/minet.js
 Page({
 
@@ -5,14 +6,46 @@ Page({
    * 页面的初始数据
    */
   data: {
-  
+    userInfo:{},
+    urlList:{
+      exam:'我的考试',
+      courses:'已学课程', 
+      records:'培训记录',
+      news:'我的消息',
+      account:'我的账户' 
+    },
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-  
+    if (app.globalData.userInfo) {
+      this.setData({
+        userInfo: app.globalData.userInfo,
+        hasUserInfo: true
+      })
+    } else if (this.data.canIUse) {
+      // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
+      // 所以此处加入 callback 以防止这种情况
+      app.userInfoReadyCallback = res => {
+        this.setData({
+          userInfo: res.userInfo,
+          hasUserInfo: true
+        })
+      }
+    } else {
+      // 在没有 open-type=getUserInfo 版本的兼容处理
+      wx.getUserInfo({
+        success: res => {
+          app.globalData.userInfo = res.userInfo
+          this.setData({
+            userInfo: res.userInfo,
+            hasUserInfo: true
+          })
+        }
+      })
+    }  
   },
 
   /**
@@ -62,5 +95,10 @@ Page({
    */
   onShareAppMessage: function () {
   
+  },
+  // 自定义事件
+  changeUrl(event){
+    var key = event.currentTarget.dataset.key;
+    console.log(this.data.urlList[key])
   }
 })
