@@ -1,0 +1,21 @@
+/* pages/exam/exam.wxss */
+.color{color:#09bb07}
+.colorRed{color:#f76260}
+.container{background:#efeff4}
+.header{background: #ffffff;}
+.header view{display: inline-block; width:32%; text-align: center; padding:10rpx 0; font-size:30rpx;}
+.header view text{display: block; padding:0px; margin:0px; font-size:24rpx; color:#575656; border-right:1px solid #cccccc; padding-bottom:10rpx;}
+
+.items{margin-top:23rpx; background:#fff; padding:0 30rpx;}
+.recordTitle{font-size:34rpx; padding:25rpx 0rpx 25rpx;}
+.cItem{padding:0 0rpx 20rpx; position:relative; overflow:hidden;}
+.cItem .courseLeft{position:absolute; top:0px; bottom:0px; width:20rpx;overflow: hidden;}
+.cItem .courseLeft .radioBox{width:3rpx; height:100%; margin-left:10rpx; background:#a6a6a7}
+.cItem .courseLeft .line{background:#0f8af4; width:20rpx; height:20rpx; border-radius:10rpx; position:absolute; top:30rpx;}
+.cItem .courseRight{border:1rpx solid #a6a6a7; position:relative; margin-left:70rpx;font-size:24rpx; padding:20rpx 20rpx 5rpx;}
+.cItem .courseRight .leftSj{width:15px;height:20px; position:absolute; left:-15px; top:20rpx; }
+.cItem .courseRight .cTime{padding-bottom:10rpx; float:left; margin-right:40rpx; font-size:25rpx;}
+.cItem .cContent{float:right;}
+.cItem .cContent view{ margin-bottom:15rpx;}
+.cContent .fbolder{margin-right:50rpx; text-align: center; display: inline-block;}
+.cContent .mark{width:240rpx; display: inline-block}

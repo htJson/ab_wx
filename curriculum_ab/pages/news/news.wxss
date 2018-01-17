@@ -1,0 +1,6 @@
+/* pages/news/news.wxss */
+.container{background:#ffffff; padding:30rpx}
+.item{padding-left:60rpx; font-size:28rpx; padding-bottom:20rpx; margin-bottom:20rpx; position:relative; border-bottom:1px solid #f1f1f1;}
+.item .newsTitle{float:left; font-size:32rpx; font-weight: bolder;}
+.item .newsTime{float:right; font-size:28rpx;}
+.item .newsIcon{width:30rpx; height:35rpx; position:absolute; left:0px; top:7rpx;}

@@ -1,7 +1,9 @@
-//app.js
+
 App({
   data:{
-    url:'{auth.aobei.com}'
+    url:'https://test-auth.aobei.com',
+    code:'',
+    appid:'wx731d62ae850c6c5e'
   },
   onLaunch: function () {
     // 展示本地存储能力
@@ -13,6 +15,7 @@ App({
     wx.login({
       success: res => {
         // 发送 res.code 到后台换取 openId, sessionKey, unionId
+        this.globalData.code=res.code
       }
     })
     // 获取用户信息
@@ -33,7 +36,7 @@ App({
           })
         }
       }
-    })
+    }) 
   },
   globalData: {
     userInfo: null

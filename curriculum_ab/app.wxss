@@ -9,9 +9,10 @@
   background:#f1f1f1;
   box-sizing: border-box;
 } 
-.f18{font-size:18px;}
+.f18{font-size:18rpx;}
 .f22{font-size:22rpx;}
 .f24{font-size:24rpx;}
+.f30{font-size:30rpx;}
 .f32{font-size:32rpx;}
 .f34{font-size:34rpx;}
 .f38{font-size:38rpx}
@@ -22,5 +23,12 @@
 .abRight{float:right}
 .mt30{margin-top:30rpx}
 .mt20{margin-top:20rpx;}
+.mr40{margin-right:40rpx;}
+.pb20{padding-bottom:20rpx;}
 .bgColor{ background:#f7f7fa;}
 .bgBlue{background:blue}
+.overflow{overflow:hidden;}
+.borderBlue{border:1px solid #0089ff}
+.borderYellow{border:1px solid #ffba00}
+.wx-radio-input{width:14px !important; height:14px !important;}
+.clearbotn{clear: both; overflow: hidden;}

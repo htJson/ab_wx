@@ -1,7 +1,14 @@
 {
   "pages":[
+    "pages/exam/exam",
+    "pages/record/record",
+    "pages/coursesDetail/coursesDetail",
+    "pages/news/news",
+    "pages/study/study",
+    "pages/login/login",
     "pages/index/index",
     "pages/mine/mine",
+
     "pages/_progress/_progress",
     "pages/_pickerJ/_pickerJ",
     "pages/_switch/_switch",
@@ -10,15 +17,16 @@
     "pages/_img/_img",
     "pages/_nav/_nav",
     "pages/_textarea/_textarea",
+    "pages/_icon/_icon",
     "pages/_radios/_radios",
-    "pages/_picker/_picker",
     "pages/_label/_label",
+    "pages/_picker/_picker",
     "pages/_inputt/_inputt",
     "pages/_from/_from",
     "pages/_button/_button",
     "pages/_rich/_rich",
     "pages/_text/_text",
-    "pages/_icon/_icon",
+    
     "pages/_move/_move",
     "pages/_scroll/_scroll",
     "pages/logs/logs"
@@ -30,8 +38,8 @@
     "navigationBarTextStyle":"white"
   },
   "tabBar": {
-    "color": "#ff0000",
-    "selectedColor": "#000000",
+    "color": "#dfdfdf",
+    "selectedColor": "#0084ff",
     "list": [
       {
         "pagePath":"pages/index/index",

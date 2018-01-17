@@ -3,3 +3,13 @@
     <radio value="{{item.name}}" style="font-size:12px;" checked="{{item.checked}}"/>{{item.value}}
   </label>
 </radio-group>
+
+<scroll-view style="height: 100px;" bindscrolltoupper="upper" bindscrolltolower="lower" bindscroll="scroll" >
+    <view class="radio-group" >
+        <label wx:for="{{areas}}" wx:for-item="area">
+            <text bindtap="selectAreaOk" data-areaId="{{area.id}}">{{area.name}}</text> 
+            <icon wx:if="{{area.isSelect}}" type="success" size="10"/> 
+            <icon wx:else type="circle" size="10"/>
+        </label>
+    </view>
+</scroll-view>

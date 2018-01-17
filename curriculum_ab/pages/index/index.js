@@ -1,3 +1,4 @@
+
 Page({
 
   /**
@@ -56,21 +57,19 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    wx.request({  //请求token;
-      url: 'http://10.10.30.65:8080/oauth/token', //仅为示例，并非真实的接口地址
+    wx.request({
+      url: 'https://test-auth.aobei.com/wxapi/jscode2session', //仅为示例，并非真实的接口地址
       data: {
         x: '',
         y: ''
       },
       header: {
-        'content-type': 'application/json', // 默认值
-        'Authorization': 'Basic Y2xpZW50OiBzZWNyZXQ='
+        'content-type': 'application/json' // 默认值
       },
       success: function (res) {
         console.log(res.data)
       }
     })
-
   },
 
   /**
@@ -124,7 +123,7 @@ Page({
 
   toDetail: function () {
     wx.navigateTo({
-      url: '../logs/logs'
+      url: '../coursesDetail/coursesDetail'
     })
   },
 })

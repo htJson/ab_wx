@@ -1,0 +1,16 @@
+<!--pages/study/study.wxml-->
+<view class="container">
+  <view class="item" wx:for="{{trainList}}">
+      <image src="{{item.imgUrl}}"></image>
+      <view class="f34">
+        {{item.title}} 
+        <text class="f18 {{item.typeNum?'borderBlue':'borderYellow'}}">{{item.type}}</text>
+      </view>
+      <view class="f24"> <image src="../../images/hour.png" class="iconImg"></image> {{item.hour}}课时</view>
+      <view class="f24"> <image src="../../images/credit.png" class="iconImg"></image> {{item.credit}}学分</view>
+      <view class="f24"> <image src="../../images/exam.png" class="iconImg"></image>课时成绩 <text class="f38">100</text>分</view>
+      <view class="">
+      </view>
+      <text class="qualified bg1">合格</text>
+    </view>
+</view>

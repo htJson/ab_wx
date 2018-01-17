@@ -45,27 +45,6 @@
             </view>
           </view>
       </view>
-
-      <!-- <view class="cItem">
-          <view class="courseLeft">
-            <view class="radioBox"></view>
-            <view class="line"></view>
-          </view>
-          <view class="courseRight bgColor">
-            <image class="leftSj" src="../../images/train.png"></image>
-            <view class="cTime f24">2019/12/09 10:10:10</view>
-            <view class="cContent">
-              <view class="courLeftItem">
-                <view class="fbolder">月嫂【面授】</view>
-                <view>第一讲 月嫂的注意事项</view>
-              </view>
-              <view class="courRightItem">
-                <view>智学苑301</view>
-                <view>智学苑北京东城职业大学</view>
-              </view>
-            </view>
-          </view>
-      </view> -->
     </view>
   </view>
 </view>

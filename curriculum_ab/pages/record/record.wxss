@@ -1,0 +1,17 @@
+/* pages/record/record.wxss */
+.container{background: #ffffff; padding-top:20rpx;}
+.cItem{padding:20rpx 30rpx 20rpx; position:relative; overflow:hidden;}
+.cItem .courseLeft{position:absolute; top:0px; bottom:0px; width:20rpx;overflow: hidden;}
+.cItem .courseLeft .radioBox{width:3rpx; height:100%; margin-left:10rpx; background:#a6a6a7}
+.cItem .courseLeft .line{background:#0f8af4; width:20rpx; height:20rpx; border-radius:10rpx; position:absolute; top:30rpx;}
+
+.cItem .courseRight{ margin-left:40rpx;font-size:24rpx;}
+.cItem .items{border:1rpx solid #a9a9a9;padding:15rpx 20rpx;border-radius:8rpx;}
+.cItem .courseRight .leftSj{width:15px;height:20px; position:absolute; left:-15px; top:22px; }
+.cItem .courseRight .cTime{padding-bottom:10rpx;}
+.cContent{overflow: hidden; line-height: 35rpx; font-size:24rpx;}
+.startList{text-align: center; padding:20rpx 0;}
+.startList image{display:inline-block; width:50rpx; height:50rpx;}
+.startTxt{border-bottom:1px solid #e5e5e5; position: relative; padding-bottom:20rpx; margin:0 50rpx;}
+.startTxt text{position: absolute; left:50%; margin-left:-70rpx; display: block; background:#fff; text-align: center; width:150rpx; top:0rpx; font-size:24rpx;}
+

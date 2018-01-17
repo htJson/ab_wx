@@ -1,1 +1,4 @@
 /* pages/_radios/_radios.wxss */
+.radio-group{
+    font-size: 20rpx;
+  }

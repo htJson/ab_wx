@@ -1,0 +1,53 @@
+<!--pages/exam/exam.wxml-->
+<view class="container">
+  <view class="header">
+    <view>
+      <text>参加考核课程</text>
+      5科
+    </view>
+    <view class="color">
+      <text>通过考核</text>
+      3科
+    </view>
+    <view class="colorRed">
+      <text>未通过考核</text>
+      2科
+    </view>
+  </view>
+  <view class="items">
+    <view class="recordTitle">考核记录</view>
+    <view class="cItem" data-id="{{item.id}}" wx:for="{{coursesList}}">
+      <view class="courseLeft">
+        <view class="radioBox"></view>
+        <view class="line"></view>
+      </view>
+      <view class="courseRight bgColor" bindtap='toDetail'>
+        <image class="leftSj" src="../../images/train.png"></image>
+        <view class="cTime f24">{{item.startTime}}</view>
+        <view class="cContent">
+          <view>
+            <text class="fbolder">【{{item.curTitle}}】</text>
+            <text class="mark">理论成绩：100分</text>
+          </view>
+          <view>
+            <text class="fbolder">【{{item.curTitle}}】</text>
+            <text class="mark">理论成绩：100分</text>
+          </view>
+          <view>
+            <text class="fbolder">【{{item.curTitle}}】</text>
+            <text class="mark">理论成绩：100分</text>
+          </view>
+          <view>
+            <text class="fbolder">【{{item.curTitle}}】</text>
+            <text class="mark">理论成绩：100分</text>
+          </view>
+          <view>
+            <text class="fbolder">【{{item.curTitle}}】</text>
+            <text class="mark">理论成绩：100分</text>
+          </view>
+        </view>
+        <view class="clearbotn"></view>
+      </view>
+  </view>
+  </view>
+</view>
