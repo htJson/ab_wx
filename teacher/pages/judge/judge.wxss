@@ -1,0 +1,13 @@
+/* pages/judge/judge.wxss */
+.container{background:#eee}
+.allJudge{background:#fff; padding:30rpx;}
+.judgeTitle{font-size:30rpx;}
+.judgeContent{overflow: hidden;}
+.judgeContent .content_left{text-align: center; width:200rpx; margin-right:30rpx;}
+.judgeContent .content_left .mark{font-size:106rpx; color:#ff9c00; font-weight: bolder}
+.judgeContent .content_left .startLeft image{display: inline-block; width:40rpx; height: 40rpx;}
+.content_right{padding-top:30rpx;}
+.content_right .item{overflow: hidden;}
+.content_right .item .itemLeft{margin-right:20rpx;}
+.content_right .item .itemLeft image{display:inline-block; width:20rpx; height:20rpx;}
+.content_right .item progress{ font-size:12rpx!important;}

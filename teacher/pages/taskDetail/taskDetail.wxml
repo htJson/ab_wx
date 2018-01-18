@@ -1,0 +1,42 @@
+<view class="container">
+  <view class="item">
+    <text class="cTitle">任务类型：</text>
+    <text>{{content.time}}</text>
+  </view>
+  <view class="item">
+    <text class="cTitle">日期：</text>
+    <text>{{content.name}}</text>
+  </view>
+  <view class="item">
+    <text class="cTitle">时间：</text>
+    <text>{{content.section}}</text>
+  </view>
+  <view class="item">
+    <text class="cTitle">课程：</text>
+    <text>{{content.mode}}</text>
+  </view>
+  <view class="item">
+    <text class="cTitle">章节：</text>
+    <text>{{content.classType}}</text>
+  </view>
+  <view class="item">
+    <text class="cTitle">授课方式：</text>
+    <text>{{content.school}}</text>
+  </view>
+  <view class="item">
+    <text class="cTitle">学校：</text>
+    <text>{{content.room}}</text>
+  </view>
+  <view class="item">
+    <text class="cTitle">教室：</text>
+    <text>{{content.room}}</text>
+  </view>
+  <view class="item">
+    <text class="cTitle">地址：</text>
+    <view class="address">
+      <text>{{content.address}}</text>
+      <!-- <icon type="download" size="20" color="green"/> -->
+      <image class="place" src="../../images/place.png"></image>
+    </view>
+  </view>
+</view>

@@ -1,12 +1,14 @@
 {
   "pages":[
+    "pages/index/index",
+    "pages/login/login",
     "pages/exam/exam",
     "pages/record/record",
     "pages/coursesDetail/coursesDetail",
     "pages/news/news",
     "pages/study/study",
-    "pages/login/login",
-    "pages/index/index",
+    
+    
     "pages/mine/mine",
 
     "pages/_progress/_progress",

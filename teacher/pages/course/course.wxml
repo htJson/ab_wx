@@ -1,0 +1,48 @@
+<!--pages/course/course.wxml-->
+<view class="container">
+  <view class="item itemActive">
+    <view class="item_left">
+      <view class="round"></view>
+      <view class="line"></view>
+    </view>
+    <view class="item_right">
+      <!-- <image src="../../images/train.png"></image> -->
+      <image src="../../images/trainActive.png"></image>
+      <view class="item_header"> 2018/12/12 10:00~10:00</view>
+      <view class="item_footer">
+        <view class="content_left abLeft">
+          <view class="itemTitle">月嫂 <text class="borderBlue type">面授</text></view>
+          <view>第一讲 月嫂的注意事项</view>
+        </view>
+        <view class="vertical_line"></view>
+        <view class="content_right abRight">
+          <view class="itemTitle">月嫂 <text class="borderYellow type">面授</text></view>
+          <view>第一讲 月嫂的注意事项</view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="item">
+    <view class="item_left">
+      <view class="round"></view>
+      <view class="line"></view>
+    </view>
+    <view class="item_right">
+      <image src="../../images/train.png"></image>
+      <view class="item_header"> 2018/12/12 10:00~10:00</view>
+      <view class="item_footer">
+        <view class="content_left abLeft">
+          <view class="itemTitle">月嫂 <text class="borderBlue type">面授</text></view>
+          <view>第一讲 月嫂的注意事项</view>
+        </view>
+        <view class="vertical_line"></view>
+        <view class="content_right abRight">
+          <view class="itemTitle">月嫂 <text class="borderYellow type">面授</text></view>
+          <view>第一讲 月嫂的注意事项</view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
+  

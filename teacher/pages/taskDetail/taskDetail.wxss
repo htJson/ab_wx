@@ -1,0 +1,7 @@
+/* pages/taskDetail/taskDetail.wxss */
+.container{background:#ffffff; padding:30rpx;}
+.item{overflow: hidden;}
+.item text{font-size:28rpx; padding:20rpx 0; display: block; float:left}
+.item .cTitle{width:170rpx; text-align: right; font-size:30rpx; padding:20rpx 0;}
+.item .address{position:relative;}
+.item .address .place{position:absolute; right:0px;top:10rpx; width:35rpx; height:50rpx}

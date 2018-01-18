@@ -1,0 +1,82 @@
+<!--pages/judge/judge.wxml-->
+<view class="container">
+  <view class="allJudge">
+    <view class="judgeTitle">整体评分</view>
+    <view class="judgeContent">
+      <view class="content_left abLeft">
+        <view class="mark">3.7</view>
+        <view class="startLeft">
+          <image src="../../images/start.png"></image>
+          <image src="../../images/start.png"></image>
+          <image src="../../images/start.png"></image>
+          <image src="../../images/start.png"></image>
+          <image src="../../images/startEmpty.png"></image>
+        </view>
+        <text>综合评分</text>
+      </view>
+
+      <view class="content_right">
+        <view class="item">
+          <view class="itemLeft abLeft">
+            <image src="../../images/start.png"></image>
+            <image src="../../images/start.png"></image>
+            <image src="../../images/start.png"></image>
+            <image src="../../images/start.png"></image>
+            <image src="../../images/start.png"></image>
+          </view>
+          <view class="prosee">
+            <progress percent="40" stroke-width="12" color="#ffcd7f" stroke-width="7" show-info />
+          </view>
+        </view>
+        <view class="item">
+          <view class="itemLeft abLeft">
+            <image src="../../images/start.png"></image>
+            <image src="../../images/start.png"></image>
+            <image src="../../images/start.png"></image>
+            <image src="../../images/start.png"></image>
+            <image src="../../images/start.png"></image>
+          </view>
+          <view class="prosee">
+            <progress percent="40" stroke-width="12" color="#ffcd7f" stroke-width="7" show-info />
+          </view>
+        </view>
+        <view class="item">
+          <view class="itemLeft abLeft">
+            <image src="../../images/start.png"></image>
+            <image src="../../images/start.png"></image>
+            <image src="../../images/start.png"></image>
+            <image src="../../images/start.png"></image>
+            <image src="../../images/start.png"></image>
+          </view>
+          <view class="prosee">
+            <progress percent="40" stroke-width="12" color="#ffcd7f" stroke-width="7" show-info />
+          </view>
+        </view>
+        <view class="item">
+          <view class="itemLeft abLeft">
+            <image src="../../images/start.png"></image>
+            <image src="../../images/start.png"></image>
+            <image src="../../images/start.png"></image>
+            <image src="../../images/start.png"></image>
+            <image src="../../images/start.png"></image>
+          </view>
+          <view class="prosee">
+            <progress percent="40" stroke-width="12" color="#ffcd7f" stroke-width="7" show-info />
+          </view>
+        </view>
+        <view class="item">
+          <view class="itemLeft abLeft">
+            <image src="../../images/start.png"></image>
+            <image src="../../images/start.png"></image>
+            <image src="../../images/start.png"></image>
+            <image src="../../images/start.png"></image>
+            <image src="../../images/start.png"></image>
+          </view>
+          <view class="prosee">
+            <progress percent="40" stroke-width="12" color="#ffcd7f" stroke-width="7" show-info />
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

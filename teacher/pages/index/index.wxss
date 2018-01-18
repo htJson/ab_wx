@@ -1,21 +1,20 @@
-/**index.wxss**/
-.userinfo {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
+.slide-image{display: block; width:100%;}
+.play{background:#fff; padding:20rpx 30rpx 0;}
+.play_header{overflow:hidden; padding-bottom:20rpx;}
+.play_header text{font-size:38rpx; float:left;}
+.play_header image{width:16px; height:20px; float:right; margin-top:6rpx;}
 
-.userinfo-avatar {
-  width: 128rpx;
-  height: 128rpx;
-  margin: 20rpx;
-  border-radius: 50%;
-}
-
-.userinfo-nickname {
-  color: #aaa;
-}
-
-.usermotto {
-  margin-top: 200px;
-}
+.item{position:relative; padding-bottom:20rpx;} 
+.item .item_left{width:20px; position:absolute; left:0px; top:0px; bottom:0px; padding:0px;}
+.item_left .line{border-left:1px #a6a6a7 solid; width:10px; height: 100%; margin-left:5px;}
+.item_left .round{width:10px; height:10px; background:#a6a6a7; border-radius:10rpx; margin-top:42rpx; position: absolute; }
+.item .item_right{border:1px solid #a9a9a9; margin-left:30px; position: relative;background: #f7f7fa; padding:20rpx 0}
+.item_right image{width:10px; height:30rpx; position: absolute; left:-20rpx; top:30rpx;}
+.item_right .item_header{font-size:24rpx;padding:0 20rpx 15rpx;}
+.item_footer{overflow: hidden; position: relative;}
+.item_footer .content_left,.item_footer .content_right{font-size:24rpx; width:45%; margin-left:10px;}
+.item_footer .vertical_line{border:1px solid #c6c6c8; position: absolute; top:10rpx; bottom:10rpx; left:49.6%;}
+.item_footer .itemTitle{font-size:26rpx;  padding-bottom:10rpx;}
+.item_footer .type{font-size:17rpx; display: inline-block; height: 14rpx; border-radius:10px; padding:5rpx 10rpx; line-height: 20rpx; margin-left:20rpx;}
+.itemActive .round{background:#0f8af4;}
+.itemActive .item_right{border:2px solid #0f8af4}
