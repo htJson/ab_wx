@@ -1,5 +1,7 @@
 {
   "pages":[
+    "pages/curriculum/curriculum",
+    "pages/task/task",
     "pages/judge/judge",
     "pages/course/course",
     "pages/news/news",

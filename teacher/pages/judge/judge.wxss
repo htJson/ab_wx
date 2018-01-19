@@ -1,13 +1,19 @@
 /* pages/judge/judge.wxss */
 .container{background:#eee}
-.allJudge{background:#fff; padding:30rpx;}
+.allJudge{background:#fff; padding:30rpx; margin-bottom:20rpx;}
 .judgeTitle{font-size:30rpx;}
-.judgeContent{overflow: hidden;}
+.judgeContent{position: relative;}
 .judgeContent .content_left{text-align: center; width:200rpx; margin-right:30rpx;}
-.judgeContent .content_left .mark{font-size:106rpx; color:#ff9c00; font-weight: bolder}
-.judgeContent .content_left .startLeft image{display: inline-block; width:40rpx; height: 40rpx;}
-.content_right{padding-top:30rpx;}
-.content_right .item{overflow: hidden;}
-.content_right .item .itemLeft{margin-right:20rpx;}
-.content_right .item .itemLeft image{display:inline-block; width:20rpx; height:20rpx;}
-.content_right .item progress{ font-size:12rpx!important;}
+.judgeContent .content_left .mark{font-size:100rpx; color:#ff6600; font-weight: bolder}
+.judgeContent .content_left .startLeft image{display: inline-block; width:35rpx; height:35rpx;}
+.judgeContent .content_right{position:absolute; left:230rpx; right:0px; top:20rpx;}
+.content_left text{color:#575656; font-size:21rpx;}
+.content_right .item{position:relative;}
+.content_right .item .itemLeft{position:absolute; left:0px; top:-8rpx;} 
+.content_right .item .itemLeft image{ width:18rpx; height:18rpx;}
+.content_right .progre{padding-left:60px;}
+
+.classNav{background: #fff; padding:30rpx; border-bottom:1px solid #e5e5e5}
+.classNav .judgeContent .content_left{text-align: center; width:200rpx; margin-right:30rpx; padding-top:20rpx;}
+.classNav .judgeContent .content_left .mark{font-size:70rpx; color:#ff9c00; font-weight: bolder}
+.classNav .judgeContent .content_right{position:absolute; left:230rpx; right:0px; top:0rpx;}

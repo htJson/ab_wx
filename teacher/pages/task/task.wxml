@@ -1,0 +1,13 @@
+<!--pages/task/task.wxml-->
+<view class="container">
+  <view class="tabLeft">
+    <view>
+      <!-- <image></image> -->
+      全部任务
+    </view>
+    <view>
+      <!-- <image></image> -->
+      授课内容
+    </view>
+  </view>
+</view>

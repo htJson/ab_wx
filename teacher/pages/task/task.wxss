@@ -1,0 +1,4 @@
+/* pages/task/task.wxss */
+.container{background:#fff;}
+.tabLeft{background: #ededed; position: fixed; height: 100%; width:180rpx;}
+.tabLeft view{}
