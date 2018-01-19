@@ -65,7 +65,7 @@
       <image src="../../images/more.png"></image>
     </view>
     <view class="play_content">
-      <view class="item itemActive">v
+      <view class="item itemActive">
         <view class="item_left">
           <view class="round"></view>
           <view class="line"></view>

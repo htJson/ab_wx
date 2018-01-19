@@ -70,8 +70,7 @@ Page({
   
   bindUser(){
     wx.request({
-      // url: app.data.url + '/graphql', //仅为示例，并非真实的接口地址
-      url: 'http://10.10.30.65:8090/graphql', //仅为示例，并非真实的接口地址
+      url: app.data.dev+ '/graphql', //仅为示例，并非真实的接口地址
       method: "POST",
       data: { "query": "{my_student_bindinfo{student_id,student_age,student_name}}", "variables": null, "operationName": null },
       header: {

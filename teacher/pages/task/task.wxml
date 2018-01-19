@@ -1,13 +1,59 @@
-<!--pages/task/task.wxml-->
-<view class="container">
-  <view class="tabLeft">
-    <view>
-      <!-- <image></image> -->
-      全部任务
+<view class="header">
+  <image class="search" src="../../images/search.png"></image>
+  <view class="section">
+    <picker mode="date" value="{{date}}" start="2015-09-01" end="2017-09-01" bindchange="bindDateChange">
+      <view class="picker">
+        {{date}}
+      </view>
+    </picker>
+  </view>
+  ~
+  <view class="section">
+    <picker mode="date" value="{{date}}" start="2015-09-01" end="2017-09-01" bindchange="bindDateChange">
+      <view class="picker">
+        {{date}}
+      </view>
+    </picker>
+  </view>
+</view>
+
+<view class="currList">
+  <view class="play_content">
+    <view class="item itemActive">
+      <view class="item_left">
+        <view class="round"></view>
+        <view class="line"></view>
+      </view>
+      <view class="item_right">
+        <image class="leftsj" src="../../images/trainActive.png"></image>
+        <image class="task" src="../../images/taskActive.png"></image>
+        <view class="item_header"> 2018/12/12 10:00~10:00</view>
+        <view class="item_footer">
+          <view class="content_left">
+            <view class="itemTitle">月嫂 <text class="borderBlue type">面授</text></view>
+            <view>第一讲 月嫂的注意事项</view>
+          </view>
+        </view>
+      </view>
     </view>
-    <view>
-      <!-- <image></image> -->
-      授课内容
+
+    <view class="item">
+      <view class="item_left">
+        <view class="round"></view>
+        <view class="line"></view>
+      </view>
+      <view class="item_right">
+        <image class="leftsj" src="../../images/train.png"></image>
+        <image class="task" src="../../images/task.png"></image>
+        <view class="item_header"> 2018/12/12 10:00~10:00</view>
+        <view class="item_footer">
+          <view class="content_left">
+            <view class="itemTitle">月嫂 <text class="borderBlue type">面授</text></view>
+            <view>第一讲 月嫂的注意事项</view>
+          </view>
+        </view>
+      </view>
     </view>
   </view>
+
 </view>

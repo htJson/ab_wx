@@ -1,7 +1,7 @@
 App({
   data:{
     url:'https://test-auth.aobei.com',
-    dev:'',
+    dev:'http://10.10.30.65:8090',
     code:'',
     appid:'wx731d62ae850c6c5e',
     token:''

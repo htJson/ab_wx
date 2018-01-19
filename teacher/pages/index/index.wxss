@@ -16,5 +16,6 @@
 .item_footer .vertical_line{border:1px solid #c6c6c8; position: absolute; top:10rpx; bottom:10rpx; left:49.6%;}
 .item_footer .itemTitle{font-size:26rpx;  padding-bottom:10rpx;}
 .item_footer .type{font-size:17rpx; display: inline-block; height: 14rpx; border-radius:10px; padding:5rpx 10rpx; line-height: 20rpx; margin-left:20rpx;}
+
 .itemActive .round{background:#0f8af4;}
 .itemActive .item_right{border:2px solid #0f8af4}

@@ -1,7 +1,5 @@
 {
   "pages":[
-    "pages/_picker/_picker",
-    "pages/_pickerJ/_pickerJ",
     "pages/login/login",
     "pages/index/index",
     "pages/exam/exam",
@@ -11,7 +9,8 @@
     "pages/study/study",
     "pages/mine/mine",
     "pages/_progress/_progress",
-    
+    "pages/_picker/_picker",
+    "pages/_pickerJ/_pickerJ",
     "pages/_switch/_switch",
     "pages/_swiper/_swiper",
     "pages/_slider/_slider",
@@ -21,7 +20,6 @@
     "pages/_icon/_icon",
     "pages/_radios/_radios",
     "pages/_label/_label",
-    
     "pages/_inputt/_inputt",
     "pages/_from/_from",
     "pages/_button/_button",
