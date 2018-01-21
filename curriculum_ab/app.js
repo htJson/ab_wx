@@ -1,17 +1,17 @@
 App({
   data:{
     url:'https://test-auth.aobei.com',
-    dev:'http://10.10.30.65:8090',
+    dev:'http://10.10.30.65:8090/graphql',
     code:'',
     appid:'wx731d62ae850c6c5e',
-    token:''
+    token:'',
+    userId:''
   },
   onLaunch: function () {
     // 展示本地存储能力
     var logs = wx.getStorageSync('logs') || []
     logs.unshift(Date.now())
     wx.setStorageSync('logs', logs)
-
     // 登录
     wx.login({
       success: res => {
@@ -68,15 +68,42 @@ App({
       method: "POST",
       data: {
         grant_type: 'password',
-        username: 'WX_' + openId,
-        password: 'WX_' + openId,
+        username: 'WX_' + openId+'__b',
+        password: 'WX_' + openId+'__b',
       },
       header: {
         "content-type": 'application/x-www-form-urlencoded', // 默认值
         "Authorization": 'Basic d3hfbV9zdHVkZW50OjdjMDhlMjdlLWI2NGYtNDUxOC05YzY5LTU3OTUwODE5NjgxMw=='
       },
       success:res=>{
-        this.globalData.token=res.data.access_token
+        this.globalData.token ='Bearer '+res.data.access_token
+        this.globalData.userId=res.data.uuid
+        // this.getInfo();
+      }
+    })
+  },
+  getInfo(){
+    // 根据是否绑定判断进入哪个界面
+    wx.request({
+      url: this.data.dev,
+      method:'POST',
+      data:{
+        query:'query{my_student_bindinfo{student_phone}}'
+      },
+      header: {
+        "content-type": 'application/json', // 默认值
+        "Authorization": this.globalData.token
+      },
+      success:res=>{
+        if(res.data.errors ==undefined){
+          wx.switchTab({
+            url: '/pages/index/index'
+          })
+        }else{
+          wx.navigateTo({
+            url: '/pages/index/index',
+          })
+        }
       }
     })
   }

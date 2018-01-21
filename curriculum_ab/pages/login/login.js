@@ -9,13 +9,17 @@ Page({
       { name: 'man', value: '男', checked:true},
       { name: 'woman', value: '女', checked:false},
     ],
+    phone:'',
+    idNum:'',
+    errorTip:'',
+    errorNews:{}
   },
 
   /*
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    console.log(app,'=====')
+    // console.log(app,'=====')
     // this.getOpenId(app.data,);
   },
 
@@ -67,18 +71,54 @@ Page({
   onShareAppMessage: function () {
   
   },
-  
+  phoneInupt(e){
+    this.setData({
+      phone:e.detail.value
+    })
+  },
+  idNumInput(e) {
+    this.setData({
+      idNum: e.detail.value
+    })
+  },
+  checkoutData(){
+    var phoneReg =/^[1][3,4,5,7,8][0-9]{9}$/;
+    var idNumReg = /^[1-9]\d{5}(18|19|([23]\d))\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/;
+    if (!idNumReg.test(this.data.idNum)){
+      this.setData({
+        errorTip:'身份证号填写不正确'
+      })
+    }
+    if (!phoneReg.test(this.data.phone)){
+      this.setData({
+        errorTip:'手机号填写不正确'
+      })
+    }
+    return phoneReg.test(this.data.phone) && idNumReg.test(this.data.idNum)
+  },
   bindUser(){
+    if(!this.checkoutData()){return false;}
     wx.request({
-      url: app.data.dev+ '/graphql', //仅为示例，并非真实的接口地址
+      url: app.data.dev, //仅为示例，并非真实的接口地址
       method: "POST",
-      data: { "query": "{my_student_bindinfo{student_id,student_age,student_name}}", "variables": null, "operationName": null },
+      data: {
+        "query": ['mutation{my_student_binduser(phone:"',this.data.phone,'",id_num:"',this.data.idNum,'"){status}}'].join('')
+      },
       header: {
         "content-type": 'application/json', // 默认值
         "Authorization": 'Bearer '+app.globalData.token
       },
       success: res => {
-        console.log(res, '====')
+        if (res.data.errors =='undefined'){
+          this.setData({
+            errorTip: res.data.errors[0].message
+          })
+        }else{
+          console.log(1111)
+          wx.switchTab({
+            url: '../index/index'
+          })
+        }
       },
       fail: error => {
         console.log(error)

@@ -1,4 +1,5 @@
 // pages/exam/exam.js
+var app=getApp();
 Page({
 
   /**
@@ -27,13 +28,14 @@ Page({
         schoolName: '智学苑北京东城职业大学'
       }
     ],
+    examCounts:{}
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-  
+    this.getCount()
   },
 
   /**
@@ -83,5 +85,24 @@ Page({
    */
   onShareAppMessage: function () {
   
+  },
+  getCount(){
+    wx.request({
+      url: app.data.dev,
+      method:'POST',
+      data:{
+        query:"query{my_student_exam_score_counts{total,passed,failed}}"
+      },
+      header: {
+        "content-type": 'application/json', // 默认值
+        "Authorization": app.globalData.token
+      },
+      success:res=>{
+        console.log()
+        this.setData({
+          examCounts: res.data.data.my_student_exam_score_counts
+        })
+      }
+    })
   }
 })

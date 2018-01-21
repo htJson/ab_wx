@@ -8,12 +8,12 @@
     <view class="item" wx:for="{{trainList}}">
       <image src="{{item.imgUrl}}"></image>
       <view class="f34">
-        {{item.title}} 
+        {{item.team_name}} 
         <text class="{{item.typeNum?'borderBlue':'borderYellow'}}">{{item.type}}</text>
       </view>
-      <view class="f22"> <image src="../../images/hour.png" class="iconImg"></image> {{item.hour}}课时</view>
-      <view class="f22"> <image src="../../images/credit.png" class="iconImg"></image> {{item.credit}}学分</view>
-      <view class="f22"> <image src="../../images/time.png" class="iconImg"></image> {{item.startTime}}~{{item.endTime}}</view>
+      <view class="f22"> <image src="../../images/hour.png" class="iconImg"></image> {{item.team_hour}}课时</view>
+      <view class="f22"> <image src="../../images/credit.png" class="iconImg"></image> {{item.team_credit}}学分</view>
+      <view class="f22"> <image src="../../images/time.png" class="iconImg"></image> {{item.team_begin}}~{{item.team_end}}</view>
       <view class="">
         <progress percent="{{item.centum}}" color="#60a8ef" show-info />
       </view>

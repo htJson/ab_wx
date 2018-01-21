@@ -3,15 +3,15 @@
   <view class="header">
     <view>
       <text>参加考核课程</text>
-      5科
+      {{examCounts.total}}科
     </view>
     <view class="color">
       <text>通过考核</text>
-      3科
+      {{examCounts.passed}}科
     </view>
     <view class="colorRed">
       <text>未通过考核</text>
-      2科
+      {{examCounts.failed}}科
     </view>
   </view>
   <view class="items">

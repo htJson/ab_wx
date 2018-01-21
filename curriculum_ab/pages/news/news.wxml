@@ -1,21 +1,11 @@
 <!--pages/news/news.wxml-->
 <view class="container">
-  <view class="item">
-    <view class="overflow pb20"> 
-      <image class="newsIcon" src="../../images/systemNews.png"></image>
-      <text class="newsTitle">系统消息</text><text class="newsTime">2012/12/23</text>
-    </view>
-    <view>
-      张三您好，请于2018年2月1日至2018年2月10日到北京东城区职业大学接受清洁课程培训。
-    </view>
-  </view>
-  <view class="item">
+  <view class="item" wx:for="{{newsList}}">
     <view class="overflow pb20">
-      <image class="newsIcon" src="../../images/testIcon.png"></image>
-      <text class="newsTitle">系统消息w</text><text class="newsTime">2012/12/23</text>
+      <image class="newsIcon" src="../../images/systemNews.png"></image>
+      <text class="newsTitle">{{item.msg_title}}</text><text class="newsTime">{{item.create_datetime}}</text>
     </view>
-    <view>
-      张三您好，请于2018年2月1日至2018年2月10日到北京s东城区职业大学接受清洁课程培训。
-    </view>
+    <view>{{item.msg_content}}</view>
   </view>
+  
 </view>

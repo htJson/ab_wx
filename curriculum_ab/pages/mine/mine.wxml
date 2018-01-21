@@ -25,14 +25,18 @@
   </view>
   <view class="mineAttr mt30">
     <view bindtap="changeUrl" data-key="news">
-      <image class="leftIcon" src="../../images/news.png"></image>
-      <text>我的消息</text>
-      <image class="moreBox" src="../../images/more.png"></image>
+      <navigator url="../news/news" hover-class="none">
+        <image class="leftIcon" src="../../images/news.png"></image>
+        <text>我的消息</text>
+        <image class="moreBox" src="../../images/more.png"></image>
+      </navigator>
     </view>
     <view bindtap="changeUrl" data-key="account">
-      <image class="leftIcon" src="../../images/account.png"></image>
-      <text>我的账户</text>
-      <image class="moreBox" src="../../images/more.png"></image>
+      <navigator url="../login/login" hover-class="none">
+        <image class="leftIcon" src="../../images/account.png"></image>
+        <text>我的账户</text>
+        <image class="moreBox" src="../../images/more.png"></image>
+      </navigator>
     </view>
   </view>
 </view>
