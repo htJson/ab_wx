@@ -5,57 +5,107 @@ const app = getApp()
 Page({
   data: {
     imgUrls: [
-      'http://img02.tooopen.com/images/20150928/tooopen_sy_143912755726.jpg',
-      'http://img06.tooopen.com/images/20160818/tooopen_sy_175866434296.jpg',
-      'http://img06.tooopen.com/images/20160818/tooopen_sy_175833047715.jpg'
+      { path: 'http://img02.tooopen.com/images/20150928/tooopen_sy_143912755726.jpg' },
+      { path: 'http://img06.tooopen.com/images/20160818/tooopen_sy_175866434296.jpg' },
+      { path: 'http://img06.tooopen.com/images/20160818/tooopen_sy_175833047715.jpg'}
     ],
     indicatorDots: true,
     autoplay: true,
     indicatorColor:'#0f8af4',
     interval: 5000,
     duration: 500,
-    circular:true
+    circular:true,
+    noData:false,
+    loading:false,
+    list:[]
   },
   //事件处理函数
-  bindViewTap: function() {
+
+  onLoad: function () {
+    this.getImgId();
+    this.getList();
+  },
+  toDetail(options){
+    // var id = options.currentTarget.dataset.id;
     wx.navigateTo({
-      url: '../logs/logs'
+      url: '../coursesDetail/coursesDetail?cursore_id=' + options.currentTarget.dataset.id
     })
   },
-  onLoad: function () {
-    if (app.globalData.userInfo) {
-      this.setData({
-        userInfo: app.globalData.userInfo,
-        hasUserInfo: true
-      })
-    } else if (this.data.canIUse){
-      // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
-      // 所以此处加入 callback 以防止这种情况
-      app.userInfoReadyCallback = res => {
+  getImgId(){
+    wx.request({
+      url: app.data.dev,
+      method:'POST',
+      data:{
+        query:'query{teacher_cms_bannar_online_list{content_id,coverimg_id,title,intro,serial_number}}'
+      },
+      header: {
+        "content-type": 'application/json', // 默认值
+        "Authorization": app.globalData.token
+      },
+      success:res=>{
+        var idArr=[];
+        var data = res.data.data.teacher_cms_bannar_online_list,n=data.length;
+        for(let i=0; i<n; i++){
+          idArr.push('"'+data[i].coverimg_id.toString()+'"');
+        }
+        this.getPath(idArr);
+      }
+    })
+  },
+  getPath(arr){
+    wx.request({
+      url: app.data.dev,
+      method: 'POST',
+      data: {
+        query:'query{images(ids:['+arr+']){img_id,path}}'
+      },
+      header: {
+        "content-type": 'application/json', // 默认值
+        "Authorization": app.globalData.token
+      },
+      success:res=>{
         this.setData({
-          userInfo: res.userInfo,
-          hasUserInfo: true
+          imgUrls: res.data.data.images
         })
       }
-    } else {
-      // 在没有 open-type=getUserInfo 版本的兼容处理
-      wx.getUserInfo({
-        success: res => {
-          app.globalData.userInfo = res.userInfo
-          this.setData({
-            userInfo: res.userInfo,
-            hasUserInfo: true
-          })
-        }
-      })
-    }
+    })
   },
-  getUserInfo: function(e) {
-    console.log(e)
-    app.globalData.userInfo = e.detail.userInfo
+  getList(){
     this.setData({
-      userInfo: e.detail.userInfo,
-      hasUserInfo: true
+      loading:true
+    })
+    wx.request({
+      url: app.data.dev,
+      method: 'POST',
+      header: {
+        "content-type": 'application/json', // 默认值
+        "Authorization": app.globalData.token
+      },
+      data:{
+        query: 'query{my_teacher_courseinfo_active_list{trainSchedule {id},course {headline,section_name},school {school_name},classroom {block_number},plan {train_begin,train_end,train_way},courseTeam {team_name}}}'
+      },
+      success:res=>{
+        this.setData({
+          loading: false
+        })
+        if (res.errors != undefined || res.data.data.my_teacher_courseinfo_active_list == null || res.data.data.my_teacher_courseinfo_active_list.length==0){
+          this.setData({
+            noData:true
+          })
+          return false;
+        }
+
+        var data = res.data.data.my_teacher_courseinfo_active_list,n=data.length;
+        for(let i=0; i<n; i++){
+          var arr=data[i].plan.train_begin.split('T');
+          var d=arr[0],sT=arr[1].substring(0,arr[1].length-1);
+          var ed=data[i].plan.train_end.split('T')[1],eT=ed.substring(0,ed.length-1);
+          data[i].plan.mydate=d+' '+sT+'~'+eT;
+        }
+        this.setData({
+          list:data
+        })
+      }
     })
   }
 })

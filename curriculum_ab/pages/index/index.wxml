@@ -2,20 +2,27 @@
 <view class="container">
   <view class="userinfo">
     <text class="f38">培训中的课程</text>
-    <image src="../../images/more.png"></image>
+    <!-- <image src="../../images/more.png"></image> -->
   </view>
-  <view class="coursesing">
-    <view class="item" wx:for="{{trainList}}">
-      <image src="{{item.imgUrl}}"></image>
+  <view class="noData" wx:if="{{trainNoData}}">
+    <image src="../../images/noData.jpg"></image>
+    <text>暂无数据</text>
+  </view>
+  <view class="coursesing" wx:else>
+    <view class="loading" wx:if="{{trainLoading}}">
+      <image src="../../images/loading.gif"></image>
+    </view>
+    <view class="item" wx:for="{{trainList}}" wx:key="index">
+      <image src="{{item.courseTeam.path}}"></image>
       <view class="f34">
-        {{item.team_name}} 
-        <text class="{{item.typeNum?'borderBlue':'borderYellow'}}">{{item.type}}</text>
+        {{item.courseTeam.team_name}} 
+        <text class="{{item.plan.train_way?'borderBlue':'borderYellow'}}">{{item.plan.train_way?"在线":"面授"}}</text>
       </view>
-      <view class="f22"> <image src="../../images/hour.png" class="iconImg"></image> {{item.team_hour}}课时</view>
-      <view class="f22"> <image src="../../images/credit.png" class="iconImg"></image> {{item.team_credit}}学分</view>
-      <view class="f22"> <image src="../../images/time.png" class="iconImg"></image> {{item.team_begin}}~{{item.team_end}}</view>
+      <view class="f22"> <image src="../../images/hour.png" class="iconImg"></image> {{item.courseTeam.team_hour}}课时</view>
+      <view class="f22"> <image src="../../images/credit.png" class="iconImg"></image> {{item.courseTeam.team_credit}}学分</view>
+      <view class="f22"> <image src="../../images/time.png" class="iconImg"></image> {{item.plan.mydate}}</view>
       <view class="">
-        <progress percent="{{item.centum}}" color="#60a8ef" show-info />
+        <progress percent="{{item.pre}}" color="#60a8ef" show-info />
       </view>
     </view>
   </view>
@@ -23,24 +30,31 @@
     <view class="userinfo">
       <text class="f38">课程表</text>
     </view>
-    <view class="courseBox">
-      <view class="cItem {{item.isRead?'cItemActive':''}}" data-id="{{item.id}}" wx:for="{{coursesList}}">
+    <view class="noData" wx:if="{{courseNoData}}">
+      <image src="../../images/noData.jpg"></image>
+      <text>暂无数据</text>
+    </view>
+    <view class="courseBox" wx:else>
+      <view class="loading" wx:if="{{curseLoading}}">
+        <image src="../../images/loading.gif"></image>
+      </view>
+      <view class="cItem" wx:for="{{coursesList}}" wx:key="index">
           <view class="courseLeft">
             <view class="radioBox"></view>
             <view class="line"></view>
           </view>
-          <view class="courseRight bgColor" bindtap='toDetail'>
-            <image wx:if="{{item.isRead}}" class="leftSj" src="../../images/trainActive.png"></image>
-            <image wx:else class="leftSj" src="../../images/train.png"></image>
-            <view class="cTime f24">{{item.startTime}}</view>
+          <view class="courseRight bgColor" data-id="{{item.trainSchedule.id}}" bindtap='toDetail'>
+            <!-- <image wx:if="{{item.isRead}}" class="leftSj" src="../../images/trainActive.png"></image> -->
+            <image class="leftSj" src="../../images/train.png"></image>
+            <view class="cTime f24"> {{item.trainSchedule.mydate}}</view>
             <view class="cContent">
               <view class="courLeftItem">
-                <view class="fbolder">{{item.curTitle}}【{{item.typeName}}】</view>
-                <view>{{item.title}}</view>
+                <view class="fbolder">{{item.courseTeam.team_name}}【{{item.plan.train_way?"在线":"面授"}}】</view>
+                <view>第{{item.course.section_name}}节 <text style="margin-left:10rpx;">{{item.course.headline}}</text></view>
               </view>
               <view class="courRightItem">
-                <view>{{item.schoolDddress}}</view>
-                <view>{{item.schoolName}}</view>
+                <view>{{item.classroom.block_number}}</view>
+                <view>{{item.school.school_name}}</view>
               </view>
             </view>
           </view>

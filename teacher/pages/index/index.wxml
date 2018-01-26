@@ -1,57 +1,40 @@
 <!--index.wxml-->
 <view class="container">
   <swiper indicator-dots="{{indicatorDots}}" circular="{{circular}}" indicator-active-color="{{indicatorColor}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
-    <block wx:for="{{imgUrls}}">
+    <block wx:for="{{imgUrls}}" wx:key="{{index}}">
       <swiper-item>
-        <image src="{{item}}" class="slide-image" height="150" background="cover" />
+        <image src="{{item.path}}" class="slide-image" height="150" background="cover" />
       </swiper-item>
     </block>
   </swiper>
   <view class="play">
     <view class="play_header">
       <text>课程安排</text>
-      <image src="../../images/more.png"></image>
+      <!-- <image src="../../images/more.png"></image> -->
     </view>
-    <view class="play_content">
-      <view class="item">
+    <view class="noData" wx:if="{{noData}}">
+      <image src="../../images/noData.jpg"></image>
+      <text>暂无数据</text>
+    </view>
+    <view class="play_content" wx:else>
+      <view class="loading" wx:if="{{loading}}"><image src="../../images/loading.gif"></image></view>
+      <view class="item" wx:for="{{list}}" wx:key="{{index}}" bindtap='toDetail' data-id="{{item.trainSchedule.id}}">
         <view class="item_left">
           <view class="round"></view>
           <view class="line"></view>
         </view>
         <view class="item_right">
          <image src="../../images/train.png"></image>
-          <view class="item_header"> 2018/12/12 10:00~10:00</view>
+          <view class="item_header">{{item.plan.mydate}}</view>
           <view class="item_footer">
             <view class="content_left abLeft">
-              <view class="itemTitle">月嫂 <text class="borderBlue type">面授</text></view>
-              <view>第一讲 月嫂的注意事项</view>
+              <view class="itemTitle">{{item.courseTeam.team_name}} <text class="{{item.plan.train_way?'borderBlue':'borderYellow'}} type">{{item.plan.train_way?"在线":"面授"}}</text></view>
+              <view>第{{item.course.section_name}}讲 {{item.course.headline}}</view>
             </view>
             <view class="vertical_line"></view>
             <view class="content_right abRight">
-              <view class="itemTitle">月嫂 <text class="borderYellow type">面授</text></view>
-              <view>第一讲 月嫂的注意事项</view>
-            </view>
-          </view>
-        </view>
-      </view>
-
-      <view class="item">
-        <view class="item_left">
-          <view class="round"></view>
-          <view class="line"></view>
-        </view>
-        <view class="item_right">
-         <image src="../../images/train.png"></image>
-          <view class="item_header"> 2018/12/12 10:00~10:00</view>
-          <view class="item_footer">
-            <view class="content_left abLeft">
-              <view class="itemTitle">月嫂 <text class="borderBlue type">面授</text></view>
-              <view>第一讲 月嫂的注意事项</view>
-            </view>
-            <view class="vertical_line"></view>
-            <view class="content_right abRight">
-              <view class="itemTitle">月嫂 <text class="borderYellow type">面授</text></view>
-              <view>第一讲 月嫂的注意事项</view>
+              <view class="itemTitle">{{item.classroom.block_number}}</view>
+              <view>{{item.school.school_name}}</view>
             </view>
           </view>
         </view>
@@ -59,7 +42,7 @@
     </view>
   </view>
 
-  <view class="play mt30">
+  <!-- <view class="play mt30">
     <view class="play_header">
       <text>任务通知</text>
       <image src="../../images/more.png"></image>
@@ -71,7 +54,7 @@
           <view class="line"></view>
         </view>
         <view class="item_right">
-         <!-- <image src="../../images/train.png"></image> -->
+         <!-- <image src="../../images/train.png"></image> 
          <image src="../../images/trainActive.png"></image>
           <view class="item_header"> 2018/12/12 10:00~10:00</view>
           <view class="item_footer">
@@ -110,5 +93,5 @@
         </view>
       </view>
     </view>
-  </view>
+  </view> -->
 </view>

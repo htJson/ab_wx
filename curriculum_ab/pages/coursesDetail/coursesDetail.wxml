@@ -1,38 +1,38 @@
 <view class="container">
   <view class="item">
     <text class="cTitle">日期：</text>
-    <text>{{content.time}}</text>
+    <text>{{content.trainSchedule.myDate}}</text>
   </view>
   <view class="item">
     <text class="cTitle">课程：</text>
-    <text>{{content.name}}</text>
+    <text>{{content.courseTeam.team_name}}</text>
   </view>
   <view class="item">
     <text class="cTitle">章节：</text>
-    <text>{{content.section}}</text>
+    <text>第{{content.course.section_name}}节 {{content.course.headline}}</text>
   </view>
   <view class="item">
     <text class="cTitle">授课方式：</text>
-    <text>{{content.mode}}</text>
+    <text>{{content.plan.train_way?"在线":"面授"}}</text>
   </view>
-  <view class="item">
+  <!-- <view class="item">
     <text class="cTitle">班型：</text>
     <text>{{content.classType}}</text>
-  </view>
+  </view> -->
   <view class="item">
     <text class="cTitle">学校：</text>
-    <text>{{content.school}}</text>
+    <text>{{content.school.school_name}}</text>
   </view>
   <view class="item">
     <text class="cTitle">教室：</text>
-    <text>{{content.room}}</text>
+    <text>{{content.classroom.block_number}}</text>
   </view>
   <view class="item">
     <text class="cTitle">地址：</text>
     <view class="address">
-      <text>{{content.address}}</text>
+      <text>{{content.school.school_address}}</text>
       <!-- <icon type="download" size="20" color="green"/> -->
-      <image class="place" src="../../images/place.png"></image>
+      <!-- <image class="place" src="../../images/place.png"></image> -->
     </view>
   </view>
 </view>

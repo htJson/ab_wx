@@ -17,5 +17,5 @@
 .cItem .courseRight .cTime{padding-bottom:10rpx; float:left; margin-right:40rpx; font-size:25rpx;}
 .cItem .cContent{float:right;}
 .cItem .cContent view{ margin-bottom:15rpx;}
-.cContent .fbolder{margin-right:50rpx; text-align: center; display: inline-block;}
+.cContent .fbolder{margin-right:25rpx; text-align: center; display: inline-block;}
 .cContent .mark{width:240rpx; display: inline-block}

@@ -1,55 +1,61 @@
 <view class="header">
   <view class="section">
-    <picker mode="date" value="{{date}}" start="2015-09-01" end="2017-09-01" bindchange="bindDateChange">
+    <picker mode="date" class="{{sTime?'errorStyle':''}}" value="{{startData}}"  bindchange="changeStart">
       <view class="picker">
-        {{date}}
+        {{startData}}
       </view>
     </picker>
   </view>
   ~
   <view class="section">
-    <picker mode="date" value="{{date}}" start="2015-09-01" end="2017-09-01" bindchange="bindDateChange">
+    <picker mode="date" value="{{endData}}" bindchange="changeEnd">
       <view class="picker">
-        {{date}}
+        {{endData}}
       </view>
     </picker>
   </view>
+  <view class="errorTip">{{errorTip}}</view>
 </view>
 
 <view class="currList">
-  <view class="currTitle">总课时 <text>60</text></view>
-  <view class="play_content">
-    <view class="item itemActive">
+  <view class="currTitle">总课时 <text>{{result}}</text></view>
+  <view class="noData" wx:if="{{noData}}">
+    <image src="../../images/noData.jpg"></image>
+    <text>暂无数据</text>
+  </view>
+  <view class="play_content" wx:else>
+    <view class="loading" wx:if="{{loading}}"><image src="../../images/loading.gif"></image></view>
+    <view class="item" wx:for="{{list}}" wx:key="{{index}}">
       <view class="item_left">
         <view class="round"></view>
         <view class="line"></view>
       </view>
       <view class="item_right">
-        <image class="leftsj" src="../../images/trainActive.png"></image>
-        <view class="score">
+        <image class="leftsj" src="../../images/train.png"></image>
+        <!-- <view class="score">
           <image src="../../images/start.png"></image>
           <image src="../../images/start.png"></image>
           <image src="../../images/start.png"></image>
           <image src="../../images/start.png"></image>
           <image src="../../images/start.png"></image>
           3.7
-        </view>
-        <view class="item_header"> 2018/12/12 10:00~10:00</view>
+        </view> -->
+        <view class="item_header">{{item.plan.mydate}}</view>
         <view class="item_footer">
           <view class="content_left abLeft">
-            <view class="itemTitle">月嫂 <text class="borderBlue type">面授</text></view>
-            <view>第一讲 月嫂的注意事项</view>
+            <view class="itemTitle">{{item.courseTeam.team_name}} <text class="{{item.plan.train_way?'borderBlue':'borderYellow'}} type">{{item.plan.train_way?"在线":"面授"}}</text></view>
+            <view>第{{item.course.section_name}}讲 {{item.course.headline}}</view>
           </view>
           <view class="vertical_line"></view>
           <view class="content_right abRight">
-            <view class="itemTitle">月嫂 <text class="borderYellow type">面授</text></view>
-            <view>第一讲 月嫂的注意事项</view>
+            <view class="itemTitle">{{item.classroom.block_number}}</view>
+            <view>{{item.school.school_name}}</view>
           </view>
         </view>
       </view>
     </view>
 
-    <view class="item">
+    <!-- <view class="item">
       <view class="item_left">
         <view class="round"></view>
         <view class="line"></view>
@@ -77,7 +83,7 @@
           </view>
         </view>
       </view>
-    </view>
+    </view> -->
   </view>
 
 </view>

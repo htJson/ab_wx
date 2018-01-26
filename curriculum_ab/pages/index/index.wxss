@@ -7,7 +7,7 @@
 .item image{width:240rpx; height:240rpx; float:left; margin-right:30rpx;}
 .item text{display:inline-block; border-radius: 30rpx; height:30rpx; line-height: 30rpx; font-size:18rpx; padding:0 13rpx; margin-left:10rpx}
 .item .iconImg{width:15px; height:15px;}
-.courseBox{background:#fff; padding-bottom:20rpx；}
+.courseBox{background:#fff; padding-bottom:20rpx;position:relative;}
 .cItem{padding:0 30rpx 20rpx; position:relative; overflow:hidden;}
 .cItem .courseLeft{position:absolute; top:0px; bottom:0px; width:20rpx;overflow: hidden;}
 .cItem .courseLeft .radioBox{width:3rpx; height:100%; margin-left:10rpx; background:#a6a6a7}

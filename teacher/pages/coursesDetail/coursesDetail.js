@@ -1,75 +1,48 @@
-// pages/coursesDetail/coursesDetail.js
+var app=getApp();
 Page({
-
-  /**
-   * 页面的初始数据
-   */
   data: {
-    content:{
-      time:'2012/12/12 12:00:00',
-      name:'月嫂',
-      section:'第一讲，月嫂的注意事项',
-      mode:'面授',
-      classType:'精品班',
-      school:'北京东城区职业大学',
-      room:'智学院301',
-      address:'北京市东城区朝阳门外潘家坡胡同1号'
-    }
+    content:{},
+    cId:'',
+    noData:false
   },
-
-  /**
-   * 生命周期函数--监听页面加载
-   */
   onLoad: function (options) {
-  
+    this.setData({
+      cId: options.cursore_id
+    })
+    this.getDetail();
   },
 
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-  
-  },
+  getDetail(){
+    wx.request({
+      url: app.data.dev,
+      method: 'POST',
+      data: {
+        query: 'query{train_schedule_info(train_schedule_id:"'+this.data.cId+'"){trainSchedule{attendclass_date,attendclass_starttime,attendclass_endtime},course{headline,section_name},school{school_name,school_address},plan{train_way},classroom{block_number},courseTeam{team_name}}}'
+      },
+      header: {
+        "content-type": 'application/json', // 默认值
+        "Authorization": app.globalData.token
+      },
+      success:res => {
+        if (res.errors != undefined ||res.data.data.train_schedule_info == null){
+          this.setData({
+            noData:true
+          })
+          return false;
+        }
 
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-  
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-  
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-  
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-  
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-  
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-  
+        var data = res.data.data.train_schedule_info;
+        var date = data.trainSchedule.attendclass_date.split('T')[0];
+        var sd = data.trainSchedule.attendclass_starttime.split('T')[1];
+        var ed = data.trainSchedule.attendclass_endtime.split('T')[1];
+        var sT=sd.substring(0,sd.length-1);
+        var eT=ed.substring(0,ed.length-1);
+        data.trainSchedule.mydate=date+' '+sT+'~'+eT;
+        this.setData({
+          content:data
+        })
+        console.log(data,'================')
+      }
+    })
   }
 })

@@ -2,7 +2,9 @@
 var app=getApp();
 Page({
   data: {
-    newsList:[]
+    newsList:[],
+    newsNoData:false,
+    newsLoading:false
   },
 
   /**
@@ -12,61 +14,15 @@ Page({
     this.getNewsList();
   },
 
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-  
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-  
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-  
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-  
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-  
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-  
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-  
-  },
   getNewsList(){
-    console.log(app)
+    this.setData({
+      newsLoading:true
+    })
     wx.request({
       url:app.data.dev,
       method:'POST',
       data:{
-        query:'query{user_message_info_list{id,type,bis_type,user_id,msg_title,msg_content,status,create_datetime}}'
+        query:'query{user_message_info_list{id,type,user_id,msg_title,msg_content,status,create_datetime}}'
       },
       header: {
         "content-type": 'application/json', // 默认值
@@ -74,7 +30,22 @@ Page({
       },
       success:res=>{
         this.setData({
-          newsList:res.data.data.user_message_info_list
+          newsLoading: false
+        })
+        if (res.errors != undefined || res.data.data.user_message_info_list == null || res.data.data.user_message_info_list.length==0){
+          this.setData({
+            newsNoData:true
+          })
+          return false;
+        }
+        var data = res.data.data.user_message_info_list,n=data.length;
+        for(let i=0; i<n; i++){
+          var d=data[i].create_datetime.split('T');
+          d[1] = d[1].substring(0, d[1].length - 1);
+          data[i].mydate=d.join(' ');
+        }
+        this.setData({
+          newsList:data
         })
       }
     })

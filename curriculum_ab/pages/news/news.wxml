@@ -1,11 +1,19 @@
 <!--pages/news/news.wxml-->
 <view class="container">
-  <view class="item" wx:for="{{newsList}}">
-    <view class="overflow pb20">
-      <image class="newsIcon" src="../../images/systemNews.png"></image>
-      <text class="newsTitle">{{item.msg_title}}</text><text class="newsTime">{{item.create_datetime}}</text>
-    </view>
-    <view>{{item.msg_content}}</view>
+  <view class="noData" wx:if="{{newsNoData}}">
+    <image src="../../images/noData.jpg"></image>
+    <text>暂无数据</text>
   </view>
-  
+  <view>
+    <view class="loading" wx:if="{{newsLoading}}">
+      <image src="../../images/loading.gif"></image>
+    </view>
+    <view class="item {{item.status?'':'active'}}" wx:for="{{newsList}}" >
+      <view class="overflow pb20">
+        <image class="newsIcon" src="../../images/systemNews.png"></image>
+        <text class="newsTitle">{{item.msg_title}}</text><text class="newsTime">{{item.mydate}}</text>
+      </view>
+      <view>{{item.msg_content}}</view>
+    </view>
+  </view>
 </view>

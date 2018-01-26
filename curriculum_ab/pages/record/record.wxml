@@ -1,29 +1,38 @@
 <view class="container">
-  <view class="cItem" data-id="{{item.id}}" wx:for="{{coursesList}}">
-    <view class="courseLeft">
-      <view class="radioBox"></view>
-      <view class="line"></view>
+  <view class="noData" wx:if="{{courseNoData}}">
+    <image src="../../images/noData.jpg"></image>
+    <text>暂无数据</text>
+  </view>
+  <view>
+    <view class="loading" wx:if="{{courseLoading}}">
+      <image src="../../images/loading.gif"></image>
     </view>
-    <view class="courseRight" bindtap='toDetail'>
-      <view class="items">
-        <view class="cTime f24">{{item.startTime}}</view>
-        <view class="cContent">
-          <view>
-            <text class="f30">月嫂</text>
-            <text class="mr40">【面授】</text>
-            <text>第一讲：月嫂的注意事项</text>
+    <view class="cItem" data-id="{{item.id}}" wx:for="{{coursesList}}">
+      <view class="courseLeft">
+        <view class="radioBox"></view>
+        <view class="line"></view>
+      </view>
+      <view class="courseRight" bindtap='toDetail'>
+        <view class="items">
+          <view class="cTime f24">{{item.plan.mydate}}</view>
+          <view class="cContent">
+            <view>
+              <text class="f30">{{item.courseTeam.team_name}}</text>
+              <text class="mr40">【{{item.plan.train_way?"在线":"面授"}}】</text>
+              <text>第{{item.course.section_name}}讲  {{item.course.headline}}</text>
+            </view>
           </view>
         </view>
-      </view>
-      <view class="startList">
-        <image src="../../images/start.png"></image>
-        <image src="../../images/start.png"></image>
-        <image src="../../images/start.png"></image>
-        <image src="../../images/start.png"></image>
-        <image src="../../images/start.png"></image>
-      </view>
-      <view class="startTxt">
-        <text>评 星</text>
+        <view class="startList">
+          <image src="../../images/start.png"></image>
+          <image src="../../images/start.png"></image>
+          <image src="../../images/start.png"></image>
+          <image src="../../images/start.png"></image>
+          <image src="../../images/start.png"></image>
+        </view>
+        <view class="startTxt">
+          <text>评 星</text>
+        </view>
       </view>
     </view>
   </view>

@@ -1,7 +1,7 @@
 App({
   data:{
     url:'https://test-auth.aobei.com',
-    dev:'http://10.10.30.65:8090/graphql',
+    dev:'https://test-api.aobei.com/graphql',
     code:'',
     appid:'wx731d62ae850c6c5e',
     token:'',
@@ -78,7 +78,7 @@ App({
       success:res=>{
         this.globalData.token ='Bearer '+res.data.access_token
         this.globalData.userId=res.data.uuid
-        // this.getInfo();
+        this.getInfo();
       }
     })
   },
@@ -95,13 +95,9 @@ App({
         "Authorization": this.globalData.token
       },
       success:res=>{
-        if(res.data.errors ==undefined){
-          wx.switchTab({
-            url: '/pages/index/index'
-          })
-        }else{
-          wx.navigateTo({
-            url: '/pages/index/index',
+        if(res.data.errors !=undefined){
+          wx.redirectTo({
+            url: '/pages/login/login',
           })
         }
       }

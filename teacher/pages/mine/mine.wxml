@@ -11,31 +11,33 @@
     </view>
   </view>
   <view class="tabs">
-    <view bindtap="changeUrl" data-key="exam">
-      <image class="leftIcon" src="../../images/exam.png"></image>
-      <text>我的考试</text>
-      <image class="moreBox" src="../../images/more.png"></image>
-    </view>
-    <view bindtap="changeUrl" data-key="courses">
-      <image class="leftIcon" src="../../images/courses.png"></image>
-      <text>已学课程</text>
-      <image class="moreBox" src="../../images/more.png"></image>
-    </view>
-    <view bindtap="changeUrl" data-key="records">
-      <image class="leftIcon" src="../../images/records.png"></image>
-      <text>培训记录</text>
+    <view bindtap="changeUrl" data-key="login">
+      <image class="leftIcon" src="../../images/account.png"></image>
+      <text>我的账户</text>
       <image class="moreBox" src="../../images/more.png"></image>
     </view>
   </view>
-  <view class="mineAttr mt30">
-    <view bindtap="changeUrl" data-key="news">
+  <view class="mineAttr">
+    <view bindtap="changeUrl" data-key="curriculum">
+      <image class="leftIcon" src="../../images/courses.png"></image>
+      <text>我的课程</text>
+      <image class="moreBox" src="../../images/more.png"></image>
+    </view>
+     <!-- <view bindtap="changeUrl" data-key="task">
+      <image class="leftIcon" src="../../images/tasklist.png"></image>
+      <text>我的任务</text>
+      <image class="moreBox" src="../../images/more.png"></image>
+    </view>  -->
+  </view>
+  <view class="mineAttr">
+    <!-- <view bindtap="changeUrl" data-key="news">
       <image class="leftIcon" src="../../images/news.png"></image>
       <text>我的消息</text>
       <image class="moreBox" src="../../images/more.png"></image>
-    </view>
-    <view bindtap="changeUrl" data-key="account">
-      <image class="leftIcon" src="../../images/account.png"></image>
-      <text>我的账户</text>
+    </view>  -->
+    <view bindtap="changeUrl" data-key="judge">
+      <image class="leftIcon" src="../../images/judge.png"></image>
+      <text>我的评价</text>
       <image class="moreBox" src="../../images/more.png"></image>
     </view>
   </view>

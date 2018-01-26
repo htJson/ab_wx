@@ -1,9 +1,0 @@
-<progress percent="20" show-info color="red" active activeColor='black' />
-
-<progress percent="20" stroke-width="90" color="yellow" backgroundColor="red" />
-
-<progress percent="60" color="pink" />
-
-<progress percent="80" active />
-
-<progress percent="80" color="black" />

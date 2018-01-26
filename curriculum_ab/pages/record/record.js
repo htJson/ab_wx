@@ -1,87 +1,75 @@
 // pages/record/record.js
+var app=getApp();
 Page({
-
-  /**
-   * 页面的初始数据
-   */
   data: {
-    coursesList: [
-      {
-        startTime: '2019/12/02 10:00~11:00',
-        id: '2',
-        curTitle: '月嫂',
-        typeName: '面授',
-        isRead: true,
-        title: '月嫂的注意事项',
-        schoolDddress: '智学苑301',
-        schoolName: '智学苑北京东城职业大学'
-      },
-      {
-        startTime: '2019/12/02 10:00~11:00',
-        id: '4',
-        curTitle: '月嫂',
-        isRead: false,
-        typeName: '面授',
-        title: '月嫂的注意事项',
-        schoolDddress: '智学苑301',
-        schoolName: '智学苑北京东城职业大学'
-      }
-    ]
+    coursesList: [],
+    courseNoData:false,
+    courseLoading:false
   },
-
-  /**
-   * 生命周期函数--监听页面加载
-   */
   onLoad: function (options) {
-  
+    this.getRecord();
   },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
   onReady: function () {
   
   },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
   onShow: function () {
   
   },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
   onHide: function () {
   
   },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
   onUnload: function () {
   
   },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
   onPullDownRefresh: function () {
   
   },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
   onReachBottom: function () {
   
   },
-
-  /**
-   * 用户点击右上角分享
-   */
   onShareAppMessage: function () {
   
+  },
+  getRecord(){
+    this.setData({
+      courseLoading:true
+    })
+    wx.request({
+      url: app.data.dev,
+      method: 'POST',
+      data: {
+        query: "query{my_student_trained_courseinfo_list{trainScheduleInfo{course{headline,section_name},courseTeam{team_name},plan{train_begin,train_end,train_way},trainSchedule{attendclass_date,attendclass_starttime,attendclass_endtime}}}}"
+      },
+      header: {
+        "content-type": 'application/json', // 默认值
+        "Authorization": app.globalData.token
+      },
+      success:res=>{
+        this.setData({
+          courseLoading: false
+        })
+        if (res.errors != undefined || res.data.data.my_student_trained_courseinfo_list == null || res.data.data.my_student_trained_courseinfo_list.length == 0){
+          this.setData({
+            courseNoData:true
+          })
+          return false;
+        }
+        var vdata=[]
+        var data = res.data.data.my_student_trained_courseinfo_list,n=data.length;
+        for(let i=0; i<n; i++){
+          var d = data[i].trainScheduleInfo.trainSchedule.attendclass_date.split('T')[0]
+          var sd = data[i].trainScheduleInfo.plan.train_begin.split('T')[1];
+          sd=sd.substring(0,sd.length-1)
+          var ed = data[i].trainScheduleInfo.plan.train_end.split('T')[1];
+          ed=ed.substring(0,ed.length-1)
+          data[i].trainScheduleInfo.plan.mydate=d+' '+sd+'~'+ed
+          vdata.push(data[i].trainScheduleInfo)
+        }
+        console.log(vdata)
+        this.setData({
+          coursesList:vdata
+        })
+      }
+    })
   }
 })

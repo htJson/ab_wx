@@ -7,3 +7,4 @@
 #submitLogin label{font-size:24rpx;}
 #submitLogin button{width:30%; display:block; margin:0 auto; background:#0084ff; color:#fff;font-size:26rpx;}
 .errorStyle{color:#f00; text-align: center; margin-top:20rpx; border-radius:10rpx; font-size:26rpx;}
+.disStyle{background:#f8f8f8!important; color:#999!important}

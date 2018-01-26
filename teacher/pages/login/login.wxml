@@ -4,14 +4,15 @@
   <view id="submitLogin">
     <view>
       <text class="">手机号：</text>
-      <input password type="text" placeholder='请输入11位有效手机号' placeholder-style="font-size:24rpx"/>
+      <input type="Number" bindinput='getphone' value="{{phone}}" placeholder='请输入11位有效手机号' placeholder-style="font-size:24rpx"/>
     </view>
     <view>
       <text class="">身份证号：</text>
-      <input password type="text" placeholder='请输入有效身份证号' placeholder-style='font-size:24rpx'/>
+      <input type="text" bindinput='getIdCord' value="{{idCord}}" placeholder='请输入有效身份证号' placeholder-style='font-size:24rpx'/>
     </view>
     <view class="btn-area">
-      <button formType="submit">绑定</button>
+      <button bindtap='submitForm' class="{{isDisabled?'disStyle':''}}" disabled='{{isDisabled}}'>绑定</button>
     </view>
+    <view class="errorStyle">{{errorTip}}</view>
   </view>
 </view>

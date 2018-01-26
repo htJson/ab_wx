@@ -1,15 +1,16 @@
 {
   "pages":[
-    "pages/task/task",
-    "pages/curriculum/curriculum",
-    "pages/judge/judge",
-    "pages/course/course",
-    "pages/news/news",
-    "pages/login/login",
+    "pages/index/index",
     "pages/mine/mine",
+    "pages/login/login",
+    "pages/curriculum/curriculum",
+    "pages/courseArr/courseArr",
+    "pages/judge/judge",
+    "pages/task/task",
+    "pages/news/news",
+    
     "pages/coursesDetail/coursesDetail",
     "pages/taskDetail/taskDetail",
-    "pages/index/index",
     "pages/logs/logs"
   ],
   "window":{

@@ -1,27 +1,20 @@
 // pages/coursesDetail/coursesDetail.js
+var app=getApp();
 Page({
-
-  /**
-   * 页面的初始数据
-   */
   data: {
-    content:{
-      time:'2012/12/12 12:00:00',
-      name:'月嫂',
-      section:'第一讲，月嫂的注意事项',
-      mode:'面授',
-      classType:'精品班',
-      school:'北京东城区职业大学',
-      room:'智学院301',
-      address:'北京市东城区朝阳门外潘家坡胡同1号'
-    }
+    id:'',
+    content:{}
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-  
+    console.log(options)
+    this.setData({
+      id:options.cursore_id
+    })
+    this.getDetail();
   },
 
   /**
@@ -71,5 +64,28 @@ Page({
    */
   onShareAppMessage: function () {
   
+  },
+  getDetail(){
+    wx.request({
+      url: app.data.dev,
+      method: 'POST',
+      data: {
+        query: 'query{train_schedule_info(train_schedule_id:"' + this.data.id +'"){trainSchedule {attendclass_date,attendclass_starttime},course{headline,section_name},school{school_name,school_address},classroom {block_number},plan{train_way},courseTeam{team_name}}}'
+      },
+      header: {
+        "content-type": 'application/json', // 默认值
+        "Authorization": app.globalData.token
+      },
+      success:res=>{
+        var data = res.data.data.train_schedule_info;
+        var d = data.trainSchedule.attendclass_date.split('T')[0];
+        var t = data.trainSchedule.attendclass_starttime.split('T')[1];
+        t = t.substring(0, t.length - 1);
+          data.trainSchedule.myDate =d+' '+t
+        this.setData({
+          content:data
+        })
+      }
+    })
   }
 })

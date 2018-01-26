@@ -3,7 +3,7 @@
 .header .section{width:40%; display: inline-block}
 .section picker{border:1px solid #959595; font-size:28rpx; padding:10rpx 0;}
 .currTitle{padding-bottom:32rpx; font-size:34rpx;}
-
+.play_content{position: relative}
 .item{position:relative; padding-bottom:20rpx;} 
 .item .item_left{width:20px; position:absolute; left:0px; top:0px; bottom:0px; padding:0px;}
 .item_left .line{border-left:1px #a6a6a7 solid; width:10px; height: 100%; margin-left:5px;}
@@ -23,3 +23,5 @@
 .itemActive .round{background:#0f8af4;}
 .itemActive .item_right{border:2px solid #0f8af4}
 .currList{padding:20rpx 30rpx;}
+.errorStyle{border:1px solid #f00!important}
+.errorTip{font-size:28rpx; margin-top:10rpx; color:#f00}

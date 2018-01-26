@@ -4,7 +4,8 @@
 .play_header text{font-size:38rpx; float:left;}
 .play_header image{width:16px; height:20px; float:right; margin-top:6rpx;}
 
-.item{position:relative; padding-bottom:20rpx;} 
+.play_content{position:relative;}
+.item{position:relative; padding-bottom:20rpx;}
 .item .item_left{width:20px; position:absolute; left:0px; top:0px; bottom:0px; padding:0px;}
 .item_left .line{border-left:1px #a6a6a7 solid; width:10px; height: 100%; margin-left:5px;}
 .item_left .round{width:10px; height:10px; background:#a6a6a7; border-radius:10rpx; margin-top:42rpx; position: absolute; }
@@ -19,3 +20,4 @@
 
 .itemActive .round{background:#0f8af4;}
 .itemActive .item_right{border:2px solid #0f8af4}
+

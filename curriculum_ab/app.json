@@ -1,34 +1,15 @@
 {
   "pages":[
-    "pages/exam/exam",
-    "pages/study/study",
-    "pages/news/news",
+    
     "pages/index/index",
+    "pages/mine/mine",
     "pages/login/login",
+    "pages/exam/exam",
+    "pages/news/news",
+    "pages/study/study",
     "pages/record/record",
     "pages/coursesDetail/coursesDetail",
-    "pages/mine/mine",
-    "pages/_progress/_progress",
-    "pages/_picker/_picker",
-    "pages/_pickerJ/_pickerJ",
-    "pages/_switch/_switch",
-    "pages/_swiper/_swiper",
-    "pages/_slider/_slider",
-    "pages/_img/_img",
-    "pages/_nav/_nav",
-    "pages/_textarea/_textarea",
-    "pages/_icon/_icon",
-    "pages/_radios/_radios",
-    "pages/_label/_label",
-    "pages/_inputt/_inputt",
-    "pages/_from/_from",
-    "pages/_button/_button",
-    "pages/_rich/_rich",
-    "pages/_text/_text",
-    
-    "pages/_move/_move",
-    "pages/_scroll/_scroll",
-    "pages/logs/logs"
+    "pages/map/map"
   ],
   "window":{
     "backgroundTextStyle":"light",

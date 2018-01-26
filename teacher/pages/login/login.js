@@ -1,108 +1,117 @@
 var app = getApp();
 Page({
-
-  /**
-   * 页面的初始数据
-   */
   data: {
     radioItems: [
       { name: 'man', value: '男' },
       { name: 'woman', value: '女', },
     ],
+    phone:'',
+    idCord:'',
+    errorTip:'',
+    isDisabled:false
   },
-
-  /**
-   * 生命周期函数--监听页面加载
-   */
   onLoad: function (options) {
-    this.getOpenId(app.data, app.globalData.code);
+    this.getUserNews();
   },
 
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
   onReady: function () {
     
   },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
   onShow: function () {
     
   },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
   onHide: function () {
     
   },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
   onUnload: function () {
     
   },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
   onPullDownRefresh: function () {
     
   },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
   onReachBottom: function () {
     
   },
-
-  /**
-   * 用户点击右上角分享
-   */
   onShareAppMessage: function () {
     
   },
-  getOpenId(options, code) {
+  getphone(options){
+    // 获取手机号
+    this.setData({
+      phone: options.detail.value
+    })
+  },
+  getIdCord(options){
+    // 获取身份证号
+    this.setData({
+      idCord: options.detail.value
+    })
+  },
+  checkOut(){
+    var phoneReg = /^[1][3,4,5,7,8][0-9]{9}$/;
+    var idNumReg = /^[1-9]\d{5}(18|19|([23]\d))\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/;
+    if (!idNumReg.test(this.data.idCord)) {
+      this.setData({
+        errorTip: '身份证号填写不正确'
+      })
+    }
+    if (!phoneReg.test(this.data.phone)) {
+      this.setData({
+        errorTip: '手机号填写不正确'
+      })
+    }
+    return phoneReg.test(this.data.phone) && idNumReg.test(this.data.idCord)
+  },
+  submitForm(){
+    if(!this.checkOut()){return false}
+    this.setData({
+      errorTip:''
+    })
     wx.request({
-      url: options.url + '/wxapi/jscode2session', //仅为示例，并非真实的接口地址
-      method: "POST",
+      url: app.data.dev,
+      method: 'POST',
       data: {
-        appid: options.appid,
-        js_code: code
+        query: 'mutation{my_teacher_binduser(phone: "' + this.data.phone + '", id_num: "' + this.data.idCord + '"){status}}'
       },
       header: {
-        "content-type": 'application/x-www-form-urlencoded' // 默认值
+        "content-type": 'application/json', // 默认值
+        "Authorization": app.globalData.token
       },
-      success: res => {
-        // this.getToken(options, res.data.openid);
-      },
-      fail: error => {
-        console.log(error)
+      success:res=>{
+        console.log(res)
+        var data = res.data.my_teacher_binduser;
+        if (res.data.errors == 'undefined') {
+          this.setData({
+            errorTip: res.data.errors[0].message
+          })
+          return false;
+        } else {
+          wx.switchTab({
+            url: '../index/index',
+          })
+        }
       }
     })
   },
-  getToken(options, openId) {
+  getUserNews(){
     wx.request({
-      url: options.url + '/oauth/token', //仅为示例，并非真实的接口地址
-      method: "POST",
+      url: app.data.dev,
+      method: 'POST',
       data: {
-        grant_type: 'password',
-        username: 'WX_' + openId,
-        password: 'WX_' + openId,
+        query: 'query{my_teacher_bindinfo{phone,identity_card}}'
       },
       header: {
-        "content-type": 'application/x-www-form-urlencoded', // 默认值
-        "Authorization": 'Basic d3hfbV9zdHVkZW50OjdjMDhlMjdlLWI2NGYtNDUxOC05YzY5LTU3OTUwODE5NjgxMw=='
+        "content-type": 'application/json', // 默认值
+        "Authorization": app.globalData.token
       },
-      success: res => {
-        console.log(res, '====')
-      },
-      fail: error => {
-        console.log(error)
+      success:res=>{
+        if (res.errors != undefined || res.data.data.my_teacher_bindinfo == null){return false}
+        var data = res.data.data.my_teacher_bindinfo;
+        this.setData({
+          phone: data.phone,
+          idCord: data.identity_card,
+          isDisabled:true
+        })
       }
     })
   }

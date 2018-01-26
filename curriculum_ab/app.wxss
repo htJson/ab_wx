@@ -32,3 +32,12 @@
 .borderYellow{border:1px solid #ffba00}
 .wx-radio-input{width:14px !important; height:14px !important;}
 .clearbotn{clear: both; overflow: hidden;}
+
+/*暂无数据样式 */
+.noData{text-align: center; padding-top:70rpx; background:#fff}
+.noData text{display: block; padding-bottom:30rpx;}
+.noData image{width:290rpx; height:240rpx;}
+
+/*loading样式  */
+.loading{padding:50rpx 0 100rpx; background: #fff;}
+.loading image{width:50rpx; height:50rpx; display:block; margin:0rpx auto;}

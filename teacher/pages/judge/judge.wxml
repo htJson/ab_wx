@@ -78,7 +78,7 @@
       </view>
     </view>
   </view>
-  <view class="classNav">
+  <!-- <view class="classNav">
     <view class="judgeTitle">一级分类</view>
     <view class="judgeContent">
       <view class="content_left">
@@ -233,5 +233,5 @@
         </view>
       </view>
     </view>
-  </view>
+  </view> -->
 </view>
