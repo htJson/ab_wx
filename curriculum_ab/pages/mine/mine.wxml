@@ -7,42 +7,32 @@
     </view>
   </view>
   <view class="tabs">
-    <view data-key="exam">
-      <navigator url="../exam/exam" hover-class="none">
-        <image class="leftIcon" src="../../images/exam.png"></image>
-        <text>我的考试</text>
-        <image class="moreBox" src="../../images/more.png"></image>
-      </navigator>
+    <view data-url="../exam/exam"  data-key="exam" bindtap='changeUrl'>
+      <image class="leftIcon" src="../../images/exam.png"></image>
+      <text>我的考试</text>
+      <image class="moreBox" src="../../images/more.png"></image>
     </view>
-    <view data-key="courses">
-      <navigator url="../study/study" hover-class="none">
-        <image class="leftIcon" src="../../images/courses.png"></image>
-        <text>已学课程</text>
-        <image class="moreBox" src="../../images/more.png"></image>
-        </navigator>
+    <view data-key="courses" data-url="../study/study" bindtap='changeUrl'>
+      <image class="leftIcon" src="../../images/courses.png"></image>
+      <text>已学课程</text>
+      <image class="moreBox" src="../../images/more.png"></image>
     </view>
-    <view data-key="records">
-      <navigator url="../record/record" hover-class="none">
-        <image class="leftIcon" src="../../images/records.png"></image>
-        <text>培训记录</text>
-        <image class="moreBox" src="../../images/more.png"></image>
-      </navigator>
+    <view data-key="records" data-url="../record/record" bindtap='changeUrl'>
+      <image class="leftIcon" src="../../images/records.png"></image>
+      <text>培训记录</text>
+      <image class="moreBox" src="../../images/more.png"></image>
     </view>
   </view>
   <view class="mineAttr mt30">
-    <view data-key="news">
-      <navigator url="../news/news" hover-class="none">
-        <image class="leftIcon" src="../../images/news.png"></image>
-        <text>我的消息</text>
-        <image class="moreBox" src="../../images/more.png"></image>
-      </navigator>
+    <view data-key="news" data-url="../news/news" bindtap='changeUrl'>
+      <image class="leftIcon" src="../../images/news.png"></image>
+      <text>我的消息</text>
+      <image class="moreBox" src="../../images/more.png"></image>
     </view>
-    <view data-key="account">
-      <navigator url="../login/login" hover-class="none">
-        <image class="leftIcon" src="../../images/account.png"></image>
-        <text>我的账户</text>
-        <image class="moreBox" src="../../images/more.png"></image>
-      </navigator>
+    <view data-key="account" data-url="../login/login" bindtap='changeUrl'>
+      <image class="leftIcon" src="../../images/account.png"></image>
+      <text>我的账户</text>
+      <image class="moreBox" src="../../images/more.png"></image>
     </view>
   </view>
 </view>

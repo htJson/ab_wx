@@ -12,57 +12,18 @@ Page({
     courseNoData:false,
     curseLoading:false,
   },
-
-  onLoad: function (options) {
-    this.getCourseList();
-    this.getcourseInfo();
-  },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-    
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-    console.log(1111)
-  },
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-    
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-    
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
   onPullDownRefresh: function () {
-    
+    wx.stopPullDownRefresh()
   },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-    
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
+  onLoad: function (options) {
+    var _this = this;
+    this.timer = setInterval(() => {
+      if (app.globalData.token) {
+        clearInterval(this.timer)
+        this.getCourseList();
+        this.getcourseInfo();
+      }
+    }, 300)
     
   },
   // 自定义事件
@@ -85,7 +46,7 @@ Page({
         this.setData({
           trainLoading: false
         })
-        if (res.errors != undefined || res.data.data.my_student_course_team_active_list == null || res.data.data.my_student_course_team_active_list.length ==0){
+        if (res.statusCode == 401 ||res.errors != undefined || res.data.statusCode == 401 || res.data.data.my_student_course_team_active_list == null || res.data.data.my_student_course_team_active_list.length ==0){
           this.setData({
             trainNoData:true
           })
@@ -95,11 +56,13 @@ Page({
         var idArr=[];
         for(let i=0; i<n; i++){
           idArr.push(data[i].courseTeam.team_img);
+          console.log(Math.round((data[i].studed / data[i].courseTeam.team_hour) * 100))
           data[i].per=Math.round((data[i].studed/data[i].courseTeam.team_hour)*100);
           data[i].plan.mydate = data[i].plan.train_begin.split('T')[0] + ' ~ ' + data[i].plan.train_end.split('T')[0];
           data[i].courseTeam.path='';
         }
         this.getImagePath(idArr)
+        console.log(data,'=======')
         this.setData({
           trainList:data
         })
@@ -152,7 +115,7 @@ Page({
         this.setData({
           curseLoading: false
         })
-        if (res.errors != undefined || res.data.data.my_student_courseinfo_active_list == null || res.data.data.my_student_courseinfo_active_list.length==0){
+        if (res.statusCode == 401 || res.errors != undefined || res.data.statusCode == 401 || res.data.data.my_student_courseinfo_active_list == null || res.data.data.my_student_courseinfo_active_list.length==0){
           this.setData({
             courseNoData:true
           })
@@ -165,6 +128,7 @@ Page({
             var t = data[a].trainSchedule.attendclass_starttime.split('T')[1];
             data[a].trainSchedule.mydate = d + ' ' + t.substring(0, t.length - 1);
         }
+        console.log(data,'vdata====')
         this.setData({
           coursesList: data
         })
@@ -173,7 +137,10 @@ Page({
   },
   toDetail: function (options) {
     wx.navigateTo({
-      url: '../coursesDetail/coursesDetail?cursore_id=' + options.currentTarget.dataset.id
+      url:'../coursesDetail/coursesDetail?cursore_id=' + options.currentTarget.dataset.id,
+      success(){
+        console.log('res====')
+      }
     })
   },
 })

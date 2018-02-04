@@ -4,7 +4,7 @@
     <image class="userImg" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
     <view class="userName">
       <text>{{userInfo.nickName}}</text>
-      <image src="../../images/man.png"></image>
+      <!-- <image src="../../images/man.png"></image> -->
     </view>
     <view class="title">
       <text>高级教师</text>

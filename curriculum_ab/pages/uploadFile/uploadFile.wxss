@@ -1,0 +1,4 @@
+/* pages/uploadFile/uploadFile.wxss */
+.submit{background: #f00; width:50%; color:#fff; margin-top:50rpx;}
+.imgList{padding:40rpx 30rpx; }
+.imgList image{width:300rpx; height:300rpx; border:1px solid #f1f1f1; margin-right:10rpx;}

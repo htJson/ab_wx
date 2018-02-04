@@ -1,7 +1,7 @@
 <!--index.wxml-->
 <view class="container">
   <view class="userinfo">
-    <text class="f38">培训中的课程</text>
+    <text class="f38">培训中的课程2</text>
     <!-- <image src="../../images/more.png"></image> -->
   </view>
   <view class="noData" wx:if="{{trainNoData}}">
@@ -22,7 +22,7 @@
       <view class="f22"> <image src="../../images/credit.png" class="iconImg"></image> {{item.courseTeam.team_credit}}学分</view>
       <view class="f22"> <image src="../../images/time.png" class="iconImg"></image> {{item.plan.mydate}}</view>
       <view class="">
-        <progress percent="{{item.pre}}" color="#60a8ef" show-info />
+        <progress percent="{{item.per}}" color="#60a8ef" show-info />
       </view>
     </view>
   </view>

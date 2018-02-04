@@ -88,7 +88,8 @@ Page({
         this.setData({
           loading: false
         })
-        if (res.errors != undefined || res.data.data.my_teacher_courseinfo_active_list == null || res.data.data.my_teacher_courseinfo_active_list.length==0){
+        // console.log(res.data.data.my_teacher_courseinfo_active_list,'=================')
+        if (res.errors != undefined || res.data.statusCode == 401 || res.data.data.my_teacher_courseinfo_active_list == null || res.data.data.my_teacher_courseinfo_active_list.length==0){
           this.setData({
             noData:true
           })

@@ -7,13 +7,6 @@ Page({
    */
   data: {
     userInfo:{},
-    urlList:{
-      exam:'我的考试',
-      courses:'已学课程', 
-      records:'培训记录',
-      news:'我的消息',
-      account:'我的账户' 
-    },
   },
 
   /**
@@ -98,7 +91,9 @@ Page({
   },
   // 自定义事件
   changeUrl(event){
-    var key = event.currentTarget.dataset.key;
-    console.log(this.data.urlList[key])
+    var src = event.currentTarget.dataset.url
+    wx.navigateTo({
+      url: src,
+    })
   }
 })

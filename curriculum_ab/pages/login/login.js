@@ -13,64 +13,12 @@ Page({
     idNum:'',
     errorTip:'',
     errorNews:{},
-    isDisabled:false
+    isDisabled:false,
   },
-
-  /*
-   * 生命周期函数--监听页面加载
-   */
   onLoad: function (options) {
     this.getUserNews();
   },
 
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-  
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-  
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-  
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-  
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-  
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-  
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-  
-  },
   getUserNews(){
     wx.request({
       url: app.data.dev,
@@ -84,10 +32,16 @@ Page({
       },
       success:res=>{
         if (res.data.data.my_student_bindinfo == null || res.errors !=undefined) {return false}
+      
         var data = res.data.data.my_student_bindinfo;
+        var midden = data.student_phone.substring(3, data.student_phone.length - 1).replace(/\d/g, function (v) { return '*' });
+        var phone = data.student_phone.substr(0, 3) + midden + data.student_phone.substr(-1, 1);
+        var cmidden = data.identity_card.substr(3, data.identity_card.length - 3).replace(/\d/g, function (v) { return '*' });
+        var card = data.identity_card.substring(0, 3) + cmidden + data.identity_card.substr(-1, 1)
         this.setData({
-          phone: data.student_phone,
-          idNum: data.identity_card,
+          isBind:true,
+          phone: phone,
+          idNum: card,
           isDisabled:true
         })
       }
@@ -135,10 +89,16 @@ Page({
         "Authorization": app.globalData.token
       },
       success: res => {
-        if (res.data.errors =='undefined'){
-          this.setData({
-            errorTip: res.data.errors[0].message
-          })
+        if (res.data.errors !=undefined){
+          if (res.data.errors.errcode =='40103'){
+            this.setData({
+              errorTip: '该学生已被绑定'
+            })
+          }else{
+            this.setData({
+              errorTip: res.data.errors.message
+            })
+          }
         }else{
           wx.switchTab({
             url: '../index/index',

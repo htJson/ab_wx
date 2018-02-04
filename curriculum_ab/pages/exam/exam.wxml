@@ -3,15 +3,15 @@
   <view class="header">
     <view>
       <text>参加考核课程</text>
-      {{examCounts.total}}科
+      {{examCounts.total || '0'}}科
     </view>
     <view class="color">
       <text>通过考核</text>
-      {{examCounts.passed}}科
+      {{examCounts.passed || '0'}}科
     </view>
     <view class="colorRed">
       <text>未通过考核</text>
-      {{examCounts.failed}}科
+      {{examCounts.failed || '0'}}科
     </view>
   </view>
   <view class="items">
@@ -21,9 +21,9 @@
       <text>暂无数据</text>
     </view>
     <view wx:else>
-    <view class="loading" wx:if="{{loading}}">
-          <image src="../../images/loading.gif"></image>
-        </view>
+      <view class="loading" wx:if="{{loading}}">
+        <image src="../../images/loading.gif"></image>
+      </view>
       <view class="cItem" wx:for="{{coursesList}}">
         
         <view class="courseLeft">

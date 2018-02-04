@@ -106,7 +106,7 @@ Page({
         this.setData({
           trainLoading:false
         })
-        if (res.errors != undefined || res.data.data.my_student_trainedinfo_list == null || res.data.data.my_student_trainedinfo_list.length ==0){
+        if (res.statusCode == 401 || res.errors != undefined || res.data.data.my_student_trainedinfo_list == null || res.data.data.my_student_trainedinfo_list.length ==0){
           this.setData({
             trainNoData:true
           })

@@ -32,7 +32,7 @@ Page({
         this.setData({
           newsLoading: false
         })
-        if (res.errors != undefined || res.data.data.user_message_info_list == null || res.data.data.user_message_info_list.length==0){
+        if (res.statusCode == 401 || res.errors != undefined || res.data.data.user_message_info_list == null || res.data.data.user_message_info_list.length==0){
           this.setData({
             newsNoData:true
           })

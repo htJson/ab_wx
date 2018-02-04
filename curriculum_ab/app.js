@@ -5,7 +5,8 @@ App({
     code:'',
     appid:'wx731d62ae850c6c5e',
     token:'',
-    userId:''
+    userId:'',
+    
   },
   onLaunch: function () {
     // 展示本地存储能力

@@ -3,14 +3,15 @@ var app=getApp();
 Page({
   data: {
     id:'',
-    content:{}
+    content:{},
+    loading:false,
+    noData:false
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    console.log(options)
     this.setData({
       id:options.cursore_id
     })
@@ -66,6 +67,9 @@ Page({
   
   },
   getDetail(){
+    this.setData({
+      loading:true
+    })
     wx.request({
       url: app.data.dev,
       method: 'POST',
@@ -77,11 +81,23 @@ Page({
         "Authorization": app.globalData.token
       },
       success:res=>{
+        this.setData({
+          loading: false
+        })
+        console.log(res.statusCode == 401 ,'====', res.errors != undefined ,'==========', res.data.data.train_schedule_info == null)
+        console.log(res.statusCode == 401 || res.errors != undefined || res.data.train_schedule_info == null)
+        if (res.statusCode == 401 ||res.errors != undefined || res.data.data.train_schedule_info ==null){
+          console.log('asfsfs')
+          this.setData({
+            noData:true
+          })
+        }
         var data = res.data.data.train_schedule_info;
         var d = data.trainSchedule.attendclass_date.split('T')[0];
         var t = data.trainSchedule.attendclass_starttime.split('T')[1];
         t = t.substring(0, t.length - 1);
           data.trainSchedule.myDate =d+' '+t
+          console.log('detail========',data)
         this.setData({
           content:data
         })

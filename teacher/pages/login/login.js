@@ -78,9 +78,8 @@ Page({
         "Authorization": app.globalData.token
       },
       success:res=>{
-        console.log(res)
         var data = res.data.my_teacher_binduser;
-        if (res.data.errors == 'undefined') {
+        if (res.data.errors != undefined) {
           this.setData({
             errorTip: res.data.errors[0].message
           })
@@ -105,12 +104,19 @@ Page({
         "Authorization": app.globalData.token
       },
       success:res=>{
-        if (res.errors != undefined || res.data.data.my_teacher_bindinfo == null){return false}
+        
+        if (res.data.data.my_teacher_bindinfo == null || res.errors != undefined) { return false }
         var data = res.data.data.my_teacher_bindinfo;
+
+        var midden = data.phone.substring(3, data.phone.length - 1).replace(/\d/g, function (v) { return '*' });
+        var phone = data.phone.substr(0, 3) + midden + data.phone.substr(-1, 1);
+
+        var cmidden = data.identity_card.substr(3, data.identity_card.length - 3).replace(/\d/g, function (v) { return '*' });
+        var card = data.identity_card.substring(0, 3) + cmidden + data.identity_card.substr(-1, 1)
         this.setData({
-          phone: data.phone,
-          idCord: data.identity_card,
-          isDisabled:true
+          phone: phone,
+          idCord: card,
+          isDisabled: true
         })
       }
     })

@@ -94,7 +94,7 @@ Page({
       url: app.data.dev,
       method: 'POST',
       data:{
-        query:"query{my_student_exam_apply_result{examPlan{exam_date},examApply{score},courseTeam{team_name}}}"
+        query:"query{my_student_exam_apply_result{examPlan{id,exam_date},examApply{score},courseTeam{team_name,team_id}}}"
       },
       header: {
         "content-type": 'application/json', // 默认值
@@ -105,7 +105,7 @@ Page({
           loading: false,
         })
 
-        if (res.errors != undefined || res.data.data.my_student_exam_apply_result == null || res.data.data.my_student_exam_apply_result.length == 0){
+        if (res.statusCode == 401 ||res.errors != undefined || res.data.data.my_student_exam_apply_result == null || res.data.data.my_student_exam_apply_result.length == 0){
           this.setData({
             noData:true
           })
@@ -120,6 +120,7 @@ Page({
           if(json[d] == undefined){
             json[d]=[];
           }
+
           json[d].push({
             teamName: data[i].courseTeam.team_name,
             score: data[i].examApply.score

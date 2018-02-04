@@ -89,7 +89,7 @@ Page({
           loading: false
         })
       
-        if (res.errors != undefined || res.data.data.my_teacher_courseinfo_list == null || res.data.data.my_teacher_courseinfo_list.length == 0) {
+        if (res.errors != undefined || res.data.statusCode == 401 || res.data.data.my_teacher_courseinfo_list == null || res.data.data.my_teacher_courseinfo_list.length == 0) {
           this.setData({
             noData: true
           })

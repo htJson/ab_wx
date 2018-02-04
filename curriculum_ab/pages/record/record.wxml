@@ -7,31 +7,31 @@
     <view class="loading" wx:if="{{courseLoading}}">
       <image src="../../images/loading.gif"></image>
     </view>
-    <view class="cItem" data-id="{{item.id}}" wx:for="{{coursesList}}">
+    <view class="cItem" wx:for="{{coursesList}}" wx:key="{{index}}" >
       <view class="courseLeft">
         <view class="radioBox"></view>
         <view class="line"></view>
       </view>
       <view class="courseRight" bindtap='toDetail'>
         <view class="items">
-          <view class="cTime f24">{{item.plan.mydate}}</view>
+          <view class="cTime f24">{{item.trainScheduleInfo.plan.mydate}}</view>
           <view class="cContent">
             <view>
-              <text class="f30">{{item.courseTeam.team_name}}</text>
-              <text class="mr40">【{{item.plan.train_way?"在线":"面授"}}】</text>
-              <text>第{{item.course.section_name}}讲  {{item.course.headline}}</text>
+              <text class="f30">{{item.trainScheduleInfo.courseTeam.team_name}}</text>
+              <text class="mr40">【{{item.trainScheduleInfo.plan.train_way?"在线":"面授"}}】</text>
+              <text>第{{item.trainScheduleInfo.course.section_name}}讲  {{item.trainScheduleInfo.course.headline}}</text>
             </view>
           </view>
         </view>
         <view class="startList">
-          <image src="../../images/start.png"></image>
-          <image src="../../images/start.png"></image>
-          <image src="../../images/start.png"></image>
-          <image src="../../images/start.png"></image>
-          <image src="../../images/start.png"></image>
+          <block wx:for="{{5}}" wx:for-item="itemName" wx:for-index="idx">
+          <image wx:if="{{idx >= item.courseEvaluate.score}}" data-par="{{index}}" data-zId="{{idx+1}}" bindtap='startFn' src="../../images/startDefault.png"></image>
+          <image wx:else src="../../images/start.png" data-par="{{index}}" data-zId="{{idx+1}}"  bindtap='startFn'></image>
+          </block>
         </view>
         <view class="startTxt">
-          <text>评 星</text>
+          <text wx:if="{{!item.courseEvaluate.isScore}}" bindtap="submitScore" class="submite" data-score="{{item.courseEvaluate.score}}" data-pid="{{item.trainScheduleInfo.trainSchedule.id}}">点击提交评分</text>
+          <text wx:else>禁止提交评分</text>
         </view>
       </view>
     </view>

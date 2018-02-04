@@ -14,4 +14,5 @@
 .startList image{display:inline-block; width:50rpx; height:50rpx;}
 .startTxt{border-bottom:1px solid #e5e5e5; position: relative; padding-bottom:20rpx; margin:0 50rpx;}
 .startTxt text{position: absolute; left:50%; margin-left:-70rpx; display: block; background:#fff; text-align: center; width:150rpx; top:0rpx; font-size:24rpx;}
+.submite{color:blue}
 
