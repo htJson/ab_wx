@@ -24,7 +24,7 @@
       <view class="loading" wx:if="{{loading}}">
         <image src="../../images/loading.gif"></image>
       </view>
-      <view class="cItem" wx:for="{{coursesList}}">
+      <view class="cItem" wx:for="{{coursesList}}" wx:key="{{index}}">
         
         <view class="courseLeft">
           <view class="radioBox"></view>
@@ -34,7 +34,7 @@
           <image class="leftSj" src="../../images/train.png"></image>
           <view class="cTime f24">{{index}}</view>
           <view class="cContent">
-            <view wx:for="{{item}}">
+            <view wx:for="{{item}}" wx:for-index="vindex" wx:key="{{vindex}}">
               <text class="fbolder">【{{item.teamName}}】</text>
               <text class="mark">理论成绩：{{item.score}}分</text>
             </view>

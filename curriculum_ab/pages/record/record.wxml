@@ -17,9 +17,9 @@
           <view class="cTime f24">{{item.trainScheduleInfo.plan.mydate}}</view>
           <view class="cContent">
             <view>
-              <text class="f30">{{item.trainScheduleInfo.courseTeam.team_name}}</text>
+              <text class="f30">{{item.trainScheduleInfo.course.name}}</text>
               <text class="mr40">【{{item.trainScheduleInfo.plan.train_way?"在线":"面授"}}】</text>
-              <text>第{{item.trainScheduleInfo.course.section_name}}讲  {{item.trainScheduleInfo.course.headline}}</text>
+              <text>第{{item.trainScheduleInfo.chapter.section_name}}讲  {{item.trainScheduleInfo.chapter.headline}}</text>
             </view>
           </view>
         </view>
@@ -30,8 +30,8 @@
           </block>
         </view>
         <view class="startTxt">
-          <text wx:if="{{!item.courseEvaluate.isScore}}" bindtap="submitScore" class="submite" data-score="{{item.courseEvaluate.score}}" data-pid="{{item.trainScheduleInfo.trainSchedule.id}}">点击提交评分</text>
-          <text wx:else>禁止提交评分</text>
+          <text wx:if="{{!item.courseEvaluate.isScore}}" bindtap="submitScore" class="submite" data-score="{{item.courseEvaluate.score}}" data-pid="{{item.trainScheduleInfo.trainSchedule.train_schedule_id}}">点击提交评分</text>
+          <text wx:else>已提交评分</text>
         </view>
       </view>
     </view>

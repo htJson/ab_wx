@@ -1,0 +1,2 @@
+var msg='这是首界面  wxs 文件的东西，我用 modules.exports输出'
+module.exports.message=msg;

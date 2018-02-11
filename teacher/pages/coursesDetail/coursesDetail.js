@@ -35,13 +35,12 @@ Page({
         var date = data.trainSchedule.attendclass_date.split('T')[0];
         var sd = data.trainSchedule.attendclass_starttime.split('T')[1];
         var ed = data.trainSchedule.attendclass_endtime.split('T')[1];
-        var sT=sd.substring(0,sd.length-1);
-        var eT=ed.substring(0,ed.length-1);
+        var sT=sd.substring(0,sd.length-4);
+        var eT=ed.substring(0,ed.length-4);
         data.trainSchedule.mydate=date+' '+sT+'~'+eT;
         this.setData({
           content:data
         })
-        console.log(data,'================')
       }
     })
   }

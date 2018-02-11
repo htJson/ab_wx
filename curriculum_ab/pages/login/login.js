@@ -24,7 +24,7 @@ Page({
       url: app.data.dev,
       method:'POST',
       data:{
-        "query":"query{my_student_bindinfo{student_phone,identity_card}}"
+        "query":"query{my_student_bindinfo{phone,identity_card}}"
       },
       header: {
         "content-type": 'application/json', // 默认值
@@ -34,8 +34,8 @@ Page({
         if (res.data.data.my_student_bindinfo == null || res.errors !=undefined) {return false}
       
         var data = res.data.data.my_student_bindinfo;
-        var midden = data.student_phone.substring(3, data.student_phone.length - 1).replace(/\d/g, function (v) { return '*' });
-        var phone = data.student_phone.substr(0, 3) + midden + data.student_phone.substr(-1, 1);
+        var midden = data.phone.substring(3, data.phone.length - 1).replace(/\d/g, function (v) { return '*' });
+        var phone = data.phone.substr(0, 3) + midden + data.phone.substr(-1, 1);
         var cmidden = data.identity_card.substr(3, data.identity_card.length - 3).replace(/\d/g, function (v) { return '*' });
         var card = data.identity_card.substring(0, 3) + cmidden + data.identity_card.substr(-1, 1)
         this.setData({
@@ -90,7 +90,7 @@ Page({
       },
       success: res => {
         if (res.data.errors !=undefined){
-          if (res.data.errors.errcode =='40103'){
+          if (res.data.errors[0].errcode =='40103'){
             this.setData({
               errorTip: '该学生已被绑定'
             })
@@ -108,6 +108,7 @@ Page({
               // nq.onLoad();
             }
           })
+          console.log('跳转前==============')
         }
       },
       fail: error => {

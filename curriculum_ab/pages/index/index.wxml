@@ -1,7 +1,7 @@
 <!--index.wxml-->
 <view class="container">
   <view class="userinfo">
-    <text class="f38">培训中的课程2</text>
+    <text class="f38">培训中的课程</text>
     <!-- <image src="../../images/more.png"></image> -->
   </view>
   <view class="noData" wx:if="{{trainNoData}}">
@@ -13,13 +13,13 @@
       <image src="../../images/loading.gif"></image>
     </view>
     <view class="item" wx:for="{{trainList}}" wx:key="index">
-      <image src="{{item.courseTeam.path}}"></image>
-      <view class="f34">
-        {{item.courseTeam.team_name}} 
-        <text class="{{item.plan.train_way?'borderBlue':'borderYellow'}}">{{item.plan.train_way?"在线":"面授"}}</text>
+      <image src="{{item.course.path}}"></image>
+      <view>
+        <text class="abLeft f34">{{item.course.name}}</text> 
+        <text class="cType {{item.plan.train_way?'borderBlue':'borderYellow'}}">{{item.plan.train_way?"在线":"面授"}}</text>
       </view>
-      <view class="f22"> <image src="../../images/hour.png" class="iconImg"></image> {{item.courseTeam.team_hour}}课时</view>
-      <view class="f22"> <image src="../../images/credit.png" class="iconImg"></image> {{item.courseTeam.team_credit}}学分</view>
+      <view class="f22"> <image src="../../images/hour.png" class="iconImg"></image> {{item.course.hour}}课时</view>
+      <view class="f22"> <image src="../../images/credit.png" class="iconImg"></image> {{item.course.credit}}学分</view>
       <view class="f22"> <image src="../../images/time.png" class="iconImg"></image> {{item.plan.mydate}}</view>
       <view class="">
         <progress percent="{{item.per}}" color="#60a8ef" show-info />
@@ -43,18 +43,18 @@
             <view class="radioBox"></view>
             <view class="line"></view>
           </view>
-          <view class="courseRight bgColor" data-id="{{item.trainSchedule.id}}" bindtap='toDetail'>
+          <view class="courseRight bgColor" data-id="{{item.trainSchedule.train_schedule_id}}" bindtap='toDetail'>
             <!-- <image wx:if="{{item.isRead}}" class="leftSj" src="../../images/trainActive.png"></image> -->
             <image class="leftSj" src="../../images/train.png"></image>
             <view class="cTime f24"> {{item.trainSchedule.mydate}}</view>
             <view class="cContent">
               <view class="courLeftItem">
-                <view class="fbolder">{{item.courseTeam.team_name}}【{{item.plan.train_way?"在线":"面授"}}】</view>
-                <view>第{{item.course.section_name}}节 <text style="margin-left:10rpx;">{{item.course.headline}}</text></view>
+                <view class="fbolder">{{item.course.name}}【{{item.plan.train_way?"在线":"面授"}}】</view>
+                <view>第{{item.chapter.section_name}}节 <text style="margin-left:10rpx;">{{item.chapter.headline}}</text></view>
               </view>
               <view class="courRightItem">
                 <view>{{item.classroom.block_number}}</view>
-                <view>{{item.school.school_name}}</view>
+                <view>{{item.school.name}}</view>
               </view>
             </view>
           </view>

@@ -1,13 +1,16 @@
 App({
   data: {
     url: 'https://test-auth.aobei.com',
-    dev: 'https://test-api.aobei.com/graphql',
+    // dev: 'https://test-api.aobei.com/graphql',
+    dev: 'http://10.10.30.18:9002/graphql',
     code: '',
     appid: 'wx731d62ae850c6c5e',
     token: '',
     userId: ''
   },
   onLaunch: function () {
+    this.getFirstDay()
+    console.log(this.getToday())
     // 展示本地存储能力
     var logs = wx.getStorageSync('logs') || []
     logs.unshift(Date.now())
@@ -102,5 +105,19 @@ App({
         }
       }
     })
+  },
+  addSum(num){
+      return num>9?num:'0'+num;
+  },
+  getFirstDay(){
+    let [n = new Date(), y = n.getFullYear(),m=n.getMonth()+1]=[]
+    return y + '-' + this.addSum(m)+'-01';
+  },
+  getToday(){
+    let t=new Date();
+    let y=t.getFullYear();
+    var m=t.getMonth()+1;
+    var d=t.getDate();
+    return y + '-' + this.addSum(m) + '-' + this.addSum(d)
   }
 })

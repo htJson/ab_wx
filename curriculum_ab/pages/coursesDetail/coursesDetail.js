@@ -74,7 +74,7 @@ Page({
       url: app.data.dev,
       method: 'POST',
       data: {
-        query: 'query{train_schedule_info(train_schedule_id:"' + this.data.id +'"){trainSchedule {attendclass_date,attendclass_starttime},course{headline,section_name},school{school_name,school_address},classroom {block_number},plan{train_way},courseTeam{team_name}}}'
+        query: 'query{train_schedule_info(train_schedule_id:"'+this.data.id+'"){trainSchedule {attendclass_date,attendclass_endtime,attendclass_starttime},chapter{headline,section_name},school{name,address},classroom {block_number},plan{train_way},course{name}}}'
       },
       header: {
         "content-type": 'application/json', // 默认值
@@ -84,8 +84,6 @@ Page({
         this.setData({
           loading: false
         })
-        console.log(res.statusCode == 401 ,'====', res.errors != undefined ,'==========', res.data.data.train_schedule_info == null)
-        console.log(res.statusCode == 401 || res.errors != undefined || res.data.train_schedule_info == null)
         if (res.statusCode == 401 ||res.errors != undefined || res.data.data.train_schedule_info ==null){
           console.log('asfsfs')
           this.setData({
@@ -95,9 +93,10 @@ Page({
         var data = res.data.data.train_schedule_info;
         var d = data.trainSchedule.attendclass_date.split('T')[0];
         var t = data.trainSchedule.attendclass_starttime.split('T')[1];
-        t = t.substring(0, t.length - 1);
-          data.trainSchedule.myDate =d+' '+t
-          console.log('detail========',data)
+        var e = data.trainSchedule.attendclass_endtime.split('T')[1];
+        t = t.substring(0, t.length - 4);
+          data.trainSchedule.myDate =d+' '+t+'~'+e.substring(0,e.length-4);
+
         this.setData({
           content:data
         })

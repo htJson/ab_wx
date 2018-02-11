@@ -15,8 +15,8 @@
 .item_footer{overflow: hidden; position: relative;}
 .item_footer .content_left,.item_footer .content_right{font-size:24rpx; width:45%; margin-left:10px;}
 .item_footer .vertical_line{border:1px solid #c6c6c8; position: absolute; top:10rpx; bottom:10rpx; left:49.6%;}
-.item_footer .itemTitle{font-size:26rpx;  padding-bottom:10rpx;}
-.item_footer .type{font-size:17rpx; display: inline-block; height: 14rpx; border-radius:10px; padding:5rpx 10rpx; line-height: 20rpx; margin-left:20rpx;}
+.item_footer .itemTitle{font-size:26rpx;  padding-bottom:10rpx;overflow:hidden}
+.item_footer .type{font-size:14rpx; margin-top:5rpx; margin-left:10rpx; border-radius:20rpx; padding:3rpx 8rpx; float:left;}
 
 .itemActive .round{background:#0f8af4;}
 .itemActive .item_right{border:2px solid #0f8af4}

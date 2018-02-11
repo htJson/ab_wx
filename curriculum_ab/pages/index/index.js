@@ -24,7 +24,6 @@ Page({
         this.getcourseInfo();
       }
     }, 300)
-    
   },
   // 自定义事件
   getCourseList(){   //培训中的课程
@@ -36,7 +35,7 @@ Page({
       url: app.data.dev,
       method: 'POST',
       data: {
-        query: "query{my_student_course_team_active_list{courseTeam{team_id,team_img,team_name,team_iclu_course,team_hour,team_credit,team_cdate,},plan{train_end,train_begin,train_way},studed}}"
+        query: "query{my_student_course_team_active_list{course{course_id,img,name,chapter_count,hour,credit,cdate,},plan{train_end,train_begin,train_way},studed}}"
       },
       header: {
         "content-type": 'application/json', // 默认值
@@ -54,15 +53,15 @@ Page({
         }
         var data = res.data.data.my_student_course_team_active_list,n=data.length;
         var idArr=[];
+        console.log(data,'=====')
         for(let i=0; i<n; i++){
-          idArr.push(data[i].courseTeam.team_img);
-          console.log(Math.round((data[i].studed / data[i].courseTeam.team_hour) * 100))
-          data[i].per=Math.round((data[i].studed/data[i].courseTeam.team_hour)*100);
+          idArr.push(data[i].course.img);
+          console.log(Math.round((data[i].studed / data[i].course.hour) * 100))
+          data[i].per=Math.round((data[i].studed/data[i].course.hour)*100);
           data[i].plan.mydate = data[i].plan.train_begin.split('T')[0] + ' ~ ' + data[i].plan.train_end.split('T')[0];
-          data[i].courseTeam.path='';
+          data[i].course.path='';
         }
         this.getImagePath(idArr)
-        console.log(data,'=======')
         this.setData({
           trainList:data
         })
@@ -85,12 +84,11 @@ Page({
         var data=res.data.data.images,n=data.length;
         for (let i = 0; i < m; i++){
           for(let y=0; y<n; y++){
-            if(list[i].courseTeam.team_img == data[y].img_id){
-              list[i].courseTeam.path=data[y].path;
+            if(list[i].course.img == data[y].img_id){
+              list[i].course.path=data[y].path;
             }
           }
         }
-       
         this.setData({
           trainList:list        
         })
@@ -105,7 +103,7 @@ Page({
       url: app.data.dev,
       method: 'POST',
       data: {
-        query: "query{my_student_courseinfo_active_list{trainSchedule{id,attendclass_date,attendclass_endtime,attendclass_starttime},course{course_id,headline,section_name,section_content},school{school_id,school_name,},classroom{block_number},plan{train_way},courseTeam{team_name}}}"
+        query: "query{my_student_courseinfo_active_list{trainSchedule{train_schedule_id,attendclass_date,attendclass_endtime,attendclass_starttime,},chapter {course_id,headline,section_name,section_content,},school{school_id,name},classroom{block_number},plan{train_way},course{name}}}"
       },
       header: {
         "content-type": 'application/json', // 默认值
@@ -123,12 +121,13 @@ Page({
         }
         var data=res.data.data.my_student_courseinfo_active_list,
           n=data.length;
+          console.log(data,'-=======')
         for(let a=0; a<n; a++){
             var d = data[a].trainSchedule.attendclass_date.split('T')[0];
             var t = data[a].trainSchedule.attendclass_starttime.split('T')[1];
-            data[a].trainSchedule.mydate = d + ' ' + t.substring(0, t.length - 1);
+            var e = data[a].trainSchedule.attendclass_endtime.split('T')[1];
+            data[a].trainSchedule.mydate = d + ' ' + t.substring(0, t.length - 4) + '~' + e.substring(0, t.length - 4);
         }
-        console.log(data,'vdata====')
         this.setData({
           coursesList: data
         })
@@ -136,6 +135,7 @@ Page({
     })
   },
   toDetail: function (options) {
+    console.log(options)
     wx.navigateTo({
       url:'../coursesDetail/coursesDetail?cursore_id=' + options.currentTarget.dataset.id,
       success(){

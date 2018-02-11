@@ -10,13 +10,13 @@
           <image src="../../images/start.png"></image>
           <image src="../../images/start.png"></image>
           <image src="../../images/start.png"></image>
-          <image src="../../images/startEmpty.png"></image>
+          <image src="../../images/startDefault.png"></image>
         </view>
         <text>综合评分</text>
       </view>
       <view class="content_right">
         <view class="item">
-          <view class="itemLeft abLeft">
+          <view class="itemLeft">
             <image src="../../images/start.png"></image>
             <image src="../../images/start.png"></image>
             <image src="../../images/start.png"></image>
@@ -28,48 +28,48 @@
           </view>
         </view>
         <view class="item">
-          <view class="itemLeft abLeft">
+          <view class="itemLeft">
             <image src="../../images/start.png"></image>
             <image src="../../images/start.png"></image>
             <image src="../../images/start.png"></image>
             <image src="../../images/start.png"></image>
-            <image src="../../images/start.png"></image>
+            <image src="../../images/startDefault.png"></image>
           </view>
           <view class="progre">
             <progress percent="20" stroke-width="12" color="#ffcd7f" stroke-width="7" show-info />
           </view>
         </view>
         <view class="item">
-          <view class="itemLeft abLeft">
+          <view class="itemLeft">
             <image src="../../images/start.png"></image>
             <image src="../../images/start.png"></image>
             <image src="../../images/start.png"></image>
-            <image src="../../images/start.png"></image>
-            <image src="../../images/start.png"></image>
+            <image src="../../images/startDefault.png"></image>
+            <image src="../../images/startDefault.png"></image>
           </view>
           <view class="progre">
             <progress percent="20" stroke-width="12" color="#ffcd7f" stroke-width="7" show-info />
           </view>
         </view>
         <view class="item">
-          <view class="itemLeft abLeft">
+          <view class="itemLeft">
             <image src="../../images/start.png"></image>
             <image src="../../images/start.png"></image>
-            <image src="../../images/start.png"></image>
-            <image src="../../images/start.png"></image>
-            <image src="../../images/start.png"></image>
+            <image src="../../images/startDefault.png"></image>
+            <image src="../../images/startDefault.png"></image>
+            <image src="../../images/startDefault.png"></image>
           </view>
           <view class="progre">
             <progress percent="20" stroke-width="12" color="#ffcd7f" stroke-width="7" show-info />
           </view>
         </view>
         <view class="item">
-          <view class="itemLeft abLeft">
+          <view class="itemLeft">
             <image src="../../images/start.png"></image>
-            <image src="../../images/start.png"></image>
-            <image src="../../images/start.png"></image>
-            <image src="../../images/start.png"></image>
-            <image src="../../images/start.png"></image>
+            <image src="../../images/startDefault.png"></image>
+            <image src="../../images/startDefault.png"></image>
+            <image src="../../images/startDefault.png"></image>
+            <image src="../../images/startDefault.png"></image>
           </view>
           <view class="progre">
             <progress percent="20" stroke-width="12" color="#ffcd7f" stroke-width="7" show-info />

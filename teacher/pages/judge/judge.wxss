@@ -2,15 +2,15 @@
 .container{background:#eee}
 .allJudge{background:#fff; padding:30rpx; margin-bottom:20rpx;}
 .judgeTitle{font-size:30rpx;}
-.judgeContent{position: relative;}
-.judgeContent .content_left{text-align: center; width:200rpx; margin-right:30rpx;}
+.judgeContent{overflow: hidden; position: relative;}
+.judgeContent .content_left{text-align: center; float:left; width:200rpx; margin-right:30rpx;}
 .judgeContent .content_left .mark{font-size:100rpx; color:#ff6600; font-weight: bolder}
 .judgeContent .content_left .startLeft image{display: inline-block; width:35rpx; height:35rpx;}
-.judgeContent .content_right{position:absolute; left:230rpx; right:0px; top:20rpx;}
+.judgeContent .content_right{  padding-bottom:10rpx; margin-left:230rpx;}
 .content_left text{color:#575656; font-size:21rpx;}
-.content_right .item{position:relative;}
-.content_right .item .itemLeft{position:absolute; left:0px; top:-8rpx;} 
-.content_right .item .itemLeft image{ width:18rpx; height:18rpx;}
+.content_right .item{position:relative; overflow: hidden;}
+.content_right .item .itemLeft{float:left; height: 18rpx} 
+.content_right .item .itemLeft image{ width:18rpx; height:18rpx; padding:0px;}
 .content_right .progre{padding-left:60px;}
 
 .classNav{background: #fff; padding:30rpx; border-bottom:1px solid #e5e5e5}

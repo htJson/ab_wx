@@ -1,7 +1,9 @@
 App({
   data:{
     url:'https://test-auth.aobei.com',
-    dev:'https://test-api.aobei.com/graphql',
+  
+    dev:'http://10.10.30.18:9002/graphql',
+    // dev:'https://test-api.aobei.com/graphql',
     code:'',
     appid:'wx731d62ae850c6c5e',
     token:'',
@@ -89,13 +91,14 @@ App({
       url: this.data.dev,
       method:'POST',
       data:{
-        query:'query{my_student_bindinfo{student_phone}}'
+        query:'query{my_student_bindinfo{phone}}'
       },
       header: {
         "content-type": 'application/json', // 默认值
         "Authorization": this.globalData.token
       },
       success:res=>{
+        console.log(res,'=========')
         if(res.data.errors !=undefined){
           wx.redirectTo({
             url: '/pages/login/login',

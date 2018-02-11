@@ -22,8 +22,13 @@ Page({
   //事件处理函数
 
   onLoad: function () {
-    this.getImgId();
-    this.getList();
+    this.timer=setInterval(()=>{
+      if (app.globalData.token){
+        clearInterval(this.timer)
+        this.getImgId();
+        this.getList();
+      }
+    },300)
   },
   toDetail(options){
     // var id = options.currentTarget.dataset.id;
@@ -36,7 +41,7 @@ Page({
       url: app.data.dev,
       method:'POST',
       data:{
-        query:'query{teacher_cms_bannar_online_list{content_id,coverimg_id,title,intro,serial_number}}'
+        query:'query{teacher_cms_bannar_online_list{cms_bannar_id,img_cover,title,intro,serial_number}}'
       },
       header: {
         "content-type": 'application/json', // 默认值
@@ -46,7 +51,7 @@ Page({
         var idArr=[];
         var data = res.data.data.teacher_cms_bannar_online_list,n=data.length;
         for(let i=0; i<n; i++){
-          idArr.push('"'+data[i].coverimg_id.toString()+'"');
+          idArr.push('"' + data[i].img_cover.toString()+'"');
         }
         this.getPath(idArr);
       }
@@ -82,7 +87,7 @@ Page({
         "Authorization": app.globalData.token
       },
       data:{
-        query: 'query{my_teacher_courseinfo_active_list{trainSchedule {id},course {headline,section_name},school {school_name},classroom {block_number},plan {train_begin,train_end,train_way},courseTeam {team_name}}}'
+        query: 'query{my_teacher_courseinfo_active_list{trainSchedule {train_schedule_id,attendclass_date,attendclass_endtime,attendclass_starttime},chapter {headline,section_name},school{name},classroom {block_number},plan {train_begin,train_end,train_way},course{name}}}'
       },
       success:res=>{
         this.setData({
@@ -98,10 +103,10 @@ Page({
 
         var data = res.data.data.my_teacher_courseinfo_active_list,n=data.length;
         for(let i=0; i<n; i++){
-          var arr=data[i].plan.train_begin.split('T');
-          var d=arr[0],sT=arr[1].substring(0,arr[1].length-1);
-          var ed=data[i].plan.train_end.split('T')[1],eT=ed.substring(0,ed.length-1);
-          data[i].plan.mydate=d+' '+sT+'~'+eT;
+          var d = data[i].trainSchedule.attendclass_date.split('T')[0];
+          var st = data[i].trainSchedule.attendclass_starttime.split('T')[1];
+          var et = data[i].trainSchedule.attendclass_endtime.split('T')[1];
+          data[i].trainSchedule.mydate=d+' '+st.substring(0,st.length-4)+'~'+et.substring(0,et.length-4);
         }
         this.setData({
           list:data

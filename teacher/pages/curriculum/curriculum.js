@@ -1,8 +1,8 @@
 var app=getApp();
 Page({
   data: {
-    startData: '2018-01-12',
-    endData: '2018-01-28',
+    startData: app.getFirstDay(),
+    endData: app.getToday(),
     result: 0,
     list:[],
     errorTip:'',
@@ -15,33 +15,6 @@ Page({
     this.getList();
   },
 
-  onReady: function () {
-    
-  },
-
-  onShow: function () {
-    
-  },
-
-  onHide: function () {
-    
-  },
-
-  onUnload: function () {
-    
-  },
-
-  onPullDownRefresh: function () {
-    
-  },
-
-  onReachBottom: function () {
-    
-  },
-
-  onShareAppMessage: function () {
-    
-  },
   changeStart: function (e) {
     this.setData({
       startData: e.detail.value
@@ -78,7 +51,7 @@ Page({
       url: app.data.dev,
       method: 'POST',
       data: {
-        query: 'query{my_teacher_courseinfo_list(dateStart: "' + this.data.startData + '", dateEnd: "' + this.data.endData + '", count: 20) {course {headline,section_name},school {school_name},classroom {block_number},plan {train_begin,train_end,train_way},courseTeam {team_name,team_hour}}}'
+        query: 'query{my_teacher_courseinfo_list(dateStart: "' + this.data.startData + '", dateEnd: "' + this.data.endData+'", count: 20) {chapter {headline,section_name},school{name},classroom {block_number},plan {train_way},course{name,hour},trainSchedule{train_schedule_id,attendclass_date,attendclass_endtime,attendclass_starttime}}}'
       },
       header: {
         "content-type": 'application/json', // 默认值
@@ -99,19 +72,15 @@ Page({
         var data = res.data.data.my_teacher_courseinfo_list,n=data.length;
         var result=0;
         for(let i=0; i<n; i++){
-          var arr = data[i].plan.train_begin.split('T')
-          var d = arr[0];
-          var sT = arr[1].substring(0, arr[1].length - 1);
-          var ed = data[i].plan.train_end.split('T');
-          var eT = ed[1].substring(0, ed[1].length - 1);
-          result+=parseInt(data[i].courseTeam.team_hour);
-          data[i].plan.mydate=d+' '+sT+'~'+eT;
+          var d = data[i].trainSchedule.attendclass_date.split('T')[0];
+          var et = data[i].trainSchedule.attendclass_endtime.split('T')[1];
+          var st = data[i].trainSchedule.attendclass_starttime.split('T')[1]
+          result+=parseInt(data[i].course.hour);
+          data[i].trainSchedule.mydate=d+' '+st.substring(0,st.length-1)+'~'+et.substring(0,st.length-1);
         }
-        // data.hour=result
-        // data.allHour=result;
-        
         this.setData({
-          result:result,
+          noData: false,
+          result:result/60,
           list:data
         })
       },

@@ -5,7 +5,7 @@
 .item{padding:0 30rpx 30rpx ; background:#fff;overflow:hidden;}
 .item view{padding-bottom:14rpx;overflow: hidden;}
 .item image{width:240rpx; height:240rpx; float:left; margin-right:30rpx;}
-.item text{display:inline-block; border-radius: 30rpx; height:30rpx; line-height: 30rpx; font-size:18rpx; padding:0 13rpx; margin-left:10rpx}
+.item .cType{font-size:14rpx; margin-top:13rpx; margin-left:10rpx; border-radius:20rpx; padding:3rpx 8rpx; float:left;}
 .item .iconImg{width:15px; height:15px;}
 .courseBox{background:#fff; padding-bottom:20rpx;position:relative;}
 .cItem{padding:0 30rpx 20rpx; position:relative; overflow:hidden;}

@@ -94,13 +94,14 @@ Page({
       url: app.data.dev,
       method: 'POST',
       data:{
-        query:"query{my_student_exam_apply_result{examPlan{id,exam_date},examApply{score},courseTeam{team_name,team_id}}}"
+        query:"query{my_student_exam_apply_result{examPlan{exam_plan_id,exam_date},examApply{score},course{name,course_id}}}"
       },
       header: {
         "content-type": 'application/json', // 默认值
         "Authorization": app.globalData.token
       },
       success:res=>{
+        
         this.setData({
           loading: false,
         })
@@ -120,9 +121,8 @@ Page({
           if(json[d] == undefined){
             json[d]=[];
           }
-
           json[d].push({
-            teamName: data[i].courseTeam.team_name,
+            teamName: data[i].course.name,
             score: data[i].examApply.score
           })
         }

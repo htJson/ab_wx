@@ -40,16 +40,16 @@
           <image src="../../images/start.png"></image>
           3.7
         </view> -->
-        <view class="item_header">{{item.plan.mydate}}</view>
+        <view class="item_header">{{item.trainSchedule.mydate}}</view>
         <view class="item_footer">
           <view class="content_left abLeft">
-            <view class="itemTitle">{{item.courseTeam.team_name}} <text class="{{item.plan.train_way?'borderBlue':'borderYellow'}} type">{{item.plan.train_way?"在线":"面授"}}</text></view>
-            <view>第{{item.course.section_name}}讲 {{item.course.headline}}</view>
+            <view class="itemTitle">{{item.course.name}} <text class="{{item.plan.train_way?'borderBlue':'borderYellow'}} type">{{item.plan.train_way?"在线":"面授"}}</text></view>
+            <view>第{{item.chapter.section_name}}讲 {{item.chapter.headline}}</view>
           </view>
           <view class="vertical_line"></view>
           <view class="content_right abRight">
             <view class="itemTitle">{{item.classroom.block_number}}</view>
-            <view>{{item.school.school_name}}</view>
+            <view>{{item.school.name}}</view>
           </view>
         </view>
       </view>
