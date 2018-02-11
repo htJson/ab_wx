@@ -78,8 +78,9 @@ Page({
           result+=parseInt(data[i].course.hour);
           data[i].trainSchedule.mydate=d+' '+st.substring(0,st.length-1)+'~'+et.substring(0,st.length-1);
         }
+        
         this.setData({
-          noData: false,
+          noData: false,  
           result:result/60,
           list:data
         })
