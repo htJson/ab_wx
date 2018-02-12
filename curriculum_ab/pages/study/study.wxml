@@ -9,10 +9,10 @@
       <image src="../../images/loading.gif"></image>
     </view>
     <view class="item" wx:for="{{trainList}}">
-      <image src="{{item.courseTeam.path}}"></image>
+      <image src="{{item.course.path}}"></image>
       <view class="f34">
         {{item.courseTeam.team_name}} 
-        <text class="f18 {{item.courseTeam.train_way?'borderBlue':'borderYellow'}}">{{item.courseTeam.train_way?"在线":"面授"}}</text>
+        <text class="f18 {{item.course.train_way?'borderBlue':'borderYellow'}}">{{item.courseTeam.train_way?"在线":"面授"}}</text>
       </view>
       <view class="f24"> <image src="../../images/hour.png" class="iconImg"></image> {{item.courseTeam.team_hour}}课时</view>
       <view class="f24"> <image src="../../images/credit.png" class="iconImg"></image> {{item.courseTeam.team_credit}}学分</view>

@@ -53,10 +53,8 @@ Page({
         }
         var data = res.data.data.my_student_course_team_active_list,n=data.length;
         var idArr=[];
-        console.log(data,'=====')
         for(let i=0; i<n; i++){
           idArr.push(data[i].course.img);
-          console.log(Math.round((data[i].studed / data[i].course.hour) * 100))
           data[i].per=Math.round((data[i].studed/data[i].course.hour)*100);
           data[i].plan.mydate = data[i].plan.train_begin.split('T')[0] + ' ~ ' + data[i].plan.train_end.split('T')[0];
           data[i].course.path='';
@@ -121,7 +119,6 @@ Page({
         }
         var data=res.data.data.my_student_courseinfo_active_list,
           n=data.length;
-          console.log(data,'-=======')
         for(let a=0; a<n; a++){
             var d = data[a].trainSchedule.attendclass_date.split('T')[0];
             var t = data[a].trainSchedule.attendclass_starttime.split('T')[1];
@@ -135,11 +132,9 @@ Page({
     })
   },
   toDetail: function (options) {
-    console.log(options)
     wx.navigateTo({
       url:'../coursesDetail/coursesDetail?cursore_id=' + options.currentTarget.dataset.id,
       success(){
-        console.log('res====')
       }
     })
   },

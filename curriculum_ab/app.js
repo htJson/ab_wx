@@ -1,9 +1,8 @@
 App({
   data:{
     url:'https://test-auth.aobei.com',
-  
-    dev:'http://10.10.30.18:9002/graphql',
-    // dev:'https://test-api.aobei.com/graphql',
+    // dev:'http://10.10.30.18:9004/graphql',
+    dev:'https://test-api.aobei.com/graphql',
     code:'',
     appid:'wx731d62ae850c6c5e',
     token:'',
@@ -98,7 +97,6 @@ App({
         "Authorization": this.globalData.token
       },
       success:res=>{
-        console.log(res,'=========')
         if(res.data.errors !=undefined){
           wx.redirectTo({
             url: '/pages/login/login',

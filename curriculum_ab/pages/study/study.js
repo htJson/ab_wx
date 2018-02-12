@@ -10,7 +10,7 @@ Page({
     this.getList();
   },
   getImagePath(idArr) {
-    return wx.request({
+     wx.request({
       url: app.data.dev,
       method: 'POST',
       data: {
@@ -21,17 +21,16 @@ Page({
         "Authorization": app.globalData.token
       },
       success: res => {
-        console.log(res,'=======');
-        return false;
         var list = this.data.trainList, m = list.length
         var data = res.data.data.images, n = data.length;
         for (let i = 0; i < m; i++) {
           for (let y = 0; y < n; y++) {
-            if (list[i].courseTeam.team_img == data[y].img_id) {
-              list[i].courseTeam.path = data[y].path;
+            if (list[i].course.img == data[y].img_id) {
+              list[i].course.path = data[y].path;
             }
           }
         }
+
         this.setData({
           trainList: list
         })
@@ -70,7 +69,6 @@ Page({
         this.setData({
           trainList:data
         })
-        console.log(Object.prototype.toString.call(idArr))
         this.getImagePath(idArr)
       }
     })

@@ -1,8 +1,8 @@
 App({
   data: {
     url: 'https://test-auth.aobei.com',
-    // dev: 'https://test-api.aobei.com/graphql',
-    dev: 'http://10.10.30.18:9002/graphql',
+    dev: 'https://test-api.aobei.com/graphql',
+    // dev: 'http://10.10.30.18:9004/graphql',
     code: '',
     appid: 'wx731d62ae850c6c5e',
     token: '',
@@ -76,7 +76,7 @@ App({
       },
       header: {
         "content-type": 'application/x-www-form-urlencoded', // 默认值
-        "Authorization": 'Basic d3hfbV90ZWFjaGU6NDg5MWU3NDctMmE5YS00YjY4LWIzNTktNTZjMmE3NTk2NDc4'
+        "Authorization": 'Basic d3hfbV90ZWFjaGVyOjQ4OTFlNzQ3LTJhOWEtNGI2OC1iMzU5LTU2YzJhNzU5NjQ3OA=='
       },
       success: res => {
         this.globalData.token = 'Bearer ' + res.data.access_token
