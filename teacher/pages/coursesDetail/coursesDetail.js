@@ -1,4 +1,6 @@
 var app=getApp();
+var QQMapWX=require('../../utils/qqmap-wx-jssdk.min.js');
+var qqmapsdk;
 Page({
   data: {
     content:{},
@@ -6,6 +8,7 @@ Page({
     noData:false
   },
   onLoad: function (options) {
+    qqmapsdk = new QQMapWX({ key:'43DBZ-CJC6K-GVVJK-AEOQT-Y37JZ-TKFSR'})
     this.setData({
       cId: options.cursore_id
     })
@@ -17,7 +20,7 @@ Page({
       url: app.data.dev,
       method: 'POST',
       data: {
-        query: 'query{train_schedule_info(train_schedule_id:"'+this.data.cId+'"){trainSchedule{attendclass_date,attendclass_starttime,attendclass_endtime},course{headline,section_name},school{school_name,school_address},plan{train_way},classroom{block_number},courseTeam{team_name}}}'
+        query: 'query{train_schedule_info(train_schedule_id:"' + this.data.cId +'"){trainSchedule{attendclass_date,attendclass_starttime,attendclass_endtime},chapter{headline,section_name},school{name,address},plan{train_way},classroom{block_number},course{name}}}'
       },
       header: {
         "content-type": 'application/json', // 默认值
@@ -43,5 +46,25 @@ Page({
         })
       }
     })
+  },
+  toMap(options){
+    var address=options.currentTarget.dataset.address;
+    qqmapsdk.geocoder({
+      address: address,
+      success: res=> {
+        wx.navigateTo({
+          url: '../map/map?lat=' + res.result.location.lat + '&lng=' + res.result.location.lng,
+        })
+      },
+      fail: function (res) {
+        console.log(res);
+      },
+      complete: function (res) {
+        console.log(res);
+      }
+    });
+    console.log(address);
+    return false;
+    
   }
 })

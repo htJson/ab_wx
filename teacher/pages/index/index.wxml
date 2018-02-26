@@ -1,5 +1,4 @@
 <!--index.wxml-->
-<wxs src="./index.wxs" module="tools" />
 <view class="container">
   <swiper indicator-dots="{{indicatorDots}}" circular="{{circular}}" indicator-active-color="{{indicatorColor}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
     <block wx:for="{{imgUrls}}" wx:key="{{index}}">
@@ -19,7 +18,7 @@
     </view>
     <view class="play_content" wx:else>
       <view class="loading" wx:if="{{loading}}"><image src="../../images/loading.gif"></image></view>
-      <view class="item" wx:for="{{list}}" wx:key="{{index}}" bindtap='toDetail' data-id="{{item.trainSchedule.id}}">
+      <view class="item" wx:for="{{list}}" wx:key="{{index}}" bindtap='toDetail' data-id="{{item.trainSchedule.train_schedule_id}}">
         <view class="item_left">
           <view class="round"></view>
           <view class="line"></view>

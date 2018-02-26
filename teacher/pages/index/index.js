@@ -32,6 +32,7 @@ Page({
   },
   toDetail(options){
     // var id = options.currentTarget.dataset.id;
+    console.log(options,'-----')
     wx.navigateTo({
       url: '../coursesDetail/coursesDetail?cursore_id=' + options.currentTarget.dataset.id
     })

@@ -1,0 +1,13 @@
+<template name="msgItem">
+   <view class="listItem {{index%2==0?'aLeft':'aRight'}}" data-id="{{item.product_id}}" bindtap="getIndex">
+    <image mode="aspectFill" src="{{item.image_first}}" title="">{{item.seo}}</image>
+    <view class="listNews">
+      <view class="newsTitle">{{item.name}}</view>
+      <view class="itemPrice">
+        <text class="aLeft">￥{{item.price_first/100}}</text>
+        <text class="aRight oldPrice">￥{{item.pricev_first/100}}</text>
+      </view>
+      <view class="itemOrder">{{item.order?'':300}}人预约</view>
+    </view>
+  </view> 
+</template>

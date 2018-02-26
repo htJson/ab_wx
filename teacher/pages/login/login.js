@@ -15,6 +15,7 @@ Page({
   },
 
   getphone(options){
+    console.log(options)
     // 获取手机号
     this.setData({
       phone: options.detail.value

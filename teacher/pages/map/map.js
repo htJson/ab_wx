@@ -15,18 +15,7 @@ Page({
         content:"这是坐标"
       }
     }],
-    // polyline: [{
-    //   points: [{
-    //     longitude: 113.3245211,
-    //     latitude: 23.10229
-    //   }, {
-    //     longitude: 113.324520,
-    //     latitude: 23.21229
-    //   }],
-    //   color: "#FF0000DD",
-    //   width: 2,
-    //   dottedLine: true
-    // }],
+   
     controls: [
       {
         id: 1,
@@ -51,6 +40,16 @@ Page({
         clickable: true
       },
     ]
+  },
+  onLoad(options){
+    var latstr = 'markers[0].latitude';
+    var lngstr ='markers[0].longitude';
+    this.setData({
+      latitude:options.lat,
+      longitude:options.lng,
+      [latstr]: options.lat,
+      [lngstr]:options.lng
+    })
   },
   regionchange(e) {
     console.log(e.type)

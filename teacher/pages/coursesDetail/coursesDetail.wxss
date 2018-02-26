@@ -3,5 +3,4 @@
 .item{overflow: hidden;}
 .item text{font-size:28rpx; padding:20rpx 0; display: block; float:left; color:#000}
 .item .cTitle{width:170rpx; text-align: left; font-size:30rpx; padding:20rpx 0; color:#575656}
-.item .address{position:relative;}
-.item .address .place{position:absolute; right:0px;top:10rpx; width:35rpx; height:50rpx}
+.item .address .place{ width:35rpx; height:50rpx; float:left; margin-top:10rpx; margin-left:10rpx}

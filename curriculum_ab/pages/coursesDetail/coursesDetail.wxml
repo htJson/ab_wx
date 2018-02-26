@@ -41,7 +41,7 @@
       <view class="address">
         <text>{{content.school.address}}</text>
         <!-- <icon type="download" size="20" color="green"/> -->
-        <!-- <image class="place" src="../../images/place.png"></image> -->
+         <image class="place" bindtap="toMap" src="../../images/place.png"></image> 
       </view>
     </view>
     </block>

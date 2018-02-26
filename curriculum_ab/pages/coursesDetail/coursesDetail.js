@@ -1,5 +1,7 @@
 // pages/coursesDetail/coursesDetail.js
 var app=getApp();
+var QQMapWX = require('../../utils/qqmap-wx-jssdk.min.js');
+var qqmapsdk;
 Page({
   data: {
     id:'',
@@ -16,55 +18,39 @@ Page({
       id:options.cursore_id
     })
     this.getDetail();
+    qqmapsdk = new QQMapWX({ key:'43DBZ-CJC6K-GVVJK-AEOQT-Y37JZ-TKFSR'})
   },
+  toMap(){
 
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-  
-  },
+    var address=this.data.content.school.address + this.data.content.school.name;
+    qqmapsdk.reverseGeocoder({
+      location: {
+        latitude: 39.984060,
+        longitude: 116.307520
+      },
+      success: function (res) {
+        console.log(res,'=======');
+      },
+      fail: function (res) {
+        console.log(res);
+      },
+      complete: function (res) {
+        console.log(res);
+      }
+    });
 
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-  
-  },
+    qqmapsdk.geocoder({
+      address: address,
+      success: function (res) {
 
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-  
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-  
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-  
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-  
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-  
+        wx.navigateTo({
+          url: '../map/map?lat=' + res.result.location.lat+'&lng='+res.result.location.lng,
+        })
+      },
+      fail: function (res) {
+        console.log(res);
+      },
+    });
   },
   getDetail(){
     this.setData({

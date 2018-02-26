@@ -8,6 +8,7 @@
     "pages/judge/judge",
     "pages/task/task",
     "pages/news/news",
+    "pages/map/map",
     "pages/coursesDetail/coursesDetail",
     "pages/taskDetail/taskDetail",
     "pages/logs/logs"

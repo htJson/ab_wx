@@ -1,0 +1,14 @@
+<view class="container">
+  <view class="errorTip">{{errorTip}}</view>
+  <view class="phone">
+    <text class='title'>手机号：</text>
+    <input type='number' bindinput='getPhone' value="{{phone}}" placeholder-style="color:#c9caca; font-size:24rpx;" placeholder='请输入手机号'></input>
+  </view>
+  <view class="adCode mt30">
+    <text class='title'>验证码：</text>
+     <input type='number' placeholder-style="color:#c9caca; font-size:24rpx;" bindinput="getCode" value="{{code}}" placeholder='请输入验证码'></input> 
+    <text class="getCode {{isGetCode?'':'noCOde'}}" bindtap='getAjaxCode'>{{btnText}}</text>
+  </view>
+  <view class="noSubBtn" bindtap="login">立即登录/注册</view>
+  <view class="protocol">注册登录，即同意 <text>《鳌背用户协议》</text></view>
+</view>

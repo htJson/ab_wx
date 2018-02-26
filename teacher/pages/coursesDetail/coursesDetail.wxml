@@ -5,11 +5,11 @@
   </view>
   <view class="item">
     <text class="cTitle">课程：</text>
-    <text>{{content.courseTeam.team_name}}</text>
+    <text>{{content.course.name}}</text>
   </view>
   <view class="item">
     <text class="cTitle">章节：</text>
-    <text>第{{content.course.section_name}}章 {{content.course.headline}}</text>
+    <text>第{{content.chapter.section_name}}章 {{content.chapter.headline}}</text>
   </view>
   <view class="item">
     <text class="cTitle">授课方式：</text>
@@ -21,7 +21,7 @@
   </view> -->
   <view class="item">
     <text class="cTitle">学校：</text>
-    <text>{{content.school.school_name}}</text>
+    <text>{{content.school.name}}</text>
   </view>
   <view class="item">
     <text class="cTitle">教室：</text>
@@ -30,9 +30,9 @@
   <view class="item">
     <text class="cTitle">地址：</text>
     <view class="address">
-      <text>{{content.school.school_address}}</text>
-      <!-- <icon type="download" size="20" color="green"/> -->
-      <!-- <image class="place" src="../../images/place.png"></image> -->
+      <text>{{content.school.address}}</text>
+       <!-- <icon type="download" size="20" color="green"/>  -->
+       <image class="place" data-address="{{content.school.address+content.school.name}}" bindtap="toMap" src="../../images/place.png"></image> 
     </view>
   </view>
 </view>
