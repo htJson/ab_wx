@@ -2,12 +2,15 @@
    <view class="listItem {{index%2==0?'aLeft':'aRight'}}" data-id="{{item.product_id}}" bindtap="getIndex">
     <image mode="aspectFill" src="{{item.image_first}}" title="">{{item.seo}}</image>
     <view class="listNews">
-      <view class="newsTitle">{{item.name}}</view>
-      <view class="itemPrice">
-        <text class="aLeft">￥{{item.price_first/100}}</text>
-        <text class="aRight oldPrice">￥{{item.pricev_first/100}}</text>
+      <view class="newsTitle">
+        <text class="title">{{item.name}}</text>
+        <text class="order">{{item.order?'':300}}人预约</text>
       </view>
-      <view class="itemOrder">{{item.order?'':300}}人预约</view>
+      <view class="itemPrice">
+        <text class="money">￥</text><text class="priceAll">{{item.price_first/100}}</text>
+        <view class="oldPrice">市场价：<text>￥{{item.pricev_first/100}}</text></view>
+        <!-- <image class="buy" src="../../images/buy.png"></image> -->
+      </view>
     </view>
   </view> 
 </template>

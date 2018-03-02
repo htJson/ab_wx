@@ -1,0 +1,37 @@
+.container{padding-bottom:80rpx;}
+.borderBottom{ border-bottom:1px solid #cecfd2}
+.moreIcon{width:40rpx; height: 45rpx;}
+.titleBox{height: 118rpx; font-size:30rpx; color:#010000; line-height: 118rpx;}
+.title{font-size:26rpx; color:#727171; width:159rpx; display: block; float:left; text-align: left;}
+.addressBox{ border-bottom:1px solid #cecfd2; padding:27rpx 30rpx 27rpx; overflow: hidden;}
+.address{font-size:26rpx; color:#000; position: relative; margin-left:159rpx; padding-right:50rpx;}
+.address image{position:absolute; right:0px; top:10px;}
+.namePhone{padding-bottom:20rpx;}
+.namePhone text{margin-right:20rpx;}
+.buyNum{padding: 35rpx 30rpx;border-bottom:1px solid #cecfd2; overflow: hidden; line-height: 50rpx;}
+.changeNum{width:300rpx; float: right;}
+.changeNum image{width:40rpx; height:40rpx; margin-top:7rpx;}
+.changeNum .num{width:80rpx; margin:0 10rpx; text-align: center;}
+.setTime,.priceBox,.coupon{padding:36rpx 30rpx; overflow: hidden;}
+/* .setTime .time{color:#000; font-size:26rpx;float:left;} */
+.setTime .timeContent{margin-left:159rpx; padding-right:40rpx; font-size:26rpx; color:#000; position:relative;}
+.setTime .timeContent image{position:absolute; right:0px; top:0px;}
+.noteBox{padding:36rpx 30rpx; position:relative;}
+.noteBox .textarea{display:block; margin-left:120rpx; margin-top:20rpx; height:130rpx;}
+.noteBox .textarea textarea{width:100%; font-size:26rpx; color:#000}
+.money{ float:right; color:#000; font-size:30rpx;}
+.allPrice{float: right; color:#ff0000; font-size:30rpx;}
+.couponContent{margin-left:159rpx; position:relative; padding-right:50rpx; line-height:50rpx; font-size:26rpx; color:#ddbf5d; text-align: right;}
+.couponContent image{position: absolute; right:0px;}
+
+
+
+
+
+
+
+
+
+
+
+.submitBtn{color:#fff; background:#00a0e9;position: fixed; bottom:0px; width:100%; border-radius:0;}

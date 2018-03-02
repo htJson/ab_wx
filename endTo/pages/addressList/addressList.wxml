@@ -1,0 +1,25 @@
+<view class="container">
+  <view class="addressItem itemActive">
+    <view class="default overflow"><text class="defaultAdress">默认</text></view>
+    <view class="addressContent">
+      <view class="addressIcon"><image src="../../images/radioActive.png"></image></view>
+      <view class="content">
+        <view class="namePhone"><text>张三</text><text>13211111111</text></view>
+        <view class="myAddress">北京市朝阳区马家堡西里1号楼456</view>
+        <image data-type="1" bindtap="goToAttr" src="../../images/editer.png"></image>
+      </view>
+    </view>
+  </view> 
+  <view class="addressItem">
+    <view class="default overflow"><text>设置为默认地址</text></view>
+    <view class="addressContent">
+      <view class="addressIcon"><image src="../../images/radio.png"></image></view>
+      <view class="content">
+        <view class="namePhone"><text>张三</text><text>13211111111</text></view>
+        <view class="myAddress">北京市朝阳区马家堡西里1号楼456</view>
+        <image src="../../images/editer.png"></image>
+      </view>
+    </view>
+  </view> 
+  <button class="address_add" data-type="0" bindtap="goToAttr">添加新地址</button>
+</view>

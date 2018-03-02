@@ -1,0 +1,61 @@
+<view class="container">
+  <view class="titleBox plr30 borderBottom">
+    <text class="title">服务名称</text>
+    <text>基础保洁</text>
+  </view>
+
+  <view class="addressBox">
+    <text class="title aLeft">联系人</text>
+    <view class="address" bindtap="goToAddress">
+      <view>
+        <view class="namePhone">
+          <text>{{userName}}</text>
+          <text>{{phone}}</text>
+        </view>
+        <view>{{address}}</view>
+      </view>
+      <image class="moreIcon" src="../../images/more.png"></image>
+    </view>
+  </view>
+
+  <view class="borderBottom buyNum">
+    <text class="title aLeft">购买数量</text>
+    <view class="aRight changeNum">
+      <image class="add aRight" src="../../images/add.png"></image>
+      <input class="num aRight" value="0" ></input>
+      <image class="reduce aRight" src="../../images/reduce.png"></image>
+    </view>
+  </view>
+
+  <view class="borderBottom setTime">
+    <text class="title">上门时间</text>
+    <view class="timeContent" bindtap="goToTime">
+      <text class="time">{{time}}</text>
+      <image class="aRight moreIcon" src="../../images/more.png"></image>
+    </view>
+  </view>
+
+  <view class="borderBottom noteBox">
+    <text class='title' style="float:none">备注信息</text>
+    <view class="textarea"><textarea placeholder='请输入备注信息,限制字数为200'></textarea></view>
+  </view>
+
+  <view class="borderBottom priceBox">
+    <text class='title'>服务价格</text>
+    <text class='money'>￥568</text>
+  </view>
+
+  <view class="borderBottom coupon">
+    <text class="title">优惠券</text>
+    <view class="couponContent">
+      <text>优惠200元</text>
+      <image class="aRight moreIcon" src="../../images/more.png"></image>
+    </view>
+  </view>
+
+  <view class="borderBottom priceBox">
+    <text class="title">实付金额</text>
+    <text class="allPrice">￥568</text>
+  </view>
+  <button class="submitBtn">确定</button>
+</view>

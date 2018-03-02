@@ -1,17 +1,10 @@
 /**index.wxss**/
 .banner{width:100%;}
 .banner image{width: 100%; background: #000}
-
 .assort{margin-top:30rpx; overflow: hidden;}
 .assort .ass_item{width:25%; float:left;}
-.assort .ass_item image{width:110rpx; height:110rpx; display: block; margin:0 auto; border:1px solid #f1f1f1; padding:2px;}
+.assort .ass_item view{width:80rpx; height:80rpx; border-radius:80rpx; overflow: hidden; margin:0 auto;}
+.assort .ass_item image{width:80rpx; height:90rpx; border-radius:80rpx;}
 .assort .ass_item text{display: block; font-size:28rpx; text-align: center; margin-top:10rpx;}
+.assList{margin:30rpx 0; background: #f9f9f9; overflow: hidden; }
 
-.assList{margin:30rpx; background: #f9f9f9; overflow: hidden; }
- .assList .listItem{width:49%; background: #fff; margin-bottom:15rpx}
-.assList .listItem image{width:100%; display: block; margin:0 auto; height: 167px;}
-.assList .listItem .listNews{margin-top:20rpx; padding:0 20rpx;}
-.listNews .newsTitle{ font-size:28rpx; color:#000;}
-.listNews .itemPrice{overflow: hidden; font-size:24rpx; margin:10rpx 0;}
-.listNews .itemPrice .oldPrice{font-size:22rpx;text-decoration:line-through}
-.listNews .itemOrder{text-align: right; color:#999; font-size:24rpx;} 

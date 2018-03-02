@@ -2,19 +2,19 @@
 <import src="../../templates/msglist.wxml"/>
 <view class="container">
   <view class="banner">
-    <swiper class="" autoplay="true" interval="3000" duration="500" circular="true" >
+    <swiper class="" autoplay="true" interval="3000" duration="500" circular="true" indicator-dots="true"  indicator-color='#b7bbc1' indicator-active-color='#00a0e9'>
       <block wx:for="{{imgUrls}}" wx:key="{{index}}" wx:key="{{index}}">
         <swiper-item>
-          <image src="{{item}}" class="slide-image" width="355" height="150"/>
+          <image src="{{item}}" class="slide-image"/>
         </swiper-item>
       </block>
     </swiper>
   </view>
 
   <view class="assort">
-    <view class="ass_item" wx:for="{{assort}}" wx:key="{{index}}" data-id="{{item.id}}">
-      <image src="{{item.image}}"  mode="aspectFill"></image>
-      <text>{{item.title}}</text>
+    <view class="ass_item" wx:for="{{assort}}" wx:key="{{index}}" data-id="{{item.category_id}}" bindtap="goToList">
+      <view><image src="{{item.logo}}"  mode="aspectFill"></image></view>
+      <text>{{item.name}}</text>
     </view>
   </view>
 
@@ -27,11 +27,10 @@
       <text>暂无数据</text>
     </view>
     <view wx:else>
-      <block wx:for="{{skuList}}">
+      <block wx:for="{{skuList}}" wx:key="{{index}}">
         <!-- <template is="msgList" data="{{item}}"/> -->
         <template is="msgItem" data="{{item,index}}"/>
       </block>
     </view>
-    
   </view>
 </view>

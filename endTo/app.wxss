@@ -1,15 +1,33 @@
 /**app.wxss**/
 /*浮动  */
-.aLeft{float:left;}
-.aRight{float:right}
+.aLeft{float:left!important;}
+.aRight{float:right!important}
 .overflow{overflow:hidden}
 .mt30{margin-top:30rpx;}
+.plr30{padding:0 30rpx;}
+.relative{position: relative}
+.mt50{margin-top:50rpx;}
 
 /*暂无数据样式 */
 .noData{text-align: center; padding-top:100rpx; background: #fff;}
-.noData text{display: block; padding-bottom:30rpx;}
+.noData text{display: block; padding-bottom:30rpx; font-size:30rpx;}
 .noData image{width:320rpx; height:240rpx;}
 
 /*loading样式  */
 .loading{background: #fff; padding:90rpx 0 100rpx}
 .loading image{width:50rpx; height:50rpx; display:block; margin:0rpx auto;}
+
+/*列表公用样式  */
+.listItem{width:365rpx; background: #fff; margin-bottom:15rpx}
+.listItem image{width:365rpx; display: block; margin:0 auto; height:365rpx;}
+.listItem .listNews{padding:0 20rpx;}
+.listNews .newsTitle{color:#000; overflow: hidden; padding:27rpx 0;}
+.listNews .newsTitle .title{font-size:30rpx; color:#000; float: left;}
+.listNews .newsTitle .order{font-size:22rpx; color:#b7bbc1; float: right; margin-top:10rpx;}
+.listNews .itemPrice{overflow: hidden; font-size:24rpx; margin:0rpx 0 10rpx;}
+.listNews .itemPrice .money{color:#00a0e9; font-size:20rpx;}
+.listNews .itemPrice .priceAll{color:#00a0e9; font-size:28rpx;}
+.listNews .itemPrice .oldPrice{font-size:22rpx; display: inline; color:#b7bbc1; margin-left:15rpx;}
+.listNews .itemPrice .oldPrice text{text-decoration:line-through; }
+.listNews .itemPrice .buy{overflow: hidden; width:35rpx; height: 35rpx; float: right; margin-top:10rpx;}
+.listNews .itemOrder{text-align: right; color:#999; font-size:24rpx;}

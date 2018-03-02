@@ -1,0 +1,33 @@
+<view class="container">
+  <view class="itemStyle">
+    <text class="title">联系人</text>
+    <view class="content">某某某</view>
+  </view>
+  <view class="itemStyle">
+    <text class="title">手机号</text>
+    <view class="content">13211111111</view>
+  </view>
+  <view class="itemStyle">
+    <text class="title">服务地址</text>
+    <view class="content selectAddress">
+      <view>北京某个地方北京某个地方北京某个地方北京某个地方北京某个地方</view>
+      <image src="../../images/more.png"></image>
+    </view>
+  </view>
+  <view class="itemStyle">
+    <text class="title">详细地址</text>
+    <view class="content"><input placeholder='请输入详细地址' /></view>
+  </view>
+  <view class="itemStyle default">
+    <text class="title">设置默认地址</text>
+    <view class="switch">
+      <switch checked color="#449fe3" bindchange="switch1Change"/>
+    </view>
+  </view>
+  <button class="address_add" wx:if="{{type == 0}}">新增</button>  
+  <view class="addressAttr" wx:if="{{type == 1}}">
+    <view class="del">删除</view>
+     <view class="save">保存</view> 
+  </view>
+  
+</view>

@@ -10,7 +10,6 @@ App({
   },
   onLaunch: function () {
     this.getFirstDay()
-    console.log(this.getToday())
     // 展示本地存储能力
     var logs = wx.getStorageSync('logs') || []
     logs.unshift(Date.now())
@@ -20,7 +19,7 @@ App({
       success: res => {
         // 发送 res.code 到后台换取 openId, sessionKey, unionId
         // this.globalData.code=res.code
-        this.getOpenId(res.code)
+        this.getToken(res.code)
       }
     })
     // 获取用户信息
@@ -46,33 +45,33 @@ App({
   globalData: {
     userInfo: null
   },
-  getOpenId(code) {
-    wx.request({
-      url: this.data.url + '/wxapi/jscode2session', //仅为示例，并非真实的接口地址
-      method: "POST",
-      data: {
-        appid: this.data.appid,
-        js_code: code
-      },
-      header: {
-        "content-type": 'application/x-www-form-urlencoded' // 默认值
-      },
-      success: res => {
-        this.getToken(res.data.openid);
-      },
-      fail: error => {
-        console.log(error)
-      }
-    })
-  },
-  getToken(openId) {
+  // getOpenId(code) {
+  //   wx.request({
+  //     url: this.data.url + '/wxapi/jscode2session', //仅为示例，并非真实的接口地址
+  //     method: "POST",
+  //     data: {
+  //       appid: this.data.appid,
+  //       js_code: code
+  //     },
+  //     header: {
+  //       "content-type": 'application/x-www-form-urlencoded' // 默认值
+  //     },
+  //     success: res => {
+  //       this.getToken(res.data.openid);
+  //     },
+  //     fail: error => {
+  //       console.log(error)
+  //     }
+  //   })
+  // },
+  getToken(code) {
     wx.request({
       url: this.data.url + '/oauth/token', //仅为示例，并非真实的接口地址
       method: "POST",
       data: {
         grant_type: 'password',
-        username: 'WX_' + openId + '__c',
-        password: 'WX_' + openId + '__c',
+        username: 'WXM_' + this.data.appid + ':' + code,
+        password: code,
       },
       header: {
         "content-type": 'application/x-www-form-urlencoded', // 默认值

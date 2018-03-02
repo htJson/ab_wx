@@ -6,30 +6,41 @@ Page({
       'http://img06.tooopen.com/images/20160818/tooopen_sy_175866434296.jpg',
       'http://img06.tooopen.com/images/20160818/tooopen_sy_175833047715.jpg'
     ],
-    assort:[{
-      'image':'../../images/type.png',
-      'title':'康洁士',
-      'id':'0'
-    },{
-      'image': '../../images/type.png',
-      'title': '金宝贝',
-      'id': '0'
-    },{
-      'image': '../../images/type.png',
-      'title': '尊夫人',
-      'id': '0'
-    },{
-      'image': '../../images/type.png',
-      'title': '萌宠物',
-      'id': '0'
-    }],
+    assort:[],
     skuList:[],
     isLoading:false,
     noData:false,
   },
   
   onLoad: function () {
+    // 获取首界分类列表
+    this.getTypeList();
+    // 获取首页，列表数据
     this.getSkuList();
+  },
+  getTypeList() {
+    wx.request({
+      url: app.data.dev,
+      data: {
+        "query": 'query{home_category_list{category_id,name,logo,pid}}',
+      },
+      method: 'POST',
+      header: {
+        "content-type": "application/json",
+        "Authorization": app.globalData.token
+      },
+      success: res => {
+        this.setData({
+          assort:res.data.data.home_category_list
+        })
+      }
+    })
+  },
+  goToList(options){
+    var id = options.currentTarget.dataset.id
+    wx.navigateTo({
+      url: '/pages/typeList/typeList?cid='+id,
+    })
   },
   getSkuList(){
     this.setData({
@@ -63,17 +74,8 @@ Page({
   },
   getIndex(options){
     var id=options.currentTarget.dataset.id;
-    wx.request({
-      url: app.data.dev,
-      data:{
-        "query":''
-      },
-      method:'POST',
-      header: {
-        "content-type": "application/json",
-        "Authorization": app.globalData.token
-      },
-      success:res=>{}
+    wx.navigateTo({
+      url: '/pages/skuDetail/skuDetail?product_id='+id,
     })
   }
 })
