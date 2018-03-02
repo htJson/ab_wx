@@ -39,7 +39,7 @@
   </view>
   <view class="btn_Price">
     <view class="myPrice"><text>￥</text>{{detailData.price_first/100}}</view>
-    <view class="marketPrice">市场价：<text>￥{{detailData.pricev_first/100}}</text></view>
+    <view class="marketPrice"><text>￥{{detailData.pricev_first/100}}</text></view>
     <button class="submit" bindtap="submitOrder" data-id="{{detailData.product_id}}">预约</button>
   </view>
 </view>
@@ -51,7 +51,7 @@
     <text>抱歉，暂无服务类型数据</text>
   </view> 
   <block wx:for-items="{{actionSheetItems}}">
-      <action-sheet-item data-index="{{index}}" data-id="{{item.psku_id}}" class="dItem {{selected == index?'active':''}}" bindtap="bindSelected">
+      <action-sheet-item data-index="{{index}}" data-id="{{item.psku_id}}" class="dItem {{selected == item.psku_id?'active':''}}" bindtap="bindSelected">
         <view class="type">{{item.name}}</view>
         <view class="txt">￥{{item.price/100}}</view>
       </action-sheet-item>

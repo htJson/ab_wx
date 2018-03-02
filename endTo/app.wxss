@@ -25,8 +25,8 @@
 .listNews .newsTitle .title{font-size:30rpx; color:#000; float: left;}
 .listNews .newsTitle .order{font-size:22rpx; color:#b7bbc1; float: right; margin-top:10rpx;}
 .listNews .itemPrice{overflow: hidden; font-size:24rpx; margin:0rpx 0 10rpx;}
-.listNews .itemPrice .money{color:#00a0e9; font-size:20rpx;}
-.listNews .itemPrice .priceAll{color:#00a0e9; font-size:28rpx;}
+.listNews .itemPrice .money{color:#00a0e9; font-size:24rpx;}
+.listNews .itemPrice .priceAll{color:#00a0e9; font-size:34rpx;}
 .listNews .itemPrice .oldPrice{font-size:22rpx; display: inline; color:#b7bbc1; margin-left:15rpx;}
 .listNews .itemPrice .oldPrice text{text-decoration:line-through; }
 .listNews .itemPrice .buy{overflow: hidden; width:35rpx; height: 35rpx; float: right; margin-top:10rpx;}

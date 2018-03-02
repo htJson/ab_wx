@@ -4,10 +4,9 @@ App({
     // dev:'http://10.10.30.18:9004/graphql',
     dev:'https://test-api.aobei.com/graphql',
     code:'',
-    appid:'wx731d62ae850c6c5e',
+    appid:'wxe15a4d44733c1121',
     token:'',
     userId:'',
-    
   },
   onLaunch: function () {
     // 展示本地存储能力
@@ -19,7 +18,8 @@ App({
       success: res => {
         // 发送 res.code 到后台换取 openId, sessionKey, unionId
         // this.globalData.code=res.code
-        this.getToken(res.code)
+        this.getToken(res.code);
+        // this.getUn(res.code)
       }
     })
     // 获取用户信息
@@ -41,6 +41,19 @@ App({
         }
       }
     }) 
+  },
+  getUn(code){
+    wx.request({
+      url: 'https://api.weixin.qq.com/sns/jscode2session?appid='+this.data.appid+'&secret=SECRET&js_code=JSCODE&grant_type=authorization_code',
+      data:{
+        appid:this.data.appid,
+        secret:"142d6b743d09bd6d2ebb62c0bace1498",
+        js_code:code,
+        grant_type:'authorization_code'
+      },success:res=>{
+        console.log(res,'===========')
+      }
+    })
   },
   globalData: {
     userInfo: null
@@ -97,6 +110,7 @@ App({
         "Authorization": this.globalData.token
       },
       success:res=>{
+        console.log(res,'=++++++++++++++++++++++++++')
         if(res.data.errors !=undefined){
           wx.redirectTo({
             url: '/pages/login/login',

@@ -1,9 +1,21 @@
 <view class="container">
   <view class="titleBox plr30 borderBottom">
     <text class="title">服务名称</text>
-    <text>基础保洁</text>
+    <text>{{productName}}</text>
   </view>
 
+  <view class="addressBox">
+    <view class="address" bindtap="goToAddress">
+      <view>
+        <view class="namePhone">
+          <text>{{userName}}</text>
+          <text>{{phone}}</text>
+        </view>
+        <view>{{address}}</view>
+      </view>
+      <image class="moreIcon" src="../../images/more.png"></image>
+    </view>
+  </view>
   <view class="addressBox">
     <text class="title aLeft">联系人</text>
     <view class="address" bindtap="goToAddress">
@@ -42,7 +54,7 @@
 
   <view class="borderBottom priceBox">
     <text class='title'>服务价格</text>
-    <text class='money'>￥568</text>
+    <text class='money'>￥{{price/100}}</text>
   </view>
 
   <view class="borderBottom coupon">
@@ -55,7 +67,7 @@
 
   <view class="borderBottom priceBox">
     <text class="title">实付金额</text>
-    <text class="allPrice">￥568</text>
+    <text class="allPrice">￥{{allPrice/100}}</text>
   </view>
   <button class="submitBtn">确定</button>
 </view>

@@ -8,8 +8,8 @@
       </view>
       <view class="itemPrice">
         <text class="money">￥</text><text class="priceAll">{{item.price_first/100}}</text>
-        <view class="oldPrice">市场价：<text>￥{{item.pricev_first/100}}</text></view>
-        <!-- <image class="buy" src="../../images/buy.png"></image> -->
+        <view class="oldPrice"><text>￥{{item.pricev_first/100}}</text></view>
+         <image class="buy" src="../../images/buy.png"></image> 
       </view>
     </view>
   </view> 

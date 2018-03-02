@@ -13,7 +13,7 @@
 
   <view class="assort">
     <view class="ass_item" wx:for="{{assort}}" wx:key="{{index}}" data-id="{{item.category_id}}" bindtap="goToList">
-      <view><image src="{{item.logo}}"  mode="aspectFill"></image></view>
+      <view><image src="{{item.logo}}" mode="aspectFill"></image></view>
       <text>{{item.name}}</text>
     </view>
   </view>

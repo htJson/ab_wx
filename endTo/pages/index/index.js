@@ -22,7 +22,7 @@ Page({
     wx.request({
       url: app.data.dev,
       data: {
-        "query": 'query{home_category_list{category_id,name,logo,pid}}',
+        "query": 'query{customer_home_category_list{category_id,name,logo,pid}}',
       },
       method: 'POST',
       header: {
@@ -31,7 +31,7 @@ Page({
       },
       success: res => {
         this.setData({
-          assort:res.data.data.home_category_list
+          assort: res.data.data.customer_home_category_list
         })
       }
     })
@@ -54,7 +54,7 @@ Page({
         "Authorization": app.globalData.token
       },
       data:{
-        "query":'query{product_list(page_index:1,count:300){product_id,image_first,seo,name,price_first,pricev_first,}}'
+        "query":'query{customer_home_product_list(page_index:1,count:300){product_id,image_first,seo,name,price_first,pricev_first,}}'
       },
       success:res=>{
         this.setData({
@@ -66,7 +66,7 @@ Page({
           })
         }else{
           this.setData({
-            skuList: res.data.data.product_list
+            skuList: res.data.data.customer_home_product_list
           })
         }
       }

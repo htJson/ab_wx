@@ -26,10 +26,10 @@
 .btn_Price .submit{background:#00a0e9; border:none; color:#fff; height: 100rpx; font-size:34rpx; float:right; border-radius: 0px; width:293rpx;}
 .sheetTitle{color:#000; padding:38rpx 30rpx;}
 .cancel{height: 200rpx; background:#00a0e9; color:#fff; margin:0px; padding:0px;}
-.dItem{ padding:65rpx; margin-left:25rpx; border:1px solid #c7c7cc; display: inline-block; margin-bottom:30rpx;}
+.dItem{ padding:58rpx; margin-left:25rpx; border:1px solid #c7c7cc; display: inline-block; margin-bottom:30rpx;}
 .dItem .type{color:#727171; font-size:24rpx;}
 .dItem .txt{color:#727171; font-size:30rpx;}
-.active{border:2px solid #00a0e9; padding:64rpx;}
+.active{border:2px solid #00a0e9; padding:56rpx;}
 .typeNoData{padding-bottom:50rpx; padding-top:0px;}
 .typeNoData image{width:220rpx; height:170rpx;}
 .typeNoData text{font-size:30rpx;}
