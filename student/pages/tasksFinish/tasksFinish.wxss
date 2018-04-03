@@ -1,0 +1,13 @@
+/* pages/tasksFinish/tasksFinish.wxss */
+.section{width:270rpx; margin:0 auto; overflow: hidden; padding:20rpx 0px; }
+.section picker{ font-size:36rpx;float:left;}
+.section image{width:30rpx; height: 30rpx; margin-top:10rpx; float:right; margin-left:20rpx;}
+
+.item{overflow: hidden; position: relative; background: #fff; padding:20rpx 30rpx; border-top:1px solid #efeff4}
+.item image{position: absolute; right:20rpx; color:#f00; width:120rpx; height: 90rpx; top:30rpx; font-weight: bolder;}
+.item view{padding:7rpx 0px; font-size:26rpx; color:#727171}
+.item .user{font-weight: bolder; color:#000}
+.item .content{margin-right:50rpx;}
+.item view .title{ float:left; font-weight: normal; color:#727171}
+.item view .rightContent{margin-left:130rpx; font-weight: normal; color:#727171; display: block;}
+

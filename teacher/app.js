@@ -1,10 +1,10 @@
 App({
   data: {
-    url: 'https://test-auth.aobei.com',
-    dev: 'https://test-api.aobei.com/graphql',
+    url: 'https://dev-auth.aobei.com',
+    dev: 'https://dev-api.aobei.com/graphql',
     // dev: 'http://10.10.30.18:9004/graphql',
     code: '',
-    appid: 'wx731d62ae850c6c5e',
+    appid: 'wx18b2a6ed40277856',
     token: '',
     userId: ''
   },

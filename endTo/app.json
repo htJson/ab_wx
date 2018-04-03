@@ -1,22 +1,34 @@
 {
   "pages":[
     "pages/index/index",
-    "pages/addEditer/addEditer",
-    "pages/addressList/addressList",
-    "pages/subOrder/subOrder",
-    "pages/timeList/timeList",
-    "pages/skuDetail/skuDetail",
-    "pages/typeList/typeList",
     "pages/order/order",
+    "pages/skuDetail/skuDetail",
+    "pages/searchAddress/searchAddress",
+    "pages/subOrder/subOrder",
+    "pages/comment/comment",
+    "pages/setPass/setPass",
     "pages/mine/mine",
-    "pages/demo/demo",
+    "pages/orderDetail/orderDetail",
+    "pages/cancel/cancel",
+    "pages/payOrder/payOrder",
+    "pages/timeList/timeList",
+    "pages/changePhone/changePhone",
+    "pages/myCoupon/myCoupon",
+    "pages/coupon/coupon",
+    "pages/myAddress/myAddress",
+    "pages/addressList/addressList",
+    "pages/setPassTow/setPassTow",
+    "pages/about/about",
+    "pages/addEditer/addEditer",
+    "pages/typeList/typeList",
     "pages/login/login"
   ],
   "window":{
     "backgroundTextStyle":"light",
     "navigationBarTitleText": "WeChat",
     "navigationBarBackgroundColor": "#00a0e9",
-    "navigationBarTextStyle": "white"
+    "navigationBarTextStyle": "white",
+    "navigationStyle":"custom"
   },
   "tabBar": {
     "color": "#7f8389",

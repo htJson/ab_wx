@@ -1,2 +1,53 @@
-<!--pages/order/order.wxml-->
-<text>pages/order/order.wxml</text>
+<wxs src="../../templates/msglist.wxs" module="tools" />
+<view class='headerBox'>
+  <view class="header_content">我的订单</view>
+</view>
+<view class="container">
+  <view class="tab">
+    <text class="{{status ==''? 'active':''}}" bindtap="tab" data-key="all">全部</text>
+    <text class="{{status =='waitPay'?'active':''}}" bindtap="tab" data-key="waitPay">待付款</text>
+    <!-- <text>待确认</text> -->
+    <text class="{{status =='waitService'?'active':''}}" bindtap="tab" data-key="waitService">待服务</text>
+    <text class="{{status =='cancel'?'active':''}}" bindtap="tab" data-key="cancel">已取消</text>
+    <text class="{{status =='done'?'active':''}}" bindtap="tab" data-key="done">已完成</text>
+  </view>
+  <view class="list">
+    <view class='noData' wx:if="{{noData}}">
+      <image src="../../images/noData.jpg"></image>
+      <text>暂无数据</text>
+    </view>
+    <view class="loading" wx:if="{{loading}}">
+      <image src="../../images/loading.gif"></image>
+    </view>
+    <view class="item" wx:for="{{orderList}}" wx:key="{{index}}">
+      <view class="header">
+        <text class="orderType" wx:if="{{item.orderStatus == 'waitPay'}}">[{{statusList[item.orderStatus]}}]</text>
+        <text class="orderServiece" wx:if="{{item.orderStatus=='waitService'}}">[{{statusList[item.orderStatus]}}]</text>
+        <text class="orderAsh" wx:if="{{item.orderStatus == 'cancel' || item.orderStatus == 'done'}}">[{{statusList[item.orderStatus]}}]</text>
+        <text class="orderNum">订单号：{{item.pay_order_id}}</text>
+      </view>
+      <view class="content" bindtap='goToDetail' data-id="{{item.pay_order_id}}">
+        <image wx:if="{{item.image_first}}" src="{{item.image_first}}"></image>
+        <image wx:else src="../../images/default.png"></image>
+        <view class="orderNews">
+            <view class="name">{{item.name}}</view>
+            <view class="time">服务时间:{{tools.forMat(item.c_begin_datetime,1)}}</view>
+            <view class="price">￥{{item.price_pay/100}}</view>
+            <image class="more" src="../../images/more.png"></image>
+        </view>
+      </view>
+      <view class="footer">
+        <block wx:if="{{item.orderStatus == 'waitPay'}}">
+          <button class="ashBtn" data-orderId="{{item.pay_order_id}}" bindtap="goToUrl" data-url="/pages/cancel/cancel">取消订单</button>
+          <button class="blueBtn" data-orderId="{{item.pay_order_id}}" bindtap="goToUrl" data-url="/pages/payOrder/payOrder">立即支付</button>
+        </block>
+        <block wx:if="{{item.orderStatus=='waitService'}}">
+          <button class="ashBtn" data-orderId="{{item.pay_order_id}}" bindtap="goToUrl" data-url="/pages/cancel/cancel" >取消订单</button>
+        </block>
+        <block wx:if="{{item.orderStatus == 'done'}}">
+          <button class="blueBtn" data-orderId="{{item.pay_order_id}}" bindtap="goToUrl" data-url="/pages/comment/comment">去评价</button>
+        </block>
+      </view>
+    </view>
+  </view>
+</view>

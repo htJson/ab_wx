@@ -1,0 +1,15 @@
+.container{background: #efeff4;}
+.header{padding:25rpx 30rpx; background: #fff; position: relative; border-bottom:1px solid #c7c7cc; font-size:26rpx; color:#727171; overflow: hidden;}
+.header .contact{margin-right:80rpx;}
+.header image{width:41rpx; height: 47rpx; position: absolute; right:20px; top:20rpx;}
+.tab{overflow: hidden; margin-top:20rpx; background: #fff; font-size:30rpx; padding:25rpx 30rpx;}
+.tab .finish{font-size:24rpx;margin-top:7rpx; color:#0f8af4}
+
+.item{overflow: hidden; position: relative; background: #fff; padding:20rpx 30rpx; margin-top:1px;}
+
+.item image{float:right; width:41rpx; height: 47rpx; margin-top:20rpx;}
+.item .content{margin-right:50rpx;}
+.item view{padding:7rpx 0px; font-size:26rpx; color:#727171}
+.item .user{font-weight: bolder; color:#000}
+.item view .title{ float:left; font-weight: normal; color:#727171}
+.item view .rightContent{margin-left:130rpx; font-weight: normal; color:#727171; display: block;}

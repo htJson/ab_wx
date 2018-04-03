@@ -1,0 +1,39 @@
+<wxs src="../../filter/common.wxs" module="time" />
+<view class="container">
+  <view class="product">
+    <image class='logo' src="{{detail.image_first}}"></image>
+    <view class="productContent">
+      <text class="title">{{detail.name}}</text>
+      <text>{{detail.cus_username}}</text>
+      <text class="mt10">{{detail.cus_phone}}</text>
+      <image class="phoneIcon" src="../../images/phone.png" data-phone="{{detail.cus_phone}}" bindtap="getPhone"></image>
+    </view>
+  </view>
+  <view class="serverNews">
+    <view class="item">
+      <text class="title">订单编号：</text><view class="content">{{detail.pay_order_id}}</view>
+    </view>
+    <view class="item">
+      <text class="title">服务时间：</text><view class="content">{{time.getDateTime(detail.c_begin_datetime)}}{{time.getTime(detail.c_end_datetime)}}</view>
+    </view>
+    <view class="item">
+      <text class="title">服务地址：</text><view class="content">{{detail.customer_address}}</view>
+    </view>
+    <view class="item">
+      <text class="title">订单金额：</text><view class="content">{{detail.price_total/100}}</view>
+    </view>
+    <view class="item">
+      <text class="title">订单备注：</text><view class="content">{{detail.remark || '无'}}</view>
+    </view>
+  </view>
+  <view class="noteTitle" wx:if="{{statusType == 'leave' || statusType=='over'}}">服务备注 <text class="tips">(如果有特殊原因提前离开,请选择或填写备注)</text></view>
+  <view class="noteRadio" wx:if="{{statusType == 'leave' || statusType=='over'}}">
+    <view wx:for="{{noteList}}" bindtap="selectNote" data-noteType="{{item.key}}">
+      <image src="../../images/radioActive.png" wx:if="{{remarkStatus == item.key}}"></image>
+      <image src="../../images/radio.png" wx:else ></image>
+      {{item.text}}
+    </view>
+  </view>
+  <textarea class="noteText" bindinput='otherNote'  wx:if="{{(statusType == 'leave'  || statusType=='over') && remarkStatus == 'other'}}"></textarea>
+  <button class="statusBtn" data-status="{{statusType}}" bindtap="getLocation">{{statusText}}</button>
+</view>

@@ -1,0 +1,117 @@
+var app=getApp();
+Page({
+  data: {
+    couponList:[],
+    couponId:'',
+    couponName:'',
+    skuId:'',
+    num:1,
+    isLoading:false,
+    isMine:false,
+    noData:false,
+    isUseCoupon:false,
+  },
+  onLoad: function (options) {
+    this.setData({
+      skuId:options.skuId
+    })
+    wx.getStorage({
+      key: 'coupon',
+      success: res=> {
+        this.setData({
+          couponId: res.data.id
+        })
+      },
+    })
+    this.getCouponList();
+  },
+  backFn() {
+    wx.redirectTo({
+      url: '/pages/subOrder/subOrder',
+    })
+  },
+  nouserCoupon(){
+    this.setData({
+      isUseCoupon : !this.data.isUseCoupon,
+      couponId:''
+    })
+    if(this.data.isUseCoupon){
+      wx.removeStorage({
+        key: 'coupon',
+        success: function(res) {},
+      })
+    }
+  },
+  getCouponList(){
+    this.setData({
+      isLoading:true
+    })
+    wx.request({
+      url: app.data.dev,
+      method:'POST',
+      data:{
+        "query": 'query{customer_coupon_list_by_product(psku_id:' + this.data.skuId + ',page_index:1,count:300,num:' + this.data.num +'){coupon_receive_id,name,value,condition,useStartTime,useEndTime,expire,unit}}'
+      },
+      header:{
+        "content-type": "application/json",
+        "Authorization": app.globalData.token
+      },
+      success: res => {
+        this.setData({
+          isLoading: false
+        })
+        if (res.data.data.customer_coupon_list_by_product && res.data.data.customer_coupon_list_by_product.length>0){
+          this.setData({
+            couponList: res.data.data.customer_coupon_list_by_product
+          })
+        }else{
+          this.setData({
+            noData:true
+          })
+        }
+      }
+    })
+  },
+  selected(options){
+    this.setData({
+      couponId: options.currentTarget.dataset.id,
+      isUseCoupon:false
+    })
+  },
+  couponUse(){
+    if (this.data.couponId == '' && !this.data.isUseCoupon){
+      wx.showModal({
+        title: '提示',
+        showCancel:false,
+        content: '请选择优惠券',
+      })
+    }else{
+      if(this.data.couponId){
+        console.log(this.data.couponList)
+        for (let i = 0; i < this.data.couponList.length; i++){
+          let item=this.data.couponList[i];
+          if (this.data.couponId == item.coupon_receive_id){
+            console.log('有')
+            this.setData({
+              couponName:item.name,
+            })
+            break;
+          }
+        }
+        wx.setStorage({
+          key: 'coupon',
+          data: {
+            id: this.data.couponId,
+            name: this.data.couponName
+          },
+        })
+      }
+      wx.redirectTo({
+        url: '/pages/subOrder/subOrder',
+        success:res=>{
+          console.log('success')
+        }
+      })
+    }
+  }
+})

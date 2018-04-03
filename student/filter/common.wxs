@@ -1,0 +1,16 @@
+
+var getDateTime = function (nStr) {
+  if (nStr == undefined) { return '' };
+  var timeArr = nStr.split('T');
+  return timeArr[0] + ' ' + timeArr[1].substring(0, 5);
+}
+
+var getTime = function (str) {
+  if (str == undefined) { return '' };
+  var timeArr = str.split('T');
+  return timeArr[1].substring(0, 5);
+}
+module.exports = {
+  getDateTime: getDateTime,
+  getTime: getTime
+}

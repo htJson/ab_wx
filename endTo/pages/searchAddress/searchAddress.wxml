@@ -1,0 +1,38 @@
+ <view class='headerBox'>
+  <view class="imgBox" bindtap='backFn'>
+    <image src="../../images/black.png"></image>
+  </view>
+  <view class="header_content">搜索地址</view>
+</view>
+ <view class="container">
+  <view class="search">
+    <!-- <view class="city"  bindtap="tap_ch"><text>{{cityName}}</text></view> -->
+    <view class="city"><text>{{cityName}}</text></view>
+    <view class="Keywords"><input type="text" bindinput='custom' placeholder='搜索当前城市的地址'></input></view>
+  </view>
+  <view class="location">
+    <view class="title">
+      <image src="../../images/dw.png"></image>
+      <text>定位地址</text>
+    </view>
+    <view class="content">
+      <view class="refresh" bindtap="openTips">
+        <image src="../../images/wz.png"></image>
+        <text>重新定位</text>
+      </view>
+      <view class="name">{{addressName}}</view>
+    </view>
+  </view>
+  <view class="searchList">
+    <view class="title"><image src="../../images/fj.png"></image><text>附近地址</text></view>
+     <view class="noData" wx:if="{{noData}}">
+      <image src="../../images/noData.jpg"></image>
+      <text>{{noDataText}}</text>
+    </view>
+    <view class="list">
+      <view class="item" wx:for="{{nearbyList}}" wx:key="{{index}}" data-index="{{index}}" bindtap="goToOrder" >{{item.address}}{{item.title}}</view>
+    </view> 
+  </view>
+</view> 
+<view bindtouchmove="tap_drag" bindtouchend="tap_end" bindtouchstart="tap_start" class="page-top {{open ? 'c-state1' : ''}}">
+</view>

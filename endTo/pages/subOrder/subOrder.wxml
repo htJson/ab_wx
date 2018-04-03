@@ -1,10 +1,17 @@
+<view class='headerBox'>
+  <view  class="imgBox" bindtap='backFn'>
+    <image src="../../images/black.png"></image>
+  </view>
+  <view class="header_content">提交订单</view>
+</view> 
 <view class="container">
   <view class="titleBox plr30 borderBottom">
     <text class="title">服务名称</text>
-    <text>{{productName}}</text>
+    <text class="name">{{productName}}-{{skuName}}</text>
   </view>
 
-  <view class="addressBox">
+  <view class="addressBox" wx:if="{{isAddress}}">
+   <text class="title aLeft">服务信息</text>
     <view class="address" bindtap="goToAddress">
       <view>
         <view class="namePhone">
@@ -16,40 +23,34 @@
       <image class="moreIcon" src="../../images/more.png"></image>
     </view>
   </view>
-  <view class="addressBox">
-    <text class="title aLeft">联系人</text>
+  <view class="addressBox" wx:else>
+    <text class="title aLeft"></text>
     <view class="address" bindtap="goToAddress">
-      <view>
-        <view class="namePhone">
-          <text>{{userName}}</text>
-          <text>{{phone}}</text>
-        </view>
-        <view>{{address}}</view>
-      </view>
+      <view class="noAddress">请选择服务地址<text>+</text></view>
       <image class="moreIcon" src="../../images/more.png"></image>
     </view>
   </view>
 
-  <view class="borderBottom buyNum">
+  <!-- <view class="borderBottom buyNum">
     <text class="title aLeft">购买数量</text>
     <view class="aRight changeNum">
-      <image class="add aRight" src="../../images/add.png"></image>
-      <input class="num aRight" value="0" ></input>
-      <image class="reduce aRight" src="../../images/reduce.png"></image>
+      <image class="add aRight" bindtap="countAdd" src="../../images/add.png"></image>
+      <input class="num aRight" value="{{count}}" placeholder='0' bindinput="countChange" ></input>
+      <image class="reduce aRight" bindtap="countRedut" src="../../images/reduce.png"></image>
     </view>
-  </view>
+  </view> -->
 
-  <view class="borderBottom setTime">
+  <view class="borderBottom setTime" bindtap="goToTime">
     <text class="title">上门时间</text>
-    <view class="timeContent" bindtap="goToTime">
-      <text class="time">{{time}}</text>
+    <view class="timeContent">
+      <text class="time">{{time.date}} {{time.startTime}}{{time.endTime}}</text>
       <image class="aRight moreIcon" src="../../images/more.png"></image>
     </view>
   </view>
 
   <view class="borderBottom noteBox">
     <text class='title' style="float:none">备注信息</text>
-    <view class="textarea"><textarea placeholder='请输入备注信息,限制字数为200'></textarea></view>
+    <view class="textarea"><textarea placeholder='请输入备注信息,限制字数为200' bindinput='remarkTxt'></textarea></view>
   </view>
 
   <view class="borderBottom priceBox">
@@ -57,10 +58,10 @@
     <text class='money'>￥{{price/100}}</text>
   </view>
 
-  <view class="borderBottom coupon">
+  <view class="borderBottom coupon" bindtap="goToCoupon">
     <text class="title">优惠券</text>
     <view class="couponContent">
-      <text>优惠200元</text>
+      <text>{{couponName}}</text>
       <image class="aRight moreIcon" src="../../images/more.png"></image>
     </view>
   </view>
@@ -69,5 +70,5 @@
     <text class="title">实付金额</text>
     <text class="allPrice">￥{{allPrice/100}}</text>
   </view>
-  <button class="submitBtn">确定</button>
+  <button class="submitBtn" bindtap='submitBtn'>确定</button>
 </view>

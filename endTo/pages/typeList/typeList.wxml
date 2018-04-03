@@ -1,5 +1,11 @@
 <!--pages/typeList/typeList.wxml-->
 <import src="../../templates/msglist.wxml"/>
+<view class='headerBox'>
+  <view class="imgBox" bindtap='backFn'>
+    <image src="../../images/black.png"></image>
+  </view>
+  <view class="header_content">{{title}}</view>
+</view> 
 <view class="container">
   <view class="loading" wx:if="{{isLoading}}">
     <image src="../../images/loading.gif"></image>

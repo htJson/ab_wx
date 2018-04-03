@@ -1,66 +1,195 @@
-// pages/order/order.js
+var app=getApp();
 Page({
-
-  /**
-   * 页面的初始数据
-   */
   data: {
-  
+    status:'',
+    orderList:[],
+    page:1,
+    noData:false,
+    loading:false,
+    isLogin:true,
+    statusList:{
+      'waitService':'待服务',
+      'cancel':'已取消',
+      'waitPay':'待付款',
+      'payed':'已支付',
+      'done':'已完成',
+      'refused':'已拒单',
+      'waitRefund':'待退款',
+      'partRefund':'已部分退款',
+      'refunded':'已退款'
+    },
+    meUrl:''
   },
-
-  /**
-   * 生命周期函数--监听页面加载
-   */
   onLoad: function (options) {
-  
+    // var timer=setInterval(()=>{
+    //   if(app.globalData.token){
+    //     clearInterval(timer)
+    //     this.getList();
+    //   }
+    // },1500)
+    this.getList();
+    
+    var pages = getCurrentPages()    //获取加载的页面
+    var currentPage = pages[pages.length - 1]    //获取当前页面的对象
+    this.setData({
+      meUrl: currentPage.route
+    })
+    this.getInfo()
   },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-  
+  onShow(){
+    if(app.data.isReload){
+      app.data.isReload=false;
+      this.getInfo();
+      this.getList();
+    }
   },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-  
+  getList(){
+    this.setData({
+      loading:true,
+      noData:false
+    })
+    wx.request({
+      url: app.data.dev,
+      method:'POST',
+      data:{
+        "query":'query{customer_order_list(status:"'+this.data.status+'",page_index:'+this.data.page+',count:10000) {pay_order_id,name,price_pay,orderStatus,product_id,proSku_id, image_first,c_begin_datetime}}'
+      },
+      header:{
+        "content-type": "application/json",
+        "Authorization": app.globalData.token
+      },
+      success:res=>{
+          this.setData({
+            loading:false
+          })
+          if(res.data.errors && res.data.errors.length>0){
+            this.setData({
+              noData: true
+            })
+            return false
+          }
+          if(res.data.eror){
+            console.log('请求返回出错')
+            return false;
+          }
+          if (res.data.data.customer_order_list.length == 0){
+            this.setData({
+              noData: true
+            })
+          }
+          this.setData({
+            orderList: res.data.data.customer_order_list
+          })
+      }
+    })
   },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-  
+  tab(options){
+    var key=options.currentTarget.dataset.key;
+    if(this.data.status==key){return false}
+    key=key =='all'?'':key
+    this.setData({
+      status:key
+    })
+    this.getList();
   },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-  
+  getInfo() {
+    wx.request({
+      url: app.data.dev,
+      method: "POST",
+      header: {
+        "content-type": "application/json",
+        "Authorization": app.globalData.token
+      },
+      data: {
+        "query": 'query{customer_info{customer_id}}'
+      },
+      success: res => {
+        if (res.data.errors && res.data.errors.length > 0) {
+          wx.showModal({
+            title: '用户提示',
+            content: '请先登录',
+            showCancel: false,
+            confirmColor: '#00a0e9',
+            success: res => {
+              if (res.confirm) {
+                app.data.isReload = true;
+                wx.redirectTo({
+                  url: '/pages/login/login?url=' + this.data.meUrl,
+                })
+              }
+            }
+          })
+        } else {
+          this.setData({
+            isLogin: true
+          })
+        }
+      }
+    })
   },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
   
+  cancelOrder(id){
+    wx.request({
+      url: app.data.dev,
+      method:'POST',
+      header:{
+        "content-type": "application/json",
+        "Authorization": app.globalData.token
+      },
+      data:{
+        "query":'mutation{customer_order_cancel(pay_order_id:"'+id+'",remark_cancel:""){status}}'
+      },
+      success:res=>{
+        if(res.data.data.errors && res.data.data.errors.length>0 || res.data.error){
+          console.log('删除失败')
+          return false; 
+        }
+        var copyList = this.data.orderList
+        for (let i = 0; i < copyList.length; i++) {
+          var item = copyList[i].pay_order_id;
+          if (item == id) {
+            copyList.splice(i, 1)
+            break;
+          }
+        }
+        this.setData({
+          orderList:copyList
+        })
+      }
+    })
   },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-  
+  goToDetail(options){
+    var id=options.currentTarget.dataset.id;
+    wx.navigateTo({
+      url: '/pages/orderDetail/orderDetail?id='+id,
+    })
   },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-  
+  payNow(options){
+    var id=options.currentTarget.dataset.orderid
+    wx.setStorage({
+      key: 'payData',
+      data: {
+        orderId: id
+      },
+    })
+    // 跳转界面
+    wx.navigateTo({
+      url: '/pages/payOrder/payOrder',
+    })
+  },
+  goToUrl(options){
+    var id = options.currentTarget.dataset.orderid,url=options.currentTarget.dataset.url;
+    wx.setStorage({
+      key: 'payData',
+      data: {
+        orderId: id,
+        backUrl:'/pages/order/order',
+        isOrder:true
+      },
+    })
+    // 跳转界面
+    wx.redirectTo({
+      url: url+'?isOrder=true',
+    })
   }
 })

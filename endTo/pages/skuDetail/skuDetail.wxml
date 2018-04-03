@@ -1,24 +1,27 @@
-<view class="container">
+<import src="../../wxParse/wxParse.wxml" />
+ <view class='headerBox'>
+  <view class="imgBox" bindtap='backFn'>
+    <image src="../../images/black.png"></image>
+  </view>
+  <view class="header_content">产品详情</view>
+</view> 
+<view class="container" bindtouchstart='move' bindtouchmove='moveTop' bindtouchcancel='move'>
   <image class="skuImg" mode='aspectFill' src="{{detailData.image_first}}"></image>
   <view class="head">
     <text class="title">{{detailData.name}}</text>
-    <text class="order">{{detailData.order?detailData.order:'0'}}人预约</text>
+    <text class="order">{{detailData.base_buyed||'0'}}人预约</text>
   </view>
-
   <view class="skuNote">{{detailData.descript}}</view>
-
   <view class="skuService" bindtap="actionSheetTap">
     <text>请选择服务类型</text>
     <image src="../../images/more.png"></image>
     <text class="selecteItem">{{selectedItem}}</text>
   </view>
-
-  <view class="skuStandard">
+  <!-- <view class="skuStandard">
     <view class="title">服务标准</view>
     <view class="item"><view class="dot"></view>冰箱无味</view>
     <view class="item"><view class="dot"></view>零部件及冰箱内外部清洁</view>
   </view>
-
   <view class="skuflow">
     <view class="title">服务流程</view>
     <view class="flowBox">
@@ -36,25 +39,28 @@
     <view class="title">温馨提示</view>
     <view class="item"><view class="dot"></view>冰箱无味</view>
     <view class="item"><view class="dot"></view>零部件及冰箱内外部清洁</view>
-  </view>
+  </view> -->
+  <view style="background:#fff; padding:30rpx 30rpx 100rpx; margin-top:30rpx;"><template is="wxParse" data="{{wxParseData:article.nodes}}"/></view>
   <view class="btn_Price">
-    <view class="myPrice"><text>￥</text>{{detailData.price_first/100}}</view>
-    <view class="marketPrice"><text>￥{{detailData.pricev_first/100}}</text></view>
+    <view class="myPrice"><text>￥</text>{{detailData.price_first/100}}<text wx:if="{{isStart}}">起</text></view>
+    <!-- <view class="marketPrice"><text>￥{{detailData.pricev_first/100}}</text></view> -->
     <button class="submit" bindtap="submitOrder" data-id="{{detailData.product_id}}">预约</button>
   </view>
 </view>
 
-<action-sheet hidden="{{actionSheetHidden}}" style="overflow:hidden; background:#fff;" bindchange="actionSheetbindchange">
-  <view class="sheetTitle">室内除空</view>
+<action-sheet hidden="{{actionSheetHidden}}" style="overflow:hidden; background:#fff; padding-bottom:100rpx;position:relative;">
+  <view class="sheetTitle">{{detailData.name}}</view>
   <view class="noData typeNoData" wx:if="{{actionSheetItems.length==0}}">
     <image src="../../images/noData.jpg"></image>
     <text>抱歉，暂无服务类型数据</text>
   </view> 
-  <block wx:for-items="{{actionSheetItems}}">
+  <view style="padding-bottom:100rpx;">
+     <block wx:for-items="{{actionSheetItems}}" wx:key="{{index}}">
       <action-sheet-item data-index="{{index}}" data-id="{{item.psku_id}}" class="dItem {{selected == item.psku_id?'active':''}}" bindtap="bindSelected">
         <view class="type">{{item.name}}</view>
         <view class="txt">￥{{item.price/100}}</view>
       </action-sheet-item>
-  </block>
-  <!-- <action-sheet-cancel class="cancel">确定</action-sheet-cancel> -->
+  </block> 
+  </view>
+   <action-sheet-cancel class="skuBtn" catchtap="skuBtn" data-id="{{detailData.product_id}}">确定</action-sheet-cancel> 
 </action-sheet>
