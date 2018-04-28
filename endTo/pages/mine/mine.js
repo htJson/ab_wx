@@ -6,6 +6,7 @@ Page({
   data: {
     phone:'',
     serverNum:'400-0311-333',
+    isLogin:false,
     url:{
       phone:'/pages/changePhone/changePhone',
       password:'/pages/setPass/setPass',
@@ -26,11 +27,15 @@ Page({
     this.getInfo();
   },
   onShow(){
-    if (app.data.isReload) {
-      app.data.isReload = false;
+    if (this.data.isLogin){
       this.getInfo();
       this.getUserNews();
     }
+  },
+  onHide(){
+    this.setData({
+      isLogin:true
+    })
   },
   phoneCall(){
     wx.makePhoneCall({
@@ -50,16 +55,17 @@ Page({
       },
       success: res => {
         if (res.data.errors && res.data.errors.length > 0) {
+         
           wx.showModal({
             title: '用户提示',
             content: '请先登录',
             showCancel: false,
             confirmColor: '#00a0e9',
             success: res => {
-              app.data.isReload = true;
               if (res.confirm) {
                 wx.redirectTo({
                   url: '/pages/login/login?url=' + this.data.meUrl,
+                  // url: '/pages/demo/demo',
                 })
               }
             }

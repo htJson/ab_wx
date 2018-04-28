@@ -42,3 +42,4 @@
 /*loading样式  */
 .loading{padding:50rpx 0 100rpx; background: #fff;}
 .loading image{width:50rpx; height:50rpx; display:block; margin:0rpx auto;}
+button::after{border: 0;}

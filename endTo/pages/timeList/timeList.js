@@ -9,6 +9,7 @@ Page({
     selectTime:null,
     startTime:'',
     endTime:'',
+    widthBox:0,
     date:'',
     isTime:false,
     noData:false
@@ -20,30 +21,10 @@ Page({
         this.setData({
           cookie:res.data
         })
-        this.getTimeList();
+          this.getTimeList();
+        
       }
     })
-    // wx.getStorage({
-    //   key: 'time',
-    //   success: res => {
-    //     res.data.startDate = res.data.date + ' ' + res.data.startTime;
-    //     res.data.endDate = res.data.date + ' ' + res.data.endTime;
-    //     // res.data.startTime += '~';
-    //     this.setData({
-    //       time: res.data
-    //     })
-    //     if(res.data.startTime !='' && res.data.endTime !=''){
-    //       this.setData({
-    //         selectDay:res.data.dIndex,
-    //         selectTime:res.data.tIndex,
-    //         startTime: res.data.startTime,
-    //         endTime: res.data.endTime,
-    //         date: res.data.date,
-    //         isTime:true
-    //       })
-    //     }
-    //   }
-    // })
   },
   backFn() {
     wx.redirectTo({
@@ -102,7 +83,7 @@ Page({
         "Authorization": app.globalData.token
       },
       data:{
-        "query": 'query{customer_product_available_times(product_id:"' + this.data.cookie.productId + '",psku_id:"' + this.data.cookie.pskuId + '",customer_address_id:"' + this.data.cookie.addressId +'"){dateTime,models{start,end,active,dateStart,dateEnd,dateTime}}}'
+        "query": 'query{customer_product_available_times(product_id:"' + this.data.cookie.productId + '",psku_id:"' + this.data.cookie.pskuId + '",customer_address_id:"' + this.data.cookie.addressId +'",num:' + this.data.cookie.count+'){dateTime,models{start,end,active,dateStart,dateEnd,dateTime}}}'
       },
       success:res=>{
         if(res.data.errors && res.data.errors.length>0){
@@ -117,12 +98,22 @@ Page({
           return false;
         }else{
           var vData = res.data.data.customer_product_available_times;
+          console.log(vData.length*160)
+          this.setData({
+            widthBox:(vData.length * 220)+'rpx'
+          })
           for(let i= 0; i <vData.length; i++){
             vData[i].nIndex=''+i;
             for(let a=0; a<vData[i].models.length; a++){
               vData[i].models[a].nIndex=''+i+'-'+a;
+              if(vData[i].models[a].end == null){
+                vData[i].models[a].showTime=vData[i].models[a].start
+              }else{
+                vData[i].models[a].showTime = vData[i].models[a].start+'~'+vData[i].models[a].end;
+              }
             }
           }
+
           this.setData({
             times: vData,
             list: vData[this.data.selectDay].models

@@ -14,11 +14,17 @@
       <text class="title">订单编号：</text><view class="content">{{detail.pay_order_id}}</view>
     </view>
     <view class="item">
-      <text class="title">服务时间：</text><view class="content">{{time.getDateTime(detail.c_begin_datetime)}}{{time.getTime(detail.c_end_datetime)}}</view>
+      <text class="title">服务时间：</text><view class="content">{{time.getDateTime(detail.c_begin_datetime)}}<block wx:if="{{time.getTime(detail.c_end_datetime) != ''}}">-{{time.getTime(detail.c_end_datetime)}}</block></view>
     </view>
     <view class="item">
       <text class="title">服务地址：</text><view class="content">{{detail.customer_address}}</view>
     </view>
+    <view class="item">
+      <text class="title">订单数量：</text><view class="content">{{detail.num}}<text wx:if="{{detail.unit != null}}">{{detail.unit}}</text></view>
+    </view>
+    <!-- <view class="item">
+      <text class="title">订单单价：</text><view class="content">{{detail.price_total/100}}</view>
+    </view> -->
     <view class="item">
       <text class="title">订单金额：</text><view class="content">{{detail.price_total/100}}</view>
     </view>
@@ -26,14 +32,27 @@
       <text class="title">订单备注：</text><view class="content">{{detail.remark || '无'}}</view>
     </view>
   </view>
-  <view class="noteTitle" wx:if="{{statusType == 'leave' || statusType=='over'}}">服务备注 <text class="tips">(如果有特殊原因提前离开,请选择或填写备注)</text></view>
-  <view class="noteRadio" wx:if="{{statusType == 'leave' || statusType=='over'}}">
+  {{orderStatus}}============
+  {{statusType}}+++++++
+  <view class="noteTitle" wx:if="{{statusType == 'leave' && orderStatus == 'waitService'}}">服务备注 
+    <text class="tips">(如果有特殊原因提前离开,请选择或填写备注)</text>
+  </view>
+  <view class="noteRadio" wx:if="{{statusType == 'leave' && orderStatus == 'waitService'}}">
     <view wx:for="{{noteList}}" bindtap="selectNote" data-noteType="{{item.key}}">
       <image src="../../images/radioActive.png" wx:if="{{remarkStatus == item.key}}"></image>
       <image src="../../images/radio.png" wx:else ></image>
       {{item.text}}
     </view>
   </view>
-  <textarea class="noteText" bindinput='otherNote'  wx:if="{{(statusType == 'leave'  || statusType=='over') && remarkStatus == 'other'}}"></textarea>
-  <button class="statusBtn" data-status="{{statusType}}" bindtap="getLocation">{{statusText}}</button>
+  <textarea class="noteText" bindinput='otherNote'  wx:if="{{(statusType == 'leave' && orderStatus == 'waitService') && remarkStatus == 'other'}}"></textarea>
+  <view class="serverBox">
+  <block wx:if="{{orderStatus == 'waitService' && statusType != 'over'}}">
+     <button class="series" data-status="{{statusType}}" data-productId="{{detail.product_id}}" wx:if="{{statusType == 'leave'}}" bindtap="series">续单</button> 
+    <button class="series" data-status="{{statusType}}" wx:else bindtap="noSeries">续单</button>
+       <!-- <button class="series" data-productId="{{detail.product_id}}" data-status="{{statusType}}"  bindtap="series">续单</button>   -->
+     <button class="statusBtn" data-status="{{statusType}}" bindtap="getLocation">{{statusText}}</button> 
+  </block>
+  </view>
+
+  <button class="cancel"  wx:if="{{ orderStatus == 'waitPay' }}" data-payId="{{detail.pay_order_id}}" bindtap="cancel">取消订单</button>
 </view>

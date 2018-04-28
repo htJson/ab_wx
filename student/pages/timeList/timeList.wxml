@@ -1,0 +1,26 @@
+<wxs src="timeList.wxs" module="week" />
+
+<view class="container">
+  <view class="header">{{cookie.pName}}-{{cookie.skuName}}</view>
+  <view class="noData" wx:if="{{noData}}">
+    <image src="../../images/noData.jpg"></image>
+    <text>暂无可用时间</text>
+  </view>
+   <view class="content" wx:else>
+    <view class="timeSelected">
+      <view class="timeList" style="width:{{widthBox}}">
+        <view class="item {{selectDay==item.nIndex?'active':''}}" wx:for="{{times}}" bindtap="selected" data-index="{{item.nIndex}}" wx:key="{{index}}">
+          <text class="week">{{week.getWeek(item.dateTime)}}</text>
+          <text class="date">{{week.tiemFormate(item.dateTime)}}</text> 
+          <text class="icon">∨</text>
+        </view>
+      </view>
+    </view>
+    <view class="bespeak {{selectTime == item.nIndex ?'active':''}}" wx:for="{{list}}" wx:key="{{index}}">
+      {{item.showTime}}
+      <view class="btn noBes" wx:if="{{!item.active}}">已约满</view>
+      <view class="btn besBtn" data-start="{{item.start}}" data-end="{{item.end}}" data-allTime="{{item.dateTime}}" data-index="{{item.nIndex}}" bindtap="bespeak" wx:else>预约</view>
+    </view>
+  </view> 
+  <button class="selectedTime" bindtap="goToOrder">确定</button>
+</view>

@@ -1,0 +1,39 @@
+ <view class='headerBox'>
+  <view class="imgBox" bindtap='backFn'>
+    <image src="../../images/black.png"></image>
+  </view>
+  <view class="header_content">{{type == 0?'新增地址':'编辑地址'}}</view>
+</view> 
+<view class="container">
+  <view class="itemStyle">
+    <text class="title">联系人</text>
+    <view class="content"><input type='text' placeholder='请输入用户名' bindinput='getUserName' value="{{userName}}" /></view>
+  </view> 
+  <view class="itemStyle">
+    <text class="title">手机号</text>
+    <view class="content"><input type='number' bindinput='getPhone' value="{{phone}}" placeholder='请输入手机号'></input></view>
+  </view>
+  <view class="itemStyle" bindtap="goToAdd">
+    <text class="title">服务地址</text>
+    <view class="content selectAddress">
+      <view>{{address}}</view>
+      <image src="../../images/more.png"></image>
+    </view>
+  </view>
+  <view class="itemStyle">
+    <text class="title">详细地址</text>
+    <view class="content"><input type='text' value="{{detailed}}" bindinput='getAddressContent' placeholder='请输入详细地址' /></view>
+  </view>
+  <view class="itemStyle default">
+    <text class="title">设置默认地址</text>
+    <view class="switch">
+      <switch checked="{{isDefault}}" color="#449fe3" bindchange="switch1Change"/>
+    </view>
+  </view>
+  <view class="errorTip">{{errorTip}}</view>
+  <button class="address_add" bindtap="add" wx:if="{{type == 0}}">{{isMine?'保存':'新增并使用'}}</button>  
+  <view class="addressAttr" wx:if="{{type == 1}}">
+    <view class="del" bindtap="delAddress">删除</view>
+    <view class="save" bindtap="editerSave">{{isMine?'保存':'保存并使用'}}</view>
+  </view>
+</view>

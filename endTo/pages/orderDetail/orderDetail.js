@@ -40,7 +40,7 @@ Page({
       url: app.data.dev,
       method:"POST",
       data:{
-        "query": 'query{customer_order_detail(pay_order_id:"' + this.data.orderId +'") {pay_order_id,name,price_total,price_discount,price_pay,orderStatus,cus_username,cus_phone,customer_address,customer_address_id,image_first,product_id,c_begin_datetime,c_end_datetime,isEvaluate,remark}}'
+        "query": 'query{customer_order_detail(pay_order_id:"' + this.data.orderId +'") {pay_order_id,name,price_total,price_discount,price_pay,orderStatus,cus_username,cus_phone,customer_address,customer_address_id,serviceStatus,image_first,product_id,c_begin_datetime,c_end_datetime,isEvaluate,remark}}'
       },
       header:{
         "content-type": "application/json",
@@ -89,6 +89,32 @@ Page({
   cancelOrder(){
     wx.redirectTo({
       url: '/pages/cancel/cancel?id=' + this.data.orderId+'&isOrder=false',
+    })
+  },
+  okOrder(){
+    wx.request({
+      url: app.data.dev,
+      method: "POST",
+      data: {
+        "query": 'mutation{customer_service_complete(pay_order_id:"' + this.data.orderId+'"){status}}'
+      },
+      header: {
+        "content-type": "application/json",
+        "Authorization": app.globalData.token
+      },
+      success: res => {
+        if(res.data.errors && res.data.errors.length>0){
+          wx.showModal({
+            title: '提示',
+            showCancel:false,
+            content: res.data.errors[0].message,
+          })
+        }else{
+          wx.showToast({
+            title: '确认成功',
+          })
+        }
+      }
     })
   }
 })

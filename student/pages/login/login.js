@@ -11,6 +11,7 @@ Page({
     ],
     phone:'',
     idNum:'',
+    isEditer:true,
     errorTip:'',
     errorNews:{},
     isDisabled:false,
@@ -32,7 +33,9 @@ Page({
       },
       success:res=>{
         if (res.data.data.my_student_bindinfo == null || res.errors !=undefined) {return false}
-      
+        this.setData({
+          isEditer:false
+        })
         var data = res.data.data.my_student_bindinfo;
         var midden = data.phone.substring(3, data.phone.length - 1).replace(/\d/g, function (v) { return '*' });
         var phone = data.phone.substr(0, 3) + midden + data.phone.substr(-1, 1);
@@ -94,6 +97,12 @@ Page({
             this.setData({
               errorTip: '该学生已被绑定'
             })
+            return false;
+          } else if (res.data.errors[0].errcode == '40101'){
+            this.setData({
+              errorTip: '没有该学生信息'
+            })
+            return false;
           }else{
             this.setData({
               errorTip: res.data.errors.message

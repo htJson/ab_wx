@@ -42,9 +42,12 @@
           <button class="blueBtn" data-orderId="{{item.pay_order_id}}" bindtap="goToUrl" data-url="/pages/payOrder/payOrder">立即支付</button>
         </block>
         <block wx:if="{{item.orderStatus=='waitService'}}">
+        <button class="blueBtn" data-orderId="{{item.pay_order_id}}" wx:if="{{item.orderStatus=='waitService' && item.serviceStatus =='leave' }}" bindtap="okOrder" data-url="/pages/cancel/cancel" >确认完成</button> 
+        <!-- <button class="ashBtn" data-orderId="{{item.pay_order_id}}" wx:else bindtap="暂无接口" data-url="/pages/cancel/cancel" >确认完成</button>   -->
+           
           <button class="ashBtn" data-orderId="{{item.pay_order_id}}" bindtap="goToUrl" data-url="/pages/cancel/cancel" >取消订单</button>
         </block>
-        <block wx:if="{{item.orderStatus == 'done'}}">
+        <block wx:if="{{item.orderStatus == 'done' && !item.isEvaluate}}">
           <button class="blueBtn" data-orderId="{{item.pay_order_id}}" bindtap="goToUrl" data-url="/pages/comment/comment">去评价</button>
         </block>
       </view>

@@ -6,7 +6,8 @@ Page({
     page:1,
     noData:false,
     loading:false,
-    isLogin:true,
+    isLogin:false,
+    isLoadingTrue:true,
     statusList:{
       'waitService':'待服务',
       'cancel':'已取消',
@@ -21,14 +22,7 @@ Page({
     meUrl:''
   },
   onLoad: function (options) {
-    // var timer=setInterval(()=>{
-    //   if(app.globalData.token){
-    //     clearInterval(timer)
-    //     this.getList();
-    //   }
-    // },1500)
     this.getList();
-    
     var pages = getCurrentPages()    //获取加载的页面
     var currentPage = pages[pages.length - 1]    //获取当前页面的对象
     this.setData({
@@ -37,14 +31,19 @@ Page({
     this.getInfo()
   },
   onShow(){
-    if(app.data.isReload){
-      app.data.isReload=false;
+    if(this.data.isLogin){
       this.getInfo();
       this.getList();
     }
   },
+  onHide(){
+    this.setData({
+      isLogin:true
+    })
+  },
   getList(){
     this.setData({
+      orderList:[],
       loading:true,
       noData:false
     })
@@ -52,7 +51,7 @@ Page({
       url: app.data.dev,
       method:'POST',
       data:{
-        "query":'query{customer_order_list(status:"'+this.data.status+'",page_index:'+this.data.page+',count:10000) {pay_order_id,name,price_pay,orderStatus,product_id,proSku_id, image_first,c_begin_datetime}}'
+        "query": 'query{customer_order_list(status:"' + this.data.status + '",page_index:' + this.data.page +',count:10000) {pay_order_id,name,price_pay,orderStatus,serviceStatus,product_id,proSku_id, image_first,c_begin_datetime,isEvaluate}}'
       },
       header:{
         "content-type": "application/json",
@@ -77,15 +76,18 @@ Page({
               noData: true
             })
           }
-          this.setData({
-            orderList: res.data.data.customer_order_list
-          })
+            this.data.isLoadingTrue=true;
+            this.setData({
+              orderList: res.data.data.customer_order_list
+            })
+          
       }
     })
   },
   tab(options){
     var key=options.currentTarget.dataset.key;
-    if(this.data.status==key){return false}
+    if (this.data.status == key || !this.data.isLoadingTrue){return false}
+    this.data.isLoadingTrue=false;
     key=key =='all'?'':key
     this.setData({
       status:key
@@ -112,7 +114,6 @@ Page({
             confirmColor: '#00a0e9',
             success: res => {
               if (res.confirm) {
-                app.data.isReload = true;
                 wx.redirectTo({
                   url: '/pages/login/login?url=' + this.data.meUrl,
                 })
@@ -190,6 +191,22 @@ Page({
     // 跳转界面
     wx.redirectTo({
       url: url+'?isOrder=true',
+    })
+  },
+  okOrder() {
+    wx.request({
+      url: app.data.dev,
+      method: "POST",
+      data: {
+        "query": 'mutation{customer_service_complete(pay_order_id:"' + this.data.orderId + '"){status}}'
+      },
+      header: {
+        "content-type": "application/json",
+        "Authorization": app.globalData.token
+      },
+      success: res => {
+        console.log(res, '=====')
+      }
     })
   }
 })

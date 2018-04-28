@@ -1,0 +1,26 @@
+/* pages/famous/famous.wxss */
+.container{background:#fff;}
+.userNews{background:#0f8af4; color:#fff; text-align: center; padding-bottom:64rpx;}
+
+.userNews .userImg{width:243rpx; height: 290rpx; margin:25rpx auto 43rpx; overflow: hidden; border-radius:10rpx; background:#ffffff; }
+.userNews .userImg image{width:100%; height: 100%;}
+.userNews .userName{font-size:37rpx; line-height: 37rpx;}
+.userNews .userNumber{font-size:30rpx; line-height: 30rpx; margin-top:39rpx;}
+
+.item{overflow:hidden; padding:0 0rpx 38rpx 30rpx;} 
+.item .title{font-size:34rpx; color:#727171; line-height:34rpx; padding-top:54rpx; padding-bottom:14rpx;}
+.item .server{overflow: hidden; width:742rpx;}
+.item .server .serverItem{font-size:26rpx;  text-align: center; color:#000; display:block; float:left; height:48rpx; line-height:48rpx; border-radius:10rpx; margin-right:45rpx; border:1px solid #727171; margin-top:29rpx;}
+.item .server .sixSmall{width:201rpx;}
+.item .server .sixMore{width:446rpx;}
+.aline{height: 21rpx; background:#f0eff5}
+
+.userCard,.healthy,.skill{padding:0 0rpx 40rpx 30rpx;}
+.userCard .title,.healthy .title,.skill .title{padding:30rpx 0; border-bottom:1px solid #e5e5e5; }
+
+.skill{ padding-bottom:40rpx;}
+
+.cardImg{width:200rpx; height: 200rpx; overflow: hidden; display:block; float:left; margin-top:40rpx; margin-right:40rpx;}
+.cardImg image{width:100%; height: 100%;}
+
+

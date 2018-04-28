@@ -20,14 +20,19 @@ Page({
       }
     },100)
   },
+  onPullDownRefresh(){
+    wx.showNavigationBarLoading()
+    this.getTaskList();
+  },
   goToDetail(options) {
-    var orderId=options.currentTarget.dataset.orderid;
+    var orderId = options.currentTarget.dataset.orderid;
+    var orderStatus=options.currentTarget.dataset.orderstatus;
     wx.setStorage({
       key: 'orderId',
       data: orderId,
     })
     wx.navigateTo({
-      url: '/pages/orderDetail/orderDetail',
+      url: '/pages/orderDetail/orderDetail?orderStatus='+orderStatus
     })
   },
   getStudentNews(){
@@ -78,6 +83,7 @@ Page({
   getTaskList(){
     this.setData({
       loading: true,
+      noData:false,
       taskList: []
     })
     wx.request({
@@ -88,9 +94,11 @@ Page({
         "Authorization": app.globalData.token
       },
       data:{
-        "query":'query{student_undone_orderinfo(page_index:1,count:10000){pay_order_id,cus_username,cus_phone,customer_address,product_id,proSku_id,c_begin_datetime,c_end_datetime,name}}'
+        "query":'query{student_undone_orderinfo(page_index:1,count:10000){pay_order_id,cus_username,cus_phone,customer_address,product_id,proSku_id,c_begin_datetime,c_end_datetime,name,serviceStatus,orderStatus}}'
       },
       success:res=>{
+        wx.hideNavigationBarLoading()
+        wx.stopPullDownRefresh()
         this.setData({
           loading: false
         })

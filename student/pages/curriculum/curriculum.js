@@ -27,7 +27,6 @@ Page({
   },
   // 自定义事件
   getCourseList(){   //培训中的课程
-    
     this.setData({
       trainLoading: true
     })
@@ -51,6 +50,7 @@ Page({
           })
           return false;
         }
+        console.log(res.data.data.my_student_course_team_active_list,'=====')
         var data = res.data.data.my_student_course_team_active_list,n=data.length;
         var idArr=[];
         for(let i=0; i<n; i++){
@@ -123,7 +123,7 @@ Page({
             var d = data[a].trainSchedule.attendclass_date.split('T')[0];
             var t = data[a].trainSchedule.attendclass_starttime.split('T')[1];
             var e = data[a].trainSchedule.attendclass_endtime.split('T')[1];
-            data[a].trainSchedule.mydate = d + ' ' + t.substring(0, t.length - 4) + '~' + e.substring(0, t.length - 4);
+            data[a].trainSchedule.mydate = d + ' ' + t.substring(0, t.length - 3) + '~' + e.substring(0, t.length - 3);
         }
         this.setData({
           coursesList: data

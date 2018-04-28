@@ -11,15 +11,16 @@
     <view class="item" wx:for="{{trainList}}">
       <image src="{{item.course.path}}"></image>
       <view class="f34">
-        {{item.courseTeam.team_name}} 
-        <text class="f18 {{item.course.train_way?'borderBlue':'borderYellow'}}">{{item.courseTeam.train_way?"在线":"面授"}}</text>
+        {{item.course.name}} 
+        <text class="f18 {{item.plan.train_way?'borderBlue':'borderYellow'}}">{{item.plan.train_way?"在线":"面授"}}</text>
       </view>
-      <view class="f24"> <image src="../../images/hour.png" class="iconImg"></image> {{item.courseTeam.team_hour}}课时</view>
-      <view class="f24"> <image src="../../images/credit.png" class="iconImg"></image> {{item.courseTeam.team_credit}}学分</view>
+      <view class="f24"> <image src="../../images/hour.png" class="iconImg"></image> {{item.course.hour}}课时</view>
+      <view class="f24"> <image src="../../images/credit.png" class="iconImg"></image> {{item.course.credit}}学分</view>
+      <block wx:if="{{item.examApplys[0].score != null}}">
       <view class="f24"> <image src="../../images/exam.png" class="iconImg"></image>课时成绩 <text class="f38">{{item.examApplys[0].score}}</text>分</view>
-      <view class="">
-      </view>
       <text class="qualified {{item.planStudent.passed?'bg1':'bg2'}}">{{item.planStudent.passed?'合格':'不合格'}}</text>
+      </block>
+      <view class="f24" wx:else> <image src="../../images/exam.png" class="iconImg"></image>暂无考试成绩 </view>
     </view>
   </view>
 </view>

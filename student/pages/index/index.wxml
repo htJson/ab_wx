@@ -8,7 +8,7 @@
   </view>
   <view class="tab">
     <text class="abLeft">待办任务</text>
-    <navigator url="/pages/tasksFinish/tasksFinish"> <text class="abRight finish">已完成任务</text></navigator>
+    <!-- <navigator url="/pages/tasksFinish/tasksFinish"> <text class="abRight finish">已完成任务</text></navigator> -->
   </view>
 
   <view class='noData' wx:if = "{{noData}}">
@@ -22,14 +22,14 @@
 
   <view class="item" wx:for="{{taskList}}" wx:key="{{index}}">
     <image class="phone" data-phone="{{item.cus_phone}}" bindtap="getPhone" src="../../images/phone.png"></image>
-    <view class="content" data-orderid="{{item.pay_order_id}}" bindtap="goToDetail">
+    <view class="content" data-orderid="{{item.pay_order_id}}" data-orderStatus="{{item.orderStatus}}" bindtap="goToDetail">
       <view class="user">
         <text class="title">联  系 人：</text>
         <text class="rightContent">{{item.cus_username}} {{item.cus_phone}}</text>
       </view>
       <view class="timer">
         <text class="title">服务时间：</text>
-        <text class="rightContent">{{tools.getDateTime(item.c_begin_datetime)}}~{{tools.getTime(item.c_end_datetime)}}</text>
+        <text class="rightContent">{{tools.getDateTime(item.c_begin_datetime)}}<block wx:if="{{tools.getTime(item.c_end_datetime) != ''}}">~{{tools.getTime(item.c_end_datetime)}}</block></text>
       </view>
       <view class="timer">
         <text class="title">服务名称：</text><text class="rightContent">{{item.name}}</text>

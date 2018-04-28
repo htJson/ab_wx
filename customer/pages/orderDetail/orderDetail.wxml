@@ -1,0 +1,86 @@
+<wxs src="../../templates/msglist.wxs" module="myTime" />
+ <view class='headerBox'>
+  <view class="imgBox" bindtap='backFn'>
+    <image src="../../images/black.png"></image>
+  </view>
+  <view class="header_content">订单详情</view>
+</view> 
+<view class="container">
+  <view class="orderNews">
+    <view class="header">
+      <text class="title">订单信息</text>
+      <block wx:if="{{detail.orderStatus!='done' && detail.orderStatus != 'cancel'}}">
+        <text wx:if="{{detail.orderStatus  == 'waitPay'}}" class="state {{detail.orderStatus  == 'waitPay'?'orderType':''}}">[{{statusList[detail.orderStatus]}}]</text>
+        <text  wx:if="{{detail.orderStatus  == 'waitService'}}" class="state {{detail.orderStatus  == 'waitService'?'orderServiece':''}}">[{{statusList[detail.orderStatus]}}]</text>
+      </block>
+      <text wx:else class="state orderAsh">[{{statusList[detail.orderStatus]}}]</text>
+    </view>
+    <view class="content">
+      <view class="orderNum">订单号：{{detail.pay_order_id}}</view>
+      <view class="product" bindtap="goToDetail" data-id="{{detail.product_id}}">
+        <image wx:if="{{detail.image_first}}" src="{{detail.image_first}}" ></image>
+        <image wx:else src="../../images/default.png"></image> 
+        <view class="news">
+          <view class="name">{{detail.name}}</view>
+          <view class="user">{{detail.cus_username}}</view>
+          <view class="phone">{{detail.cus_phone}}</view>
+          <image class="more" data-id="{{detail.pay_order_id}}" src="../../images/more.png"></image>
+        </view>
+      </view>
+      <view class="time_address">
+        <text class="title">服务时间</text>
+        <text class="time">{{myTime.forMat(detail.c_begin_datetime,1)}}<text wx:if="{{detail.c_end_datetime!=null}}">-</text>{{myTime.lastTime(detail.c_end_datetime)}}</text> 
+      </view>
+      <view class="time_address">
+        <text class="title">服务地址</text>
+        <text class="time">{{detail.customer_address}}</text>
+      </view>
+      <view class="time_address">
+        <text class="title">服务备注</text>
+        <text class="time">{{detail.remark}}</text>
+      </view>
+    </view>
+  </view>
+  <view class="orderDetail">
+    <view class="header">订单明细</view>
+    
+    <view class="item">
+      <text class="title">数量</text>
+      <text class="price">{{detail.num}}<text wx:if="{{detail.unit != null}}">{{detail.unit}}</text></text>
+    </view>
+    <!-- <view class="item">
+      <text class="title">单价</text>
+      <text class="price">-￥{{detail.price_discount/100}}</text>
+    </view> -->
+    <view class="item">
+      <text class="title">服务价格</text>
+      <text class="price">￥{{detail.price_total/100}}</text>
+    </view>
+    <view class="item">
+      <text class="title">礼券</text>
+      <text class="price">-￥{{detail.price_discount/100}}</text>
+    </view>
+    <view class="item">
+      <text class="title">实付金额</text>
+      <text class="price">￥{{detail.price_pay/100}}</text>
+    </view>
+  </view>
+
+  <view class="orderAttr" wx:if="{{detail.orderStatus == 'done' && !detail.isEvaluate}}">
+  <!--已完成  -->
+    <button class="ok" bindtap="goToStore">去点评</button>
+  </view>
+  <view class="orderAttr" wx:if="{{detail.orderStatus  == 'waitPay'}}">
+  <!--待支付  -->
+    <button class="ok" bindtap='payNow'>立即支付</button>
+
+    <button class="cancel" bindtap="cancelOrder">取消订单</button>
+  </view>
+  <view class="orderAttr" wx:if="{{detail.orderStatus  == 'waitService'}}">
+    <!--待服务  -->
+    <button class="cancel" bindtap="cancelOrder">取消订单</button>
+    <!-- <button class="ok" bindtap="okOrder" data-url="/pages/cancel/cancel" >确认完成</button>  -->
+    <button class="ok" wx:if="{{detail.orderStatus=='waitService' && detail.serviceStatus =='leave' }}" bindtap="okOrder" data-url="/pages/cancel/cancel" >确认完成</button> 
+    <!-- <button class="cancel" wx:else data-url="/pages/cancel/cancel" >确认完成</button>   -->
+  </view>
+</view>

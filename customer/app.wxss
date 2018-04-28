@@ -1,0 +1,57 @@
+/**app.wxss**/
+/*浮动  */
+.aLeft{float:left!important;}
+.aRight{float:right!important}
+.overflow{overflow:hidden}
+.mt30{margin-top:30rpx;}
+.pl30{padding-left:30rpx;}
+.plr30{padding:0 30rpx;}
+.relative{position: relative}
+.mt50{margin-top:50rpx;}
+/*公用头部样式  */
+.container{margin-top:64px!important}
+.headerBox{background: #00a0e9; height:64px; z-index: 9999999; position: fixed; width:100%; top:0px; overflow: hidden;}
+.headerBox .imgBox{width:100rpx; height: 44px; margin-top:20px;}
+.headerBox .header_content{position: absolute; right:0px; left:0px; top:0px; bottom:5px; text-align: center; color:#fff; font-weight: bolder; font-size:18px; margin-top:20rpx; margin-left:150rpx; margin-right:150rpx; line-height: 60px;}
+.headerBox image{position:absolute;left:10px;top:30px;width:23rpx;height:38rpx;}
+
+/*暂无数据样式 */
+.noData{text-align: center; padding-top:100rpx; background: #fff;}
+.noData text{display: block; padding-bottom:30rpx; font-size:30rpx;}
+.noData image{width:320rpx; height:240rpx;}
+
+/*loading样式  */
+.loading{background: #fff; padding:90rpx 0 100rpx}
+.loading image{width:50rpx; height:50rpx; display:block; margin:0rpx auto;}
+
+/*列表公用样式  */
+.listItem{width:365rpx; background: #fff; margin-bottom:15rpx;}
+.listItem image{width:365rpx; display: block; margin:0 auto; height:365rpx;}
+.listItem .listNews{padding:0 20rpx; }
+.listNews .newsTitle{color:#000; overflow: hidden; padding:27rpx 0;}
+.listNews .newsTitle .title{font-size:30rpx; color:#000;  overflow: hidden;text-overflow:ellipsis;white-space: nowrap; }
+/* .listNews .newsTitle .order{font-size:22rpx; color:#b7bbc1; float: right; margin-top:10rpx;} */
+.listNews .itemPrice{overflow: hidden; font-size:24rpx; margin:0rpx 0 10rpx;}
+.listNews .itemPrice .money{color:#00a0e9; font-size:24rpx;}
+.listNews .itemPrice .priceAll{color:#00a0e9; font-size:34rpx;}
+.listNews .itemPrice .oldPrice{font-size:22rpx; display: inline; color:#b7bbc1; margin-left:15rpx;}
+.listNews .itemPrice .oldPrice text{text-decoration:line-through; }
+.listNews .itemPrice .order{overflow: hidden; height: 35rpx; float: right; margin-top:10rpx;}
+.listNews .itemOrder{text-align: right; color:#999; font-size:24rpx;}
+
+/*  首页列表第二条  */
+
+.indexitem{overflow: hidden; padding:30rpx 20rpx; background: #fff; margin-bottom:20rpx; position: relative;}
+.indexitem .imgBox{width:230rpx; height: 230rpx; float: left;}
+.indexitem .imgBox image{width:100%; height:100%;}
+.indexitem .contentIndex{margin-left:256rpx; overflow: hidden;}
+/* .contentIndex>view{margin-bottom:24rpx;} */
+.contentIndex .title{font-size:32rpx; color:#222222; margin-bottom:20rpx;  overflow: hidden;text-overflow:ellipsis;white-space: nowrap; line-height: 36rpx;}
+.contentIndex .descript{font-size:26rpx; margin-bottom:27rpx; line-height: 32rpx; color:#b2b2b2;  overflow: hidden;text-overflow:ellipsis; white-space: nowrap;}
+.contentIndex .order{overflow: hidden; color:#9a9a9a; line-height:22rpx; font-size:22rpx; margin-bottom:60rpx; }
+/* .contentIndex .order image{width:22rpx; height:22rpx; float:left; margin-right:15rpx;} */
+.contentIndex .itemPrice{overflow: hidden; color:#ff3e00; font-size:36rpx; line-height: 36rpx;}
+.contentIndex .itemPrice .company{font-size:20rpx; color:#00a0e9; margin-left:10rpx;}
+.contentIndex .itemPrice .priceAll{line-height: 36rpx;}
+.indexitem .make{ position: absolute; right:20rpx; line-height:60rpx; background: #fff; border:1px solid #7fcff4; bottom:30rpx; font-size:26rpx; color:#00a0e9; width:160rpx; height: 60rpx; border-radius:10rpx;}
+button::after{border: 0;}

@@ -9,7 +9,7 @@
 .relative{position: relative}
 .mt50{margin-top:50rpx;}
 /*公用头部样式  */
-.container{padding-top:64px!important}
+.container{margin-top:64px!important}
 .headerBox{background: #00a0e9; height:64px; z-index: 9999999; position: fixed; width:100%; top:0px; overflow: hidden;}
 .headerBox .imgBox{width:100rpx; height: 44px; margin-top:20px;}
 .headerBox .header_content{position: absolute; right:0px; left:0px; top:0px; bottom:5px; text-align: center; color:#fff; font-weight: bolder; font-size:18px; margin-top:20rpx; margin-left:150rpx; margin-right:150rpx; line-height: 60px;}
@@ -38,3 +38,20 @@
 .listNews .itemPrice .oldPrice text{text-decoration:line-through; }
 .listNews .itemPrice .order{overflow: hidden; height: 35rpx; float: right; margin-top:10rpx;}
 .listNews .itemOrder{text-align: right; color:#999; font-size:24rpx;}
+
+/*  首页列表第二条  */
+
+.indexitem{overflow: hidden; padding:30rpx; background: #fff; margin-bottom:20rpx; position: relative;}
+.indexitem .imgBox{width:200rpx; height: 200rpx; float: left;}
+.indexitem .imgBox image{width:200rpx; height: 200rpx;}
+.indexitem .contentIndex{margin-left:226rpx; overflow: hidden;}
+.contentIndex>view{margin-bottom:24rpx;}
+.contentIndex .title{font-size:34rpx; color:#000;  overflow: hidden;text-overflow:ellipsis;white-space: nowrap; line-height: 34rpx;}
+.contentIndex .descript{font-size:26rpx; line-height: 26rpx; color:#666666;  overflow: hidden;text-overflow:ellipsis; white-space: nowrap;}
+.contentIndex .order{overflow: hidden; color:#b7bbc1; line-height:22rpx; font-size:22rpx; }
+.contentIndex .order image{width:22rpx; height:22rpx; float:left; margin-right:15rpx;}
+.contentIndex .itemPrice{overflow: hidden; margin-top:30rpx; color:#00a0e9; margin-bottom:0px; font-size:36rpx; line-height: 36rpx;}
+.contentIndex .itemPrice .company{font-size:20rpx; color:#00a0e9; margin-left:10rpx;}
+.contentIndex .itemPrice .priceAll{line-height: 36rpx;}
+.indexitem .make{background:#00a0e9; border-radius:4rpx; position: absolute; right:30rpx; bottom:33rpx; font-size:26rpx; color:#fff; width:160rpx; height: 60rpx;}
+button::after{border: 0;}

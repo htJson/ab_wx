@@ -1,0 +1,47 @@
+.container{padding-bottom:80rpx; background: #fff;}
+.borderBottom{ border-bottom:1px solid #cecfd2; padding-left:30rpx;}
+.moreIcon{width:40rpx; height: 45rpx;}
+.titleBox{height: 118rpx; font-size:30rpx; color:#010000; line-height: 118rpx;}
+.title{font-size:26rpx; color:#727171; width:159rpx; display: block; float:left; text-align: left;}
+.titleBox .name{display:block; margin-left:160rpx; overflow: hidden;text-overflow:ellipsis;white-space: nowrap; }
+.addressBox{ border-bottom:1px solid #cecfd2; padding:27rpx 30rpx 27rpx; overflow: hidden;}
+.addressBox .noAddress{border:1px solid #a0a0a0; margin:10rpx 0; display: block; width:310rpx; height:63rpx; border-radius:40rpx; text-align: center; line-height: 63rpx;}
+.addressBox .noAddress text{color:#ddbf5d; margin-right:35rpx; font-size:50rpx; display: block; margin-top:-5rpx; float: right;}
+.address{font-size:26rpx; color:#000; position: relative; margin-left:159rpx; padding-right:50rpx;}
+.address image{position:absolute; right:0px; top:10px;}
+.namePhone{padding-bottom:20rpx;}
+.namePhone text{margin-right:20rpx;}
+.buyNum{padding: 35rpx 30rpx;border-bottom:1px solid #cecfd2; overflow: hidden; line-height: 50rpx;}
+.changeNum{width:300rpx; float: right;}
+.changeNum image{width:40rpx; height:40rpx; margin-top:7rpx;}
+.changeNum .num{width:80rpx; margin:0 10rpx; text-align: center;}
+.setTime,.priceBox,.coupon{padding:36rpx 30rpx; overflow: hidden;}
+.setTime .timeContent{ font-size:26rpx; color:#000; position:relative;}
+.setTime .timeContent .item{overflow: hidden;line-height: 35rpx; font-size:26rpx; padding-top:30rpx;} 
+.setTime .timeContent .item image{width:35rpx; height: 35rpx; float:left; margin-right:30rpx;}
+.setTime .timeContent .time{ padding-left:65rpx; display: block; line-height: 26px; height:26rpx; font-size:26rpx;}
+
+.noteBox{padding:36rpx 30rpx; position:relative; border-bottom:none;}
+.noteBox .textarea{display:block; margin-left:120rpx; margin-top:20rpx; height:130rpx;}
+.noteBox .textarea textarea{width:100%; font-size:26rpx; color:#000; height: 150rpx;}
+.money{ float:right; color:#000; font-size:30rpx;}
+.allPrice{float: right; color:#ff0000; font-size:30rpx;}
+.couponContent{margin-left:159rpx; position:relative; padding-right:50rpx; line-height:50rpx; font-size:26rpx; color:#ddbf5d; text-align: right;}
+.couponContent image{position: absolute; right:0px;}
+
+.footer {overflow: hidden; position: fixed; bottom:0px; left:0px; right:0px; height: 100rpx; border-top:1px solid #c7c7cc; background: #fff;}
+.footer .allPrice{width:50%; float:left; height: 100rpx;}
+.footer .allPrice .priceBox{font-size:36rpx; color:#000; line-height: 100rpx; padding:0px; padding-left:28rpx;}
+.footer .allPrice .priceBox .ntxt{font-size:26rpx; display: block; float:left; line-height: 94rpx;}
+.footer .allPrice .priceBox .price{font-size:36rpx; color:#ff0000; display: block; float:left; line-height: 100rpx; padding-left:55rpx;}
+.footer .submitBtn{color:#fff; background:#00a0e9; width:50%; border-radius: 0px; margin-left:50%; height: 100rpx;}
+
+
+
+
+
+
+
+
+
+

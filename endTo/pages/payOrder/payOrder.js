@@ -155,9 +155,11 @@ Page({
         })
       },
       'fail': function (res) {
-        
       }
     })
+
+   
+
   },
   getOrderPayStatus(){
     wx.request({
@@ -171,7 +173,7 @@ Page({
         "query": 'query{customer_confirm_pay_status(pay_order_id: "' + this.data.orderId+'") {pay_order_id,pay_status}}'
       },
       success:res=>{
-        wx.removeStorageSync('payData')
+        // wx.removeStorageSync('payData')
       }
     })
   }

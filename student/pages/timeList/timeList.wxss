@@ -1,0 +1,24 @@
+/* pages/timeList/timeList.wxss */
+.container{ padding-bottom:80rpx; background: #fff;}
+.content{background: #fff;}
+.header{background: #fff; line-height: 100rpx; padding:0 30rpx; font-size:34rpx; overflow: hidden;text-overflow:ellipsis;white-space: nowrap; }
+.timeSelected{background: #fff;  overflow: auto; padding:50rpx 0 100rpx; text-align: center;}
+.timeSelected::-webkit-scrollbar {display:none}
+.timeSelected .item{width:160rpx; height:120rpx; padding-top:40rpx; margin:0 25rpx; border-radius:100rpx; position: relative; border:1px solid #d8d8d8; display: inline-block; }
+
+.timeSelected .item text{display: block; text-align: center; }
+.timeSelected .item .week{font-size:30rpx;}
+.timeSelected .item .date{font-size:26rpx;}
+
+.timeSelected .item .icon{position: absolute;left:0px; right:0px; text-align: center;bottom:-70rpx;}
+.timeSelected .active{color:#fff; background:#00a0e9}
+.timeSelected .active .icon{color:#00a0e9}
+
+.bespeak{background: #fff; height: 189rpx; padding-right:189rpx; margin-bottom:30rpx; border-top:1px solid #dadadd; border-bottom:1px solid #dadada; line-height: 189rpx; text-align: center; position: relative;}
+.bespeak .btn{position: absolute; width:189rpx; top:0px; right:0px; height: 189rpx;}
+.bespeak .noBes{ background: #dadadd;}
+.bespeak .besBtn{ background: #fff; color:#727171; border-left:1px solid #dadadd}
+.active {color:#77d0f8;}
+.active .besBtn{background:#77d0f8; color:#fff;}
+
+.selectedTime{position: fixed; bottom:0px; height: 100rpx; text-align: center; color: #fff; background: #00a0e9; width:100%; border-radius:0px;}

@@ -16,11 +16,10 @@
       <text class="title">订  单 号：</text><text class="rightContent">{{item.pay_order_id}}</text>
     </view>
     <view class="timer">
-      <text class="title">订单价格：</text><text class="rightContent">￥{{item.price_total}}</text>
+      <text class="title">订单价格：</text><text class="rightContent">￥{{item.price_total/100}}</text>
     </view>
     <view class="timer">
       <text class="title">服务名称：</text><text class="rightContent">{{item.name}}</text>
     </view>
   </view>
-  
 </view>

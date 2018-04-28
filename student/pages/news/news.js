@@ -6,14 +6,9 @@ Page({
     newsNoData:false,
     newsLoading:false
   },
-
-  /**
-   * 生命周期函数--监听页面加载
-   */
   onLoad: function (options) {
     this.getNewsList();
   },
-
   getNewsList(){
     this.setData({
       newsLoading:true
@@ -41,7 +36,7 @@ Page({
         var data = res.data.data.student_show_massageInfo,n=data.length;
         for(let i=0; i<n; i++){
           var d=data[i].create_datetime.split('T');
-          d[1] = d[1].substring(0, d[1].length - 1);
+          
           data[i].mydate=d.join(' ');
         }
         this.setData({

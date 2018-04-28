@@ -1,0 +1,42 @@
+<!--index.wxml-->
+<import src="../../templates/msglist.wxml"/>
+<view class='headerBox'>
+  <!-- <image src="../../images/black.png"></image> -->
+  <view class="header_content">浦尔家</view>
+</view> 
+
+<view class="container">
+<!-- <button open-type="getUserInfo" bindgetuserinfo="userInfoHandler"> Click me </button> -->
+  <view class="banner">
+    <swiper class="" style="height:246rpx;" autoplay="true" interval="3000" duration="500" circular="true" indicator-dots="true"  indicator-color='#b7bbc1' indicator-active-color='#00a0e9'>
+      <block wx:for="{{imgUrls}}" wx:key="{{index}}" wx:key="{{index}}">
+        <swiper-item>
+          <image src="{{item.url}}" class="slide-image"/>
+        </swiper-item>
+      </block>
+    </swiper>
+  </view>
+
+  <!-- <view class="assort">  
+    分类展示
+    <view class="ass_item" wx:for="{{assort}}" wx:key="{{index}}" data-id="{{item.category_level_code}}"  data-name="{{item.name}}" bindtap="goToList">
+      <view><image src="{{item.logo}}" mode="aspectFill"></image></view>
+      <text>{{item.name}}</text>
+    </view>
+  </view> -->
+
+  <view class="assList">
+    <view class="loading" wx:if="{{isLoading}}">
+      <image src="../../images/loading.gif"></image>
+    </view>
+    <view class="noData" wx:if="{{noData}}">
+      <image src="../../images/noData.jpg"></image>
+      <text>暂无数据</text>
+    </view>
+    <view wx:else>
+      <block wx:for="{{skuList}}" wx:key="{{index}}">
+        <template is="indexItem" data="{{item,index}}"/>
+      </block>
+    </view>
+  </view>
+</view>

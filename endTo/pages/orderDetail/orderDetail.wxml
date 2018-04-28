@@ -29,7 +29,7 @@
       </view>
       <view class="time_address">
         <text class="title">服务时间</text>
-        <text class="time">{{myTime.forMat(detail.c_begin_datetime,1)}}-{{myTime.lastTime(detail.c_end_datetime)}}</text> 
+        <text class="time">{{myTime.forMat(detail.c_begin_datetime,1)}}<text wx:if="{{detail.c_end_datetime!=null}}">-</text>{{myTime.lastTime(detail.c_end_datetime)}}</text> 
       </view>
       <view class="time_address">
         <text class="title">服务地址</text>
@@ -57,17 +57,21 @@
     </view>
   </view>
 
-  <view class="orderAttr" wx:if="{{detail.orderStatus == 'done'}}">
+  <view class="orderAttr" wx:if="{{detail.orderStatus == 'done' && !detail.isEvaluate}}">
   <!--已完成  -->
     <button class="ok" bindtap="goToStore">去点评</button>
   </view>
   <view class="orderAttr" wx:if="{{detail.orderStatus  == 'waitPay'}}">
   <!--待支付  -->
     <button class="ok" bindtap='payNow'>立即支付</button>
+
     <button class="cancel" bindtap="cancelOrder">取消订单</button>
   </view>
   <view class="orderAttr" wx:if="{{detail.orderStatus  == 'waitService'}}">
     <!--待服务  -->
     <button class="cancel" bindtap="cancelOrder">取消订单</button>
+    <!-- <button class="ok" bindtap="okOrder" data-url="/pages/cancel/cancel" >确认完成</button>  -->
+    <button class="ok" wx:if="{{detail.orderStatus=='waitService' && detail.serviceStatus =='over' }}" bindtap="okOrder" data-url="/pages/cancel/cancel" >确认完成</button> 
+    <!-- <button class="cancel" wx:else data-url="/pages/cancel/cancel" >确认完成</button>   -->
   </view>
 </view>

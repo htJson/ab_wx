@@ -50,6 +50,9 @@ Page({
       },
       success:res=>{
         var idArr=[];
+        if (res.data.errors && res.data.errors.length>0){
+          return false;
+        }
         var data = res.data.data.teacher_cms_bannar_online_list,n=data.length;
         for(let i=0; i<n; i++){
           idArr.push('"' + data[i].img_cover.toString()+'"');

@@ -1,0 +1,50 @@
+/* pages/searchAddress/searchAddress.wxss */
+.container{padding:50rpx 30rpx;}
+.search{overflow: hidden; background:#efeff4; margin-top:40rpx; border-radius:50rpx; padding:10rpx; position: relative;}
+.search .city{float:left; font-size:30rpx; color:#000; margin:10rpx; border-right:1px solid #adacaf; margin-right:20rpx; position: relative; padding-right:30rpx; margin-left:30rpx;}
+.search .Keywords{position: absolute; left:0px; top:0px; right:0px; bottom:0px; margin-left:150rpx; margin-top:17rpx; margin-right:30rpx;}
+.search .Keywords input{width:100%; font-size:28rpx; color:#727171}
+
+.location,.searchList{margin-top:50rpx;}
+.location .title,.searchList .title{overflow: hidden;}
+
+.location .title image,.searchList .title image{width:30rpx; height: 30rpx; float:left;}
+.location .title text,.searchList .title text{font-size:26rpx; color:#727171; float:left; margin-left:15rpx;}
+.location .content{ margin-left:45rpx; margin-top:25rpx; position:relative}
+.location .content .name{font-size:34rpx; margin-right:160rpx;}
+
+.location .content .refresh{font-size:34rpx; position:absolute; right:0px; top:0px; color:#727171; overflow: hidden; margin-top:5rpx;}
+.location .content .refresh image{width:30rpx; height: 30rpx; float:left; margin-right:15rpx; margin-top:7rpx;}
+.location .content .refresh text{ float:left; font-size:30rpx;}
+
+.searchList .list{margin-left:45rpx;}
+.searchList .list .item{color:#010101; font-size:30rpx; padding:35rpx 0; border-bottom:1px solid #c7c7cc}
+
+.page-top{
+  height: 100%;
+  position: fixed;
+  width: 750rpx;
+  background-color: rgb(57, 125, 230);
+  z-index: 10;
+  top:0px;
+  transition: All 0.4s ease; 
+  -webkit-transition: All 0.4s ease;
+}
+.page-top image{
+  position: absolute;
+  width: 68rpx;
+  height: 38rpx;
+  left: 20rpx;
+  top: 20rpx;
+}
+
+.c-state1{  
+  transform: rotate(0deg) scale(1) translate(100%,0%);   
+  -webkit-transform: rotate(0deg) scale(1) translate(100%,0%);   
+}  
+
+.c-state2{  
+  transform: rotate(0deg) scale(.8) translate(100%,0%);   
+  -webkit-transform: rotate(0deg) scale(.8) translate(100%,0%);   
+} 
+

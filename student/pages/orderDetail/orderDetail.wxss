@@ -1,14 +1,11 @@
-/* pages/orderDetail/orderDetail.wxss */
 .container{padding:0 30rpx; background: #fff;}
 
 .product{overflow: hidden;padding:30rpx 0;border-bottom:1px solid #c7c7cc}
 .product .logo{width:160rpx; height: 160rpx; float:left}
-.product .productContent{ margin-left:180rpx; position: relative;}
+.product .productContent{ margin-left:180rpx; position: relative; padding-right:70rpx;}
 .productContent text{display: block; font-size:30rpx;}
 .productContent .title{color:#000; font-size:36rpx; padding:10rpx 0}
-.productContent .phoneIcon{position: absolute; right:30px; top:20px; width:45rpx;height: 45rpx;}
-
-
+.productContent .phoneIcon{position: absolute; right:10rpx; top:20px; width:45rpx;height: 45rpx;}
 
 .serverNews{padding-top:30rpx;}
 .serverNews .item{ overflow: hidden; font-size: 28rpx; padding:15rpx 0px;}
@@ -24,5 +21,16 @@
 .noteRadio view image{width:35rpx; height: 35rpx; float:left; margin-right:10rpx;}
 
 .noteText{height: 250rpx; width:100%; background:#efeff4; margin-top:20rpx;}
-.statusBtn{background:#00a0e9; height: 100rpx; line-height: 100rpx; border-radius:0px; border:0; color:#fff; position: fixed; bottom:0px;width:100%; left:0px;}
-
+.serverBox{position:fixed; bottom:0px; left:0px; right:0px; height: 100rpx; overflow: hidden;}
+.serverBox .series{background:#f1f1f1; display: block; float:left; height: 100rpx; line-height: 100rpx; border-radius:0px; border:0; color:#666; width:50% }
+.serverBox .statusBtn{background:#00a0e9; display: block; float:right; height: 100rpx; line-height: 100rpx; border-radius:0px; border:0; color:#fff; width:50% }
+/* .cancel{background:#f1f1f1; width:100%; border:none; color:#fff; height: 100rpx; line-height:100rpx;position: fixed; bottom:0px; left:0px;} */
+.cancel{
+  color:#727171;
+  border-radius:6rpx;
+  background:#fff;
+  border:1px solid #727171;
+  margin-top:100rpx;
+  font-size:30rpx;
+  width:300rpx;
+}

@@ -1,6 +1,6 @@
 <!--Pages/login/login.wxml-->
 <view class="container">
-  <view class="tip">为了保障正常的工作安排及培训，请输入身份证号进行身份验证</view>
+  <view class="tip" wx:if="{{isEditer}}">为了保障正常的工作安排及培训，请输入身份证号进行身份验证</view>
   <view id="submitLogin">
     <!-- <view>
       <text class="">姓名：</text>
@@ -14,11 +14,11 @@
     </view> -->
     <view>
       <text class="">手机号：</text>
-      <input type="Number" bindinput='phoneInupt' value="{{phone}}" placeholder='请输入11位有效手机号'  placeholder-style="font-size:24rpx"/>
+      <input type="Number" bindinput='phoneInupt' disabled="{{!isEditer?'disabled':''}}" value="{{phone}}" placeholder='请输入11位有效手机号'  placeholder-style="font-size:24rpx"/>
     </view>
     <view>
       <text class="">身份证号：</text>
-      <input type="Number" bindinput='idNumInput' value="{{idNum}}" placeholder='请输入有效身份证号' placeholder-style='font-size:24rpx'/>
+      <input type="Number" bindinput='idNumInput' disabled="{{!isEditer?'disabled':''}}" value="{{idNum}}" placeholder='请输入有效身份证号' placeholder-style='font-size:24rpx'/>
     </view>
     <view class="btn-area">
       <button formType="submit" class="{{isDisabled?'disStyle':''}}" bindtap="bindUser" disabled="{{isDisabled}}">绑定</button>

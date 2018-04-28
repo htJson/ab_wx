@@ -24,10 +24,16 @@
           </view>
         </view>
         <view class="startList">
-          <block wx:for="{{5}}" wx:for-item="itemName" wx:for-index="idx">
-          <image wx:if="{{idx >= item.courseEvaluate.score}}" data-par="{{index}}" data-zId="{{idx+1}}" bindtap='startFn' src="../../images/startDefault.png"></image>
-          <image wx:else src="../../images/start.png" data-par="{{index}}" data-zId="{{idx+1}}"  bindtap='startFn'></image>
+          <block wx:for="{{5}}"  wx:if="{{!item.courseEvaluate.isScore}}" wx:for-item="itemName" wx:for-index="idx">
+          <image wx:if="{{idx >= item.courseEvaluate.score}}" data-par="{{index}}" data-zId="{{idx+1}}" bindtap='startFn' src="../../images/startDefault.png">22</image>
+          <image wx:else src="../../images/start.png" data-par="{{index}}" data-zId="{{idx+1}}"  bindtap='startFn'>22</image>
           </block>
+
+          <block wx:for="{{5}}"  wx:if="{{item.courseEvaluate.isScore}}" wx:for-item="itemName" wx:for-index="idx">
+            <image wx:if="{{idx >= item.courseEvaluate.score}}" data-par="{{index}}" data-zId="{{idx+1}}" src="../../images/startDefault.png"></image>
+            <image wx:else src="../../images/start.png" data-par="{{index}}" data-zId="{{idx+1}}"></image>
+          </block>
+
         </view>
         <view class="startTxt">
           <text wx:if="{{!item.courseEvaluate.isScore}}" bindtap="submitScore" class="submite" data-score="{{item.courseEvaluate.score}}" data-pid="{{item.trainScheduleInfo.trainSchedule.train_schedule_id}}">点击提交评分</text>

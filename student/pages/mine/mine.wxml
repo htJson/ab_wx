@@ -34,5 +34,10 @@
       <text>我的账户</text>
       <image class="moreBox" src="../../images/more.png"></image>
     </view>
+    <view data-url="../famous/famous"  data-key="exam" bindtap='changeUrl'>
+      <image class="leftIcon" src="../../images/famous.png"></image>
+      <text>我的工作证</text>
+      <image class="moreBox" src="../../images/more.png"></image>
+    </view>
   </view>
 </view>

@@ -37,6 +37,7 @@ Page({
             title:'评分成功',
             mask:true
           })
+          this.getRecord();
         }else{
           wx.showToast({
             title: '评分失败',
@@ -55,7 +56,7 @@ Page({
       url: app.data.dev,
       method: 'POST',
       data: {
-        query: "query{my_student_trained_courseinfo_list{trainScheduleInfo{chapter{headline,section_name},course{name},plan{train_begin,train_end,train_way},trainSchedule{train_schedule_id,attendclass_date,attendclass_starttime,attendclass_endtime}},courseEvaluate{train_schedule_id,comment,score}}}"
+        query: "query{my_student_trained_courseinfo_list{trainScheduleInfo{chapter{headline,section_name},course{name},plan{train_way},trainSchedule{train_schedule_id,attendclass_date,attendclass_starttime,attendclass_endtime}},courseEvaluate{train_schedule_id,comment,score}}}"
       },
       header: {
         "content-type": 'application/json', // 默认值
@@ -75,10 +76,10 @@ Page({
         var data = res.data.data.my_student_trained_courseinfo_list,n=data.length;
         for(let i=0; i<n; i++){
           var d = data[i].trainScheduleInfo.trainSchedule.attendclass_date.split('T')[0]
-          var sd = data[i].trainScheduleInfo.plan.train_begin.split('T')[1];
-          sd=sd.substring(0,sd.length-4)
-          var ed = data[i].trainScheduleInfo.plan.train_end.split('T')[1];
-          ed=ed.substring(0,ed.length-4)
+          var sd = data[i].trainScheduleInfo.trainSchedule.attendclass_starttime.split('T')[1];
+          sd=sd.substring(0,sd.length-3)
+          var ed = data[i].trainScheduleInfo.trainSchedule.attendclass_endtime.split('T')[1];
+          ed=ed.substring(0,ed.length-3)
           data[i].trainScheduleInfo.plan.mydate=d+' '+sd+'~'+ed;
           if (data[i].courseEvaluate==null){
             data[i].courseEvaluate={
@@ -89,7 +90,6 @@ Page({
           }
           vdata.push(data[i])
         }
-        console.log(vdata,'=====')
         this.setData({
           coursesList:vdata
         })

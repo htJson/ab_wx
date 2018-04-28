@@ -26,7 +26,11 @@ Page({
     this.getFinish();
   },
   goToDetail(options){
-    var id=options.currentTarget.dataset.orderid
+    var orderId = options.currentTarget.dataset.orderid;
+    wx.setStorage({
+      key: 'orderId',
+      data: orderId,
+    })
     wx.navigateTo({
       url: '/pages/orderDetail/orderDetail',
     })
@@ -34,7 +38,8 @@ Page({
 
   getFinish(){
     this.setData({
-      loading:true
+      loading:true,
+      complate:[]
     })
     wx.request({
       url: app.data.dev,
@@ -53,7 +58,6 @@ Page({
         })
 
         if (res.data.errors || res.data.error || res.data.data.student_complete_orderinfo==null){
-          console.log('-=---------')
           this.setData({
             noData:true
           })

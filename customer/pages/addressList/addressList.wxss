@@ -1,0 +1,20 @@
+/* pages/addressList/addressList.wxss */
+.container{padding-bottom:100rpx;}
+.addressItem{padding:24rpx 30rpx; border-bottom:1px solid #c7c7cc}
+.itemActive{background: #efeff4;}
+.addressItem .default text{color:#727171; padding:2rpx 10rpx; text-align: center; line-height: 38rpx; font-size:20rpx; width:160rpx; height:38rpx; float:left; border:1px solid #c9caca; border-radius:4px}
+.addressItem .default .defaultAdress{border:3px solid #ebcd6c; width:75rpx; height:32rpx;}
+.addressItem .addressContent{overflow: hidden; margin-top:20rpx;}
+.addressContent .addressIcon{float:left; width:90rpx;}
+.addressContent .addressIcon image{width:40rpx; height: 40rpx; display: block; margin-top:20rpx;}
+.addressContent .content{ font-size:26rpx; overflow: hidden;}
+.addressContent .content .namePhone text{margin-right:30rpx; padding-bottom:20rpx;}
+.addressContent .addressBox{margin-left:90rpx;}
+.addressContent .editerBox{width:60rpx; height: 90rpx; float:right;}
+.addressContent .editerBox .editer{width:35rpx; height:35rpx; float: right;}
+.address_add{position: fixed; bottom:0px; height:98rpx; background: #00a0e9; color:#fff; border-radius: 0; width:100%; }
+
+
+
+
+

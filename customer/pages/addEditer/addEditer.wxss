@@ -1,0 +1,16 @@
+/* pages/addEditer/addEditer.wxss */
+.itemStyle{border-bottom:1px solid #cecfd2; padding:38rpx 30rpx; overflow: hidden;}
+.title{color: #727171; font-size:26rpx; width:153rpx; float:left; line-height: 40rpx;}
+.content{font-size:26rpx; margin-left:153rpx; line-height: 40rpx; margin-top:-5rpx;}
+.selectAddress{position: relative; padding-right:50rpx;}
+.selectAddress image{position: absolute; top:0px; width:45rpx; height:45rpx;right:0px;}
+.default{padding:20rpx 30rpx;}
+.default .title{ width:200rpx; line-height: 70rpx;}
+.default .switch{float: right;}
+.address_add{position: fixed; bottom:0px; height:98rpx; background: #00a0e9; color:#fff; border-radius: 0; width:100%; }
+.addressAttr{position: fixed; bottom:0px; height: 98rpx; background: #f00; width: 100%; overflow: hidden; border-top:2px solid #00a0e9}
+.addressAttr view{border-radius:0px;width:50%;border:none; height: 98rpx; text-align: center; line-height: 98rpx; font-size:34rpx;}
+.addressAttr .save{background: #00a0e9;float:right; color: #fff;}
+.addressAttr .del{background: #fff; float: left; color:#00a0e9}
+
+.errorTip{color:#f00; text-align: center; line-height: 50rpx; margin-top:50rpx; font-size:26rpx;}
