@@ -80,37 +80,27 @@ Page({
     this.setData({
       detail:null
     })
-    wx.request({
-      url: app.data.dev,
-      method:'POST',
-      data:{
-        "query": 'query{student_show_taskdetail(pay_order_id:"' + orderId +'") {pay_order_id,name,price_total,product_id,cus_username,cus_phone,customer_address,customer_address_id,image_first,remark,c_begin_datetime,num,unit,c_end_datetime,serviceStatus,orderStatus,remarkList{d,remark,operator_name,user_id}}}'
-      },
-      header:{
-        "content-type": 'application/json', // 默认值
-        "Authorization": app.globalData.token
-      },
-      success:res=>{
-       if(res.data.errors && res.data.errors.length>1){
-         wx.showToast({
-           title: '获取详情失败',
-         })
-       }
-       var vData = res.data.data.student_show_taskdetail
-        this.setData({
-          detail: vData,
-          orderStatus:vData.orderStatus,
-          statusType: vData.serviceStatus,
-          statusText: this.data.status[vData.serviceStatus]||'',
-          addressJson : {
-            'name': vData.cus_username,
-            'phone': vData.cus_phone,
-            'address': vData.customer_address,
-            'addressId': vData.customer_address_id,
-            'pay_order_id':vData.pay_order_id
-          }
+
+    app.req({ "query": 'query{student_show_taskdetail(pay_order_id:"' + orderId + '") {pay_order_id,name,price_total,product_id,cus_username,cus_phone,customer_address,customer_address_id,image_first,remark,c_begin_datetime,num,unit,c_end_datetime,serviceStatus,orderStatus,remarkList{d,remark,operator_name,user_id}}}'}, res => {
+      if (res.data.errors && res.data.errors.length > 1) {
+        wx.showToast({
+          title: '获取详情失败',
         })
       }
+      var vData = res.data.data.student_show_taskdetail
+      this.setData({
+        detail: vData,
+        orderStatus: vData.orderStatus,
+        statusType: vData.serviceStatus,
+        statusText: this.data.status[vData.serviceStatus] || '',
+        addressJson: {
+          'name': vData.cus_username,
+          'phone': vData.cus_phone,
+          'address': vData.customer_address,
+          'addressId': vData.customer_address_id,
+          'pay_order_id': vData.pay_order_id
+        }
+      })
     })
   },
   otherNote(options){
@@ -156,31 +146,21 @@ Page({
   },
   cancel(options){
     var payOrderId=options.currentTarget.dataset.payid;
-    wx.request({
-      url: app.data.dev,
-      method: 'POST',
-      header: {
-        "content-type": "application/json",
-        "Authorization": app.globalData.token
-      },
-      data: {
-        "query": 'mutation{student_order_cancel(pay_order_id:"' + payOrderId + '"){status}}'
-      },
-      success: res => {
-        if(res.data.errors && res.data.errors.length>0){
-          wx.showToast({
-            title: '取消失败,请重试',
-            icon:'none'
-          })
-        }else{
-          wx.showToast({
-            title: '取消成功',
-            icon:'none',
-            success:res=>{
-              this.getDetail(this.data.orderId)
-            }
-          })
-        }
+
+    app.req({ "query":'mutation{student_order_cancel(pay_order_id:"' + payOrderId + '"){status}}'}, res => {
+      if (res.data.errors && res.data.errors.length > 0) {
+        wx.showToast({
+          title: '取消失败,请重试',
+          icon: 'none'
+        })
+      } else {
+        wx.showToast({
+          title: '取消成功',
+          icon: 'none',
+          success: res => {
+            this.getDetail(this.data.orderId)
+          }
+        })
       }
     })
   },
@@ -232,47 +212,36 @@ Page({
     wx.showLoading({
       title: '请稍后，正在更改状态',
     })
-    wx.request({
-      url: app.data.dev,
-      method:'POST',
-      data:{
-        "query": 'mutation{student_update_work_status(pay_order_id:"' + 
-        this.data.orderId + '",serviceStatus:"' + statusName + '",remark:"' + note + '",lbs_lat:"' + this.data.lat + '",lbs_lng:"' + this.data.lng + '"){serviceStatus,outPostion}}'
-      },
-      header:{
-        "content-type": 'application/json', // 默认值
-        "Authorization": app.globalData.token
-      },
-      success:res=>{
-        wx.hideLoading()
-        if(res.data.errors && res.data.errors.length>0){
-          wx.showToast({
-            title: '未获到定位,请稍后再试',
-            icon:'none',
-            mask:true
-          })
-          return false;
-        }
-        if (res.data.data.student_update_work_status.outPostion == "true"){
-          wx.showModal({
-            content: '当前位置不在服务范围，请到离服务范围一公里内再打卡',
-            title: '提示',
-          })
-        }
-        this.setData({
-          statusType: res.data.data.student_update_work_status.serviceStatus,
-          statusText: this.data.status[res.data.data.student_update_work_status.serviceStatus]
+
+    app.req({"query": 'mutation{student_update_work_status(pay_order_id:"' +this.data.orderId + '",serviceStatus:"' + statusName + '",remark:"' + note + '",lbs_lat:"' + this.data.lat + '",lbs_lng:"' + this.data.lng + '"){serviceStatus,outPostion}}'}, res => {
+      wx.hideLoading()
+      if (res.data.errors && res.data.errors.length > 0) {
+        wx.showToast({
+          title: '未获到定位,请稍后再试',
+          icon: 'none',
+          mask: true
         })
-        if (res.data.data.student_update_work_status.serviceStatus == 'over'){
-          wx.switchTab({
-            url: '/pages/index/index',
-            success:res=>{
-              var page = getCurrentPages().pop();
-              if (page == undefined || page == null) return;
-                page.onLoad();
-              }
-          })
-        }
+        return false;
+      }
+      if (res.data.data.student_update_work_status.outPostion == "true") {
+        wx.showModal({
+          content: '当前位置不在服务范围，请到离服务范围一公里内再打卡',
+          title: '提示',
+        })
+      }
+      this.setData({
+        statusType: res.data.data.student_update_work_status.serviceStatus,
+        statusText: this.data.status[res.data.data.student_update_work_status.serviceStatus]
+      })
+      if (res.data.data.student_update_work_status.serviceStatus == 'over') {
+        wx.switchTab({
+          url: '/pages/index/index',
+          success: res => {
+            var page = getCurrentPages().pop();
+            if (page == undefined || page == null) return;
+            page.onLoad();
+          }
+        })
       }
     })
   }

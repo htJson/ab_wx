@@ -39,21 +39,10 @@ Page({
     this.setData({
       detail:null
     })
-    wx.request({
-      url: app.data.dev,
-      method:"POST",
-      data:{
-        "query": 'query{customer_order_detail(pay_order_id:"' + this.data.orderId +'") {pay_order_id,name,price_total,price_discount,price_pay,orderStatus,cus_username,cus_phone,customer_address,unit,customer_address_id,num,serviceStatus,image_first,product_id,c_begin_datetime,c_end_datetime,isEvaluate,remark}}'
-      },
-      header:{
-        "content-type": "application/json",
-        "Authorization": app.globalData.token
-      },
-      success:res=>{
-        this.setData({
-          detail: res.data.data.customer_order_detail
-        })
-      }
+    app.req({ "query": 'query{customer_order_detail(pay_order_id:"' + this.data.orderId + '") {pay_order_id,name,price_total,price_discount,price_pay,orderStatus,cus_username,cus_phone,customer_address,unit,customer_address_id,num,serviceStatus,image_first,product_id,c_begin_datetime,c_end_datetime,isEvaluate,remark}}'},res=>{
+      this.setData({
+        detail: res.data.data.customer_order_detail
+      })
     })
   },
   goToDetail(options){
@@ -95,30 +84,19 @@ Page({
     })
   },
   okOrder(){
-    wx.request({
-      url: app.data.dev,
-      method: "POST",
-      data: {
-        "query": 'mutation{customer_service_complete(pay_order_id:"' + this.data.orderId+'"){status}}'
-      },
-      header: {
-        "content-type": "application/json",
-        "Authorization": app.globalData.token
-      },
-      success: res => {
-        if(res.data.errors && res.data.errors.length>0){
-          wx.showToast({
-            title:  res.data.errors[0].message,
-            icon:'none'
-          })
-        }else{
-          wx.showToast({
-            title: '确认成功',
-            success:res=>{
-              this.getDetail();
-            }
-          })
-        }
+    app.req({ "query": 'mutation{customer_service_complete(pay_order_id:"' + this.data.orderId + '"){status}}'},res=>{
+      if (res.data.errors && res.data.errors.length > 0) {
+        wx.showToast({
+          title: res.data.errors[0].message,
+          icon: 'none'
+        })
+      } else {
+        wx.showToast({
+          title: '确认成功',
+          success: res => {
+            this.getDetail();
+          }
+        })
       }
     })
   }

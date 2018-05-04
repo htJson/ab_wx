@@ -21,33 +21,22 @@ Page({
   },
 
   getUserNews(){
-    wx.request({
-      url: app.data.dev,
-      method:'POST',
-      data:{
-        "query":"query{my_student_bindinfo{phone,identity_card}}"
-      },
-      header: {
-        "content-type": 'application/json', // 默认值
-        "Authorization": app.globalData.token
-      },
-      success:res=>{
-        if (res.data.data.my_student_bindinfo == null || res.errors !=undefined) {return false}
-        this.setData({
-          isEditer:false
-        })
-        var data = res.data.data.my_student_bindinfo;
-        var midden = data.phone.substring(3, data.phone.length - 1).replace(/\d/g, function (v) { return '*' });
-        var phone = data.phone.substr(0, 3) + midden + data.phone.substr(-1, 1);
-        var cmidden = data.identity_card.substr(3, data.identity_card.length - 3).replace(/\d/g, function (v) { return '*' });
-        var card = data.identity_card.substring(0, 3) + cmidden + data.identity_card.substr(-1, 1)
-        this.setData({
-          isBind:true,
-          phone: phone,
-          idNum: card,
-          isDisabled:true
-        })
-      }
+    app.req({ "query": 'query{my_student_bindinfo{phone,identity_card}}' }, res => {
+      if (res.data.data.my_student_bindinfo == null || res.errors != undefined) { return false }
+      this.setData({
+        isEditer: false
+      })
+      var data = res.data.data.my_student_bindinfo;
+      var midden = data.phone.substring(3, data.phone.length - 1).replace(/\d/g, function (v) { return '*' });
+      var phone = data.phone.substr(0, 3) + midden + data.phone.substr(-1, 1);
+      var cmidden = data.identity_card.substr(3, data.identity_card.length - 3).replace(/\d/g, function (v) { return '*' });
+      var card = data.identity_card.substring(0, 3) + cmidden + data.identity_card.substr(-1, 1)
+      this.setData({
+        isBind: true,
+        phone: phone,
+        idNum: card,
+        isDisabled: true
+      })
     })
   },
   phoneInupt(e){
@@ -80,48 +69,33 @@ Page({
     this.setData({
       errorTip:''
     })
-    wx.request({
-      url: app.data.dev, //仅为示例，并非真实的接口地址
-      // url:'http://10.10.30.65:9002/graphql',
-      method: "POST",
-      data: {
-        "query": ['mutation{my_student_binduser(phone:"',this.data.phone,'",id_num:"',this.data.idNum,'"){status}}'].join('')
-      },
-      header: {
-        "content-type": 'application/json', // 默认值
-        "Authorization": app.globalData.token
-      },
-      success: res => {
-        if (res.data.errors !=undefined){
-          if (res.data.errors[0].errcode =='40103'){
-            this.setData({
-              errorTip: '该学生已被绑定'
-            })
-            return false;
-          } else if (res.data.errors[0].errcode == '40101'){
-            this.setData({
-              errorTip: '没有该学生信息'
-            })
-            return false;
-          }else{
-            this.setData({
-              errorTip: res.data.errors.message
-            })
-          }
-        }else{
-          wx.switchTab({
-            url: '../index/index',
-            success:function(e){
-              // var nq=getCurrentPages().pop();
-              // if(nq == null || nq == undefined) return false;
-              // nq.onLoad();
-            }
+    app.req({ "query": ['mutation{my_student_binduser(phone:"', this.data.phone, '",id_num:"', this.data.idNum, '"){status}}'].join('') }, res => {
+      if (res.data.errors != undefined) {
+        if (res.data.errors[0].errcode == '40103') {
+          this.setData({
+            errorTip: '该学生已被绑定'
           })
-          console.log('跳转前==============')
+          return false;
+        } else if (res.data.errors[0].errcode == '40101') {
+          this.setData({
+            errorTip: '没有该学生信息'
+          })
+          return false;
+        } else {
+          this.setData({
+            errorTip: res.data.errors.message
+          })
         }
-      },
-      fail: error => {
-        console.log(error)
+      } else {
+        wx.switchTab({
+          url: '../index/index',
+          success: function (e) {
+            // var nq=getCurrentPages().pop();
+            // if(nq == null || nq == undefined) return false;
+            // nq.onLoad();
+          }
+        })
+        console.log('跳转前==============')
       }
     })
   }

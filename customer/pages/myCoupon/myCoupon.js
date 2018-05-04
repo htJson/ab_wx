@@ -19,29 +19,18 @@ Page({
     this.setData({
       isLoading:true
     })
-    wx.request({
-      url: app.data.dev,
-      method:'POST',
-      header:{
-        "content-type": "application/json",
-        "Authorization": app.globalData.token
-      },
-      data:{
-        "query":'query{customer_coupon_list(page_index:1,count:1000){coupon_receive_id,name,value,unit,condition,useStartTime,useEndTime,expire}}'
-      },
-      success:res=>{
+    app.req({ "query": 'query{customer_coupon_list(page_index:1,count:1000){coupon_receive_id,name,value,unit,condition,useStartTime,useEndTime,expire}}'},res=>{
+      this.setData({
+        isLoading: false
+      })
+      if (res.data.data.customer_coupon_list.length > 0) {
         this.setData({
-          isLoading: false
+          couponList: res.data.data.customer_coupon_list
         })
-        if (res.data.data.customer_coupon_list.length >0) {
-          this.setData({
-            couponList: res.data.data.customer_coupon_list
-          })
-        } else {
-          this.setData({
-            noData:true
-          })
-        }
+      } else {
+        this.setData({
+          noData: true
+        })
       }
     })
   }

@@ -9,7 +9,7 @@ Page({
     isGetCode:true,
   },
   onLoad: function (options) {
-    // console.log('==========');
+    
   },
   backFn() {
     wx.switchTab({
@@ -50,30 +50,22 @@ Page({
       isGetCode:false
     })
     this.downTime();
-    wx.request({
-      url: app.data.dev,
-      method:'POST',
-      header:{
-        "content-type": "application/json",
-        "Authorization": app.globalData.token
-      },
-      data:{
-        query: 'mutation{customer_n_send_verification_code(phone:"' + this.data.phone + '"){status}}'
-      },
-      success:res=>{
-        if(res.data.data.errors && res.data.data.errors.length>0){
+    app.getmstCode(res=>{
+      app.req({ "query": 'mutation{customer_n_send_verification_code(phone:"' + this.data.phone + '"){status}}' }, res => {
+        if (res.data.data.errors && res.data.data.errors.length > 0) {
           wx.showToast({
-            icon:'none',
+            icon: 'none',
             title: '获取验证码失败',
           })
-        }else{
+        } else {
           wx.showToast({
             icon: 'none',
             title: '获取验证码成功',
           })
         }
-      }
+      }, { "mst": res.data.data.apicode.code})
     })
+    
   },
   checkPhone () {
     var reg =/^1[3|4|5|7|8]\d{9}$/;
@@ -113,43 +105,30 @@ Page({
     return true
   },
   submitOk(){
-    if (!(this.checkPhone() && this.checkCode())){
-      return false;
-    }
+    if (!(this.checkPhone() && this.checkCode())){return false;}
     wx.showLoading({
       title: '请稍后再提交',
       mask:true
     })
-    wx.request({
-      method:'POST',
-      url: app.data.dev,
-      data:{
-        "query":'mutation{customer_change_phone(phone:"'+this.data.phone+'",code:"'+this.data.code+'"){status}}'
-      },
-      header:{
-        "content-type": "application/json",
-        "Authorization": app.globalData.token
-      },
-      success:res=>{
-        wx.hideLoading()
-        if(res.data.errors && res.data.errors.length>0){
-          if(res.data.errors[0].errcode == '41017'){
-            this.setData({
-              errorTip:res.data.errors[0].message
-            })
-          }else{
-            this.setData({
-              errorTip: '修改失败'
-            })
-          }
-        }else{
+    app.req({ "query": 'mutation{customer_change_phone(phone:"' + this.data.phone + '",code:"' + this.data.code + '"){status}}'},res=>{
+      wx.hideLoading()
+      if (res.data.errors && res.data.errors.length > 0) {
+        if (res.data.errors[0].errcode == '41017') {
           this.setData({
-            errorTip: ''
+            errorTip: res.data.errors[0].message
           })
-          wx.redirectTo({
-            url: '/pages/mine/mine',
+        } else {
+          this.setData({
+            errorTip: '修改失败'
           })
         }
+      } else {
+        this.setData({
+          errorTip: ''
+        })
+        wx.redirectTo({
+          url: '/pages/mine/mine',
+        })
       }
     })
   }

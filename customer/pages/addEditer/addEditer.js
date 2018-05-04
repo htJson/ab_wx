@@ -11,7 +11,8 @@ Page({
     isMine:null,
     isDefault:true,
     errorTip:'',
-    detailed:''
+    detailed:'',
+    requestOK:false
   },
   onLoad: function (options) {
     // 保存当前用户所填信息
@@ -101,6 +102,12 @@ Page({
       })
       return false;
     }
+    if (this.data.address ==''){
+      this.setData({
+        errorTip: '服务地址不能为空'
+      })
+      return false;
+    }
     if (this.data.detailed == ''){
       this.setData({
         errorTip: '详细地址不能为空'
@@ -119,55 +126,54 @@ Page({
     })
   },
   add(){
-    if (!this.check()){return false;}
-    // var allAddress = this.data.ad_info.province + this.data.ad_info.city + this.data.ad_info.district + this.data.address.title;
-    wx.request({
-      url: app.data.dev,
-      method:'POST',
-      data:{
-        "query": 'mutation{customer_address_add (customer_address_input:{username:"' + this.data.userName + '",phone:"' + this.data.phone + '",province:"' + this.data.ad_info.province + '",city:"' + this.data.ad_info.city + '",district:"' + this.data.ad_info.district + '",address:"' + this.data.address + '",lbs_lat:"' + this.data.location.lat + '",lbs_lng:"' + this.data.location.lng + '",default_address:' + Number(this.data.isDefault)+',sub_address:"' + this.data.detailed+'"}){customer_address_id,customer_id}}'
-      },
-      header:{
-        "content-type": "application/json",
-        "Authorization": app.globalData.token
-      },
-      success:res=>{
-        if (res.data.errors && res.data.errors.length>1){
-          console.log('新增失败')
-        }else{
-          wx.removeStorage({
-            key: 'address',
-            success: function(res) {},
+    if (!this.check() && !this.data.requestOK){return false;}
+    this.setData({
+      requestOK:true
+    })
+    app.getmstCode(res=>{
+      this.addFn(res.data.data.apicode.code)
+    })
+  },
+  addFn(mtsCode){
+    app.req({ "query": 'mutation{customer_address_add (customer_address_input:{username:"' + this.data.userName + '",phone:"' + this.data.phone + '",province:"' + this.data.ad_info.province + '",city:"' + this.data.ad_info.city + '",district:"' + this.data.ad_info.district + '",address:"' + this.data.address + '",lbs_lat:"' + this.data.location.lat + '",lbs_lng:"' + this.data.location.lng + '",default_address:' + Number(this.data.isDefault) + ',sub_address:"' + this.data.detailed + '"}){customer_address_id,customer_id}}' }, res => {
+      if (res.data.errors && res.data.errors.length > 1) {
+        console.log('新增失败')
+        this.setData({
+          requestOK: false
+        })
+      } else {
+        wx.removeStorage({
+          key: 'address',
+          success: function (res) { },
+        })
+        wx.removeStorage({
+          key: 'tdata',
+          success: function (res) { },
+        })
+        wx.removeStorage({
+          key: 'time',
+          success: function (res) { },
+        })
+        wx.removeStorageSync('type')
+        this.setData({
+          addressId: res.data.data.customer_address_add.customer_address_id
+        })
+        this.updateSelectedAddress();
+        wx.setStorage({
+          key: 'addressId',
+          data: res.data.data.customer_address_add.customer_address_id,
+        })
+        if (this.data.isMine) {
+          wx.redirectTo({
+            url: '/pages/myAddress/myAddress',
           })
-          wx.removeStorage({
-            key: 'tdata',
-            success: function (res) {},
+        } else {
+          wx.redirectTo({
+            url: '/pages/subOrder/subOrder',
           })
-          wx.removeStorage({
-            key: 'time',
-            success: function(res) {},
-          })
-          wx.removeStorageSync('type')
-          this.setData({
-            addressId: res.data.data.customer_address_add.customer_address_id
-          })
-          this.updateSelectedAddress();
-          wx.setStorage({
-            key: 'addressId',
-            data: res.data.data.customer_address_add.customer_address_id,
-          })
-          if (this.data.isMine){
-            wx.redirectTo({
-              url: '/pages/myAddress/myAddress',
-            })
-          }else{
-            wx.redirectTo({
-              url: '/pages/subOrder/subOrder',
-            })
-          }
         }
       }
-    })
+    },{"mts":mtsCode})
   },
   switch1Change(options){
     this.setData({
@@ -175,52 +181,51 @@ Page({
     })
   },
 
-  editerSave(){
-    if (!this.check()) { return false; }
-    wx.request({
-      url: app.data.dev,
-      method:'POST',
-      data:{
-        "query": 'mutation{customer_address_update (customer_address_input:{customer_address_id:"' + this.data.addressId+'",username:"' + this.data.userName + '",phone:"' + this.data.phone + '",province:"' + this.data.ad_info.province + '",city:"' + this.data.ad_info.city + '",district:"' + this.data.ad_info.district + '",address:"' + this.data.address + '",lbs_lat:"' + this.data.location.lat + '",lbs_lng:"' + this.data.location.lng + '",default_address:' + Number(this.data.isDefault) + ',sub_address:"' + this.data.detailed +'"}){customer_address_id,customer_id}}'
-      },
-      header:{
-        "content-type": "application/json",
-        "Authorization": app.globalData.token
-      },
-      success:res=>{
-        if(res.data.errors && res.data.errors.length>0  || res.data.data ==null){
-          console.log('更新错误')
-        }else{
-          
-          wx.removeStorage({
-            key: 'tdata',
-            success: function (res) { },
+  editerSave() {
+    if (!this.check() && !this.data.requestOk) { return false; }
+    this.setData({
+      requestOK: true
+    })
+    app.getmstCode(res => {
+      this.editerSaveFn(res.data.data.apicode.code)
+    })
+  },
+  editerSaveFn(mstCode){
+    app.req({ "query": 'mutation{customer_address_update (customer_address_input:{customer_address_id:"' + this.data.addressId + '",username:"' + this.data.userName + '",phone:"' + this.data.phone + '",province:"' + this.data.ad_info.province + '",city:"' + this.data.ad_info.city + '",district:"' + this.data.ad_info.district + '",address:"' + this.data.address + '",lbs_lat:"' + this.data.location.lat + '",lbs_lng:"' + this.data.location.lng + '",default_address:' + Number(this.data.isDefault) + ',sub_address:"' + this.data.detailed + '"}){customer_address_id,customer_id}}'}, res => {
+      if (res.data.errors && res.data.errors.length > 0 || res.data.data == null) {
+        console.log('更新错误')
+        this.setData({
+          requestOk: false
+        })
+      } else {
+        wx.removeStorage({
+          key: 'tdata',
+          success: function (res) { },
+        })
+        wx.removeStorage({
+          key: 'editer',
+          success: function (res) { },
+        })
+        this.setData({
+          addressId: res.data.data.customer_address_update.customer_address_id
+        })
+        wx.setStorage({
+          key: 'addressId',
+          data: res.data.data.customer_address_update.customer_address_id,
+        })
+        this.updateSelectedAddress();
+        console.log(this.data.isMine)
+        if (this.data.isMine) {
+          wx.redirectTo({
+            url: '/pages/myAddress/myAddress',
           })
-          wx.removeStorage({
-            key: 'editer',
-            success: function (res) { },
+        } else {
+          wx.redirectTo({
+            url: '/pages/subOrder/subOrder',
           })
-          this.setData({
-            addressId: res.data.data.customer_address_update.customer_address_id
-          })
-          wx.setStorage({
-            key: 'addressId',
-            data: res.data.data.customer_address_update.customer_address_id,
-          })
-          this.updateSelectedAddress();
-          console.log(this.data.isMine)
-          if (this.data.isMine) {
-            wx.redirectTo({
-              url: '/pages/myAddress/myAddress',
-            })
-          } else {
-            wx.redirectTo({
-              url: '/pages/subOrder/subOrder',
-            })
-          }
         }
       }
-    })
+    }, { "mst": mstCode})
   },
   updateSelectedAddress(){
     wx.setStorage({
@@ -235,50 +240,52 @@ Page({
     })
   },
   delAddress(){
-    wx.request({
-      url: app.data.dev,
-      method:'POST',
-      data:{
-        "query": 'mutation{customer_address_delete(customer_address_id:"' + this.data.addressId+'"){status}}'
-      },
-      header:{
-        "content-type": "application/json",
-        "Authorization": app.globalData.token
-      },
-      success:res=>{
-        if (typeof res.data.data.customer_address_delete.status !=undefined && res.data.data.customer_address_delete.status ==0){
-          wx.showToast({
-            title: '删除成功',
-            duration:2000
-          })
-          wx.getStorage({
-            key: 'selectedAddress',
-            success: res => {
-              if (res.data.customer_address_id == this.data.addressId) {
-                wx.removeStorage({
-                  key: 'selectedAddress',
-                  success: function (res) { },
-                })
-              }
-            },
-          })
-          setTimeout(()=>{
-            wx.redirectTo({
-              url: this.data.isMine?'/pages/myAddress/myAddress':'/pages/addressList/addressList',
-              success: res => {
-                var page = getCurrentPages().pop();
-                if (page == undefined || page == null) return;
-                page.onLoad();
-              }
-            })
-          },2000)
-        }else{
-          wx.showToast({
-            title: '删除失败',
-            duration: 2000
-          })
-        }
-      }
+    if(!this.data.requestOk){return false;}
+    this.setData({
+      requestOk:true
     })
+    app.getmstCode(res => {
+      this.delAddressFn(res.data.data.apicode.code)
+    })
+  },
+  delAddressFn(mstCode){
+    app.req({ "query": 'mutation{customer_address_delete(customer_address_id:"' + this.data.addressId + '"){status}}'}, res => {
+      if (typeof res.data.data.customer_address_delete.status != undefined && res.data.data.customer_address_delete.status == 0) {
+        
+        wx.showToast({
+          title: '删除成功',
+          duration: 2000
+        })
+        wx.getStorage({
+          key: 'selectedAddress',
+          success: res => {
+            if (res.data.customer_address_id == this.data.addressId) {
+              wx.removeStorage({
+                key: 'selectedAddress',
+                success: function (res) { },
+              })
+            }
+          },
+        })
+        setTimeout(() => {
+          wx.redirectTo({
+            url: this.data.isMine ? '/pages/myAddress/myAddress' : '/pages/addressList/addressList',
+            success: res => {
+              var page = getCurrentPages().pop();
+              if (page == undefined || page == null) return;
+              page.onLoad();
+            }
+          })
+        }, 2000)
+      } else {
+        this.setData({
+          requestOk: false
+        })
+        wx.showToast({
+          title: '删除失败',
+          duration: 2000
+        })
+      }
+    }, { "mst": mstCode})
   }
 })

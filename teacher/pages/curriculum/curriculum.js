@@ -47,50 +47,34 @@ Page({
     this.setData({
       loading:true
     })
-    wx.request({
-      url: app.data.dev,
-      method: 'POST',
-      data: {
-        query: 'query{my_teacher_courseinfo_list(dateStart: "' + this.data.startData + '", dateEnd: "' + this.data.endData+'", count: 20) {chapter {headline,section_name},school{name},classroom {block_number},plan {train_way},course{name,hour},trainSchedule{train_schedule_id,attendclass_date,attendclass_endtime,attendclass_starttime}}}'
-      },
-      header: {
-        "content-type": 'application/json', // 默认值
-        "Authorization": app.globalData.token
-      },
-      success:res=>{
-        this.setData({
-          loading: false
-        })
-      
-        if (res.errors != undefined || res.data.statusCode == 401 || res.data.data.my_teacher_courseinfo_list == null || res.data.data.my_teacher_courseinfo_list.length == 0) {
-          this.setData({
-            noData: true
-          })
-          return false;
-        }
+    app.req({ "query": 'query{my_teacher_courseinfo_list(dateStart: "' + this.data.startData + '", dateEnd: "' + this.data.endData + '", count: 20) {chapter {headline,section_name},school{name},classroom {block_number},plan {train_way},course{name,hour},trainSchedule{train_schedule_id,attendclass_date,attendclass_endtime,attendclass_starttime}}}'},res=>{
 
-        var data = res.data.data.my_teacher_courseinfo_list,n=data.length;
-        var result=0;
-        for(let i=0; i<n; i++){
-          var d = data[i].trainSchedule.attendclass_date.split('T')[0];
-          var et = data[i].trainSchedule.attendclass_endtime.split('T')[1];
-          var st = data[i].trainSchedule.attendclass_starttime.split('T')[1]
-          result+=parseInt(data[i].course.hour);
-          data[i].trainSchedule.mydate=d+' '+st.substring(0,st.length-1)+'~'+et.substring(0,st.length-1);
-        }
-        
+      this.setData({
+        loading: false
+      })
+
+      if (res.errors != undefined || res.data.statusCode == 401 || res.data.data.my_teacher_courseinfo_list == null || res.data.data.my_teacher_courseinfo_list.length == 0) {
         this.setData({
-          noData: false,  
-          result:result/60,
-          list:data
+          noData: true
         })
-      },
-      fail(){
-        this.setData({
-          loading:false,
-          noData:true
-        })
+        return false;
       }
+
+      var data = res.data.data.my_teacher_courseinfo_list, n = data.length;
+      var result = 0;
+      for (let i = 0; i < n; i++) {
+        var d = data[i].trainSchedule.attendclass_date.split('T')[0];
+        var et = data[i].trainSchedule.attendclass_endtime.split('T')[1];
+        var st = data[i].trainSchedule.attendclass_starttime.split('T')[1]
+        result += parseInt(data[i].course.hour);
+        data[i].trainSchedule.mydate = d + ' ' + st.substring(0, st.length - 1) + '~' + et.substring(0, st.length - 1);
+      }
+
+      this.setData({
+        noData: false,
+        result: result / 60,
+        list: data
+      })
     })
   }
 })

@@ -1,7 +1,9 @@
+var http = require('utils/service.js')
+var md5 = require('utils/md5.js')
 App({
   data: {
-    url: 'https://test-auth.aobei.com',
-    dev:'https://test-api.aobei.com/graphql',
+    url: 'https://test-auth.aobei.com',   
+    dev:'https://test-api.aobei.com/graphql', 
     // dev: 'https://test-api.aobei.com/graphql',
     code: '',
     appid: 'wx653dc689ca79ac81',
@@ -10,17 +12,22 @@ App({
     userId: '',
     openId:'',
     systemInfo:'',
+    updateTokenData:'',
     isAgree:false,
-    isReload:false
+    isReload:false,
+    scene:null,
+    versionNum:1.4,
+    device:''
   },
-  onLaunch: function () {
+  onLaunch: function (options) {
     var _this=this;
     wx.getSystemInfo({
       success:res=>{
-        this.data.systemInfo=JSON.stringify(res)
+        this.data.device = res.model;
+        this.data.systemInfo = md5.hexMD5(JSON.stringify(res))
       }
     })
-
+    this.data.scene = decodeURIComponent(options.scene)
     this.data.isAgree= wx.getStorage({
       key: 'isAgree',
       success: res=> {
@@ -32,47 +39,122 @@ App({
     wx.login({
       success: res => {
         // this.getToken(res.code)
-          this.getOpenId(res.code)
-          this.globalData.code = res.code
+        this.getOpenId(res.code)
+        this.globalData.code = res.code
+      }
+    })
+    setInterval(() => {
+      this.upadteToken()
+    }, 7100000)
+  },
+  upadteToken() {
+    wx.request({
+      url: this.data.url + '/oauth/token', //仅为示例，并非真实的接口地址
+      method: "POST",
+      data: {
+        grant_type: 'refresh_token',
+        refresh_token: this.data.updateTokenData
+      },
+      header: {
+        "content-type": 'application/x-www-form-urlencoded', // 默认值
+        "Authorization": 'Basic d3hfbV9jdXN0b206NHg5MWI3NGUtM2I3YS1iYjZ4LWJ0djktcXpjaW83ams2Zzdm',
+        "channel": this.data.scene,
+        'platform': 'wxm',
+        'Duuid': this.data.systemInfo,
+        'version': this.data.versionNum,
+        'device': this.data.device
+      },
+      success: res => {
+        this.globalData.token = 'Bearer ' + res.data.access_token;
+        this.globalData.userId = res.data.uuid
       }
     })
   },
   getOpenId(vcode){
-    // wx.login({
-    //   success: res => {
-       
-        wx.request({
-          url: this.data.url + '/wxapi/jscode2session',
-          // url: 'http://10.10.30.70:9010/wxapi/jscode2session',
-          method: 'POST',
-          header: {
-            "content-type": 'application/x-www-form-urlencoded', // 默认值
+    wx.request({
+      url: this.data.url + '/wxapi/jscode2session',
+      method: 'POST',
+      header: {
+        "content-type": 'application/x-www-form-urlencoded', // 默认值
+        "channel": this.data.scene,
+        'platform': 'wxm',
+        'Duuid': this.data.systemInfo,
+        'version': this.data.versionNum,
+        'device': this.data.device
+      },
+      data: {
+        appid: this.data.appid,
+        js_code: vcode
+      },
+      success: res => {
+        this.data.openId = res.data.openid.toString();
+        wx.getStorage({
+          key: this.data.openId + '====wxm',
+          success: data => {
+            this.data.isAgree = data.data;
+            if (this.data.isAgree) {
+              this.getToken()
+            } else {
+              this.getSetting();
+            }
           },
-          data: {
-            appid: this.data.appid,
-            js_code: vcode
-          },
-          success: res => {
-            this.data.openId = res.data.openid.toString();
-            wx.getStorage({
-              key: this.data.openId + '====wxm',
-              success: data => {
-                this.data.isAgree = data.data;
-                if (this.data.isAgree) {
-                  this.getToken()
-                } else {
-                  this.getSetting();
-                }
-              },
-              fail: result => {
-                this.getSetting();
-              }
-            })
+          fail: result => {
+            this.getSetting();
           }
         })
-    //   }
-    // })
-    
+      }
+    })
+  },
+  getmstCode(fn){
+    wx.request({
+      url: this.data.dev,
+      method:'POST',
+      data:{
+        "query": 'query{apicode{code,expires_in}}'
+      },
+      header:{
+        "content-type": 'application/json',
+        "Authorization": this.globalData.token,
+        "channel": this.data.scene,
+        'platform': 'wxm',
+        'Duuid': this.data.systemInfo,
+        'version': this.data.versionNum,
+        'device': this.data.device,
+      },
+      success:res=>{
+        return typeof fn == "function" && fn(res)
+      }
+    })
+  },
+  req(data,fn,mts){
+    var json = {
+      "content-type": 'application/json',
+      "Authorization": this.globalData.token,
+      "channel": this.data.scene,
+      'platform': 'wxm',
+      'Duuid': this.data.systemInfo,
+      'version': this.data.versionNum,
+      'device': this.data.device,
+    },headerData=null;
+
+    if(typeof mts == 'object' && mts.mts != ''){
+      headerData = Object.assign({},json,mts);
+    }else{
+      headerData=json
+    }
+
+    wx.request({
+      url: this.data.dev,
+      method: "POST",
+      header: headerData,
+      data: data,
+      success: res => {
+        return typeof fn == "function" && fn(res)
+      },
+      fail: res => {
+        return typeof fn == "function" && fn(res)
+      }
+    })
   },
   getSetting(){
     wx.getSetting({
@@ -117,7 +199,6 @@ App({
         this.data.dataUserInfo = JSON.stringify(res);
         this.globalData.userInfo = res.userInfo
         this.data.isAgree=true
-      
         wx.setStorage({
           key: this.data.openId+'====wxm',
           data: true,
@@ -137,13 +218,10 @@ App({
   globalData: {
     userInfo: null
   },
-
-  
   getToken() {
     wx.request({
       url: this.data.url + '/oauth/token',
       // url:'http://10.10.30.70:9010/oauth/token',
-      
       method: "POST",
       data: {
         grant_type: 'wxm_code',
@@ -157,7 +235,8 @@ App({
         "Duuid": this.data.systemInfo
       },
       success: res => {
-        this.globalData.token = 'Bearer ' + res.data.access_token
+        this.globalData.token = 'Bearer ' + res.data.access_token;
+        this.data.updateTokenData = res.data.refresh_token,
         this.globalData.userId = res.data.uuid
       }
     })

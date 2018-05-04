@@ -57,38 +57,26 @@ Page({
   },
   
   getInfo() {
-    wx.request({
-      url: app.data.dev,
-      method: "POST",
-      header: {
-        "content-type": "application/json",
-        "Authorization": app.globalData.token
-      },
-      data: {
-        "query": 'query{customer_info{customer_id}}'
-      },
-      success: res => {
-        if (res.data.errors && res.data.errors.length > 0) {
-         
-          wx.showModal({
-            title: '用户提示',
-            content: '请先登录',
-            showCancel: false,
-            confirmColor: '#00a0e9',
-            success: res => {
-              if (res.confirm) {
-                wx.redirectTo({
-                  url: '/pages/login/login?url=' + this.data.meUrl,
-                  // url: '/pages/demo/demo',
-                })
-              }
+    app.req({ "query": 'query{customer_info{customer_id}}'},res=>{
+      if (res.data.errors && res.data.errors.length > 0) {
+        wx.showModal({
+          title: '用户提示',
+          content: '请先登录',
+          showCancel: false,
+          confirmColor: '#00a0e9',
+          success: res => {
+            if (res.confirm) {
+              wx.redirectTo({
+                url: '/pages/login/login?url=' + this.data.meUrl,
+                // url: '/pages/demo/demo',
+              })
             }
-          })
-        } else {
-          this.setData({
-            isLogin: true
-          })
-        }
+          }
+        })
+      } else {
+        this.setData({
+          isLogin: true
+        })
       }
     })
   },
@@ -100,31 +88,20 @@ Page({
     })
   },
   getUserNews(){
-    wx.request({
-      method:'POST',
-      url: app.data.dev,
-      data:{
-        "query":'query{customer_info{phone}}'
-      },
-      header:{
-        "content-type": "application/json",
-        "Authorization": app.globalData.token
-      },
-      success:res=>{
-        if(res.data.errors && res.data.errors.length>0){
-          return ;
-        }
-        if(res.data.error){
-          return ;
-        }
-        this.setData({
-          phone: res.data.data.customer_info.phone
-        })
-        wx.setStorage({
-          key: 'phoneNum',
-          data: res.data.data.customer_info.phone,
-        })
+    app.req({ "query": 'query{customer_info{phone}}'},res=>{
+      if (res.data.errors && res.data.errors.length > 0) {
+        return;
       }
+      if (res.data.error) {
+        return;
+      }
+      this.setData({
+        phone: res.data.data.customer_info.phone
+      })
+      wx.setStorage({
+        key: 'phoneNum',
+        data: res.data.data.customer_info.phone,
+      })
     })
   }
 })

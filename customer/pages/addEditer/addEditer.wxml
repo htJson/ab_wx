@@ -31,9 +31,9 @@
     </view>
   </view>
   <view class="errorTip">{{errorTip}}</view>
-  <button class="address_add" bindtap="add" wx:if="{{type == 0}}">{{isMine?'保存':'新增并使用'}}</button>  
+  <button class="address_add" bindtap="add" disabled="{{requestOK}}" wx:if="{{type == 0}}">{{isMine?'保存':'新增并使用'}}</button>  
   <view class="addressAttr" wx:if="{{type == 1}}">
-    <view class="del" bindtap="delAddress">删除</view>
-    <view class="save" bindtap="editerSave">{{isMine?'保存':'保存并使用'}}</view>
+    <view class="del" bindtap="delAddress" disabled="{{requestOK}}">删除</view>
+    <view class="save" bindtap="editerSave" disabled="{{requestOK}}">{{isMine?'保存':'保存并使用'}}</view>
   </view>
 </view>

@@ -1,14 +1,13 @@
 {
   "pages": [
     "pages/index/index",
-    "pages/timeList/timeList",
+    "pages/curriculum/curriculum",
+    "pages/studentOrder/studentOrder",
+    "pages/mine/mine",
+    "pages/orderDetail/orderDetail",
     "pages/famous/famous",
     "pages/skuDetail/skuDetail",
-    "pages/curriculum/curriculum",
-    "pages/tasksFinish/tasksFinish",
-    "pages/studentOrder/studentOrder",
     "pages/subOrder/subOrder",
-    "pages/mine/mine",
     "pages/login/login",
     "pages/exam/exam",
     "pages/news/news",
@@ -16,7 +15,8 @@
     "pages/record/record",
     "pages/coursesDetail/coursesDetail",
     "pages/map/map",
-    "pages/orderDetail/orderDetail"
+    "pages/tasksFinish/tasksFinish",
+    "pages/timeList/timeList"
   ],
   "window":{
     "backgroundTextStyle":"light",

@@ -1,6 +1,0 @@
-<!--pages/uploadFile/uploadFile.wxml-->
-<button class="submit" bindtap='selectedFile'>上传按钮</button>
-<view class="imgList">
-  <image wx:for="{{urls}}" src="{{item}}">{{}}</image>
-</view>
-<image src="../../images/ac.jpg"></image>

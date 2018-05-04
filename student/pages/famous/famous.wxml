@@ -5,8 +5,8 @@
       <image wx:if="{{detail.logo_img=='' || detail.logo_img == null}}" src="../../images/default_logo.jpg"></image>
       <image wx:else src="{{detail.logo_img}}"></image>
     </view>
-    <view class="userName">{{detail.name}}<text>（{{gradeList[detail.grade-1]}}）</text></view>
-    <view class="userNumber">
+    <view class="userName">{{detail.name}}<text wx:if="{{detail.grade != null}}">（{{gradeList[detail.grade-1]}}）</text></view>
+    <view class="userNumber" wx:if="{{detail.job_number != null}}">
       工号：{{detail.job_number}}
     </view>
   </view>
@@ -35,6 +35,13 @@
     <view class="title">技能证</view>
     <view class="cardImg" wx:for="{{detail.imgs}}">
       <image src="{{item.url}}"></image>
+    </view>
+  </view>
+  <view class="aline"></view>
+  <view class="skill">
+    <view class="title">无犯罪记录</view>
+    <view class="cardImg">
+      <image src="{{detail.health}}"></image>
     </view>
   </view>
 </view>

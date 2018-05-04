@@ -47,21 +47,10 @@ Page({
     })
   },
   getProduct(orderId){
-    wx.request({
-      url: app.data.dev,
-      method: "POST",
-      data: {
-        "query": 'query{customer_order_detail(pay_order_id:"' + orderId + '") {pay_order_id,name,price_total,price_discount,price_pay,orderStatus,cus_username,cus_phone,customer_address,customer_address_id,image_first,product_id,c_begin_datetime,isEvaluate}}'
-      },
-      header: {
-        "content-type": "application/json",
-        "Authorization": app.globalData.token
-      },
-      success: res => {
-        this.setData({
-          detail: res.data.data.customer_order_detail
-        })
-      }
+    app.req({ "query": 'query{customer_order_detail(pay_order_id:"' + orderId + '") {pay_order_id,name,price_total,price_discount,price_pay,orderStatus,cus_username,cus_phone,customer_address,customer_address_id,image_first,product_id,c_begin_datetime,isEvaluate}}'},res=>{
+      this.setData({
+        detail: res.data.data.customer_order_detail
+      })
     })
   },
   subScore(){
@@ -85,40 +74,29 @@ Page({
       })
       return false;
     }
-    wx.request({
-      url: app.data.dev,
-      method:'POST',
-      header:{
-        "content-type": "application/json",
-        "Authorization": app.globalData.token
-      },
-      data:{
-        "query":'mutation{customer_service_evaluate(pay_order_id:"'+this.data.orderId+'",score:'+this.data.score+',comment:"'+this.data.remark+'"){status}}'
-      },
-      success:res=>{
-        if(res.data.errors && res.data.errors.length>0 ){
-          if(res.data.errors[0].errcode == '41236'){
-            wx.showToast({
-              title: res.data.errors[0].message,
-              icon:'none'
-            })
-          }else{
-            wx.showToast({
-              title: '评价失败',
-              icon:'none'
-            })
-          }
-          
-        }else{
+    app.req({ "query": 'mutation{customer_service_evaluate(pay_order_id:"' + this.data.orderId + '",score:' + this.data.score + ',comment:"' + this.data.remark + '"){status}}'},res=>{
+      if (res.data.errors && res.data.errors.length > 0) {
+        if (res.data.errors[0].errcode == '41236') {
           wx.showToast({
-            title: '评价成功',
-            icon:'none',
-            duration:2000,
-            success:res=>{
-              this.backFn();
-            }
+            title: res.data.errors[0].message,
+            icon: 'none'
+          })
+        } else {
+          wx.showToast({
+            title: '评价失败',
+            icon: 'none'
           })
         }
+
+      } else {
+        wx.showToast({
+          title: '评价成功',
+          icon: 'none',
+          duration: 2000,
+          success: res => {
+            this.backFn();
+          }
+        })
       }
     })
   }

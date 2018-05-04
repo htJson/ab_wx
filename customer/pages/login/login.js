@@ -72,24 +72,13 @@ Page({
   },
   getAjaxCode() {
     if(!this.checkPhone() || !this.data.isGetCode){return false;}
-    wx.request({
-      url: app.data.dev,
-      method:'POST',
-      header:{
-        "content-type": "application/json",
-        "Authorization": app.globalData.token
-      },
-      data:{
-        query: 'mutation{customer_n_send_verification_code(phone:"' + this.data.phoneNum+'"){status}}'
-      },
-      success:res=>{
-        if(res.data.errors == undefined || res.data.errors ==null){
-          this.setData({
-            isGetCode:false,
-            btnText:'60秒后重新获取'
-          })
-          this.countDown();
-        }
+    app.req({ "query": 'mutation{customer_n_send_verification_code(phone:"' + this.data.phoneNum + '"){status}}'},res=>{
+      if (res.data.errors == undefined || res.data.errors == null) {
+        this.setData({
+          isGetCode: false,
+          btnText: '60秒后重新获取'
+        })
+        this.countDown();
       }
     })
   },
@@ -123,42 +112,31 @@ Page({
         title: '登录中请稍后',
         mask: true
       })
-      wx.request({
-        url: app.data.dev,
-        method:'POST',
-        data:{
-          query:'mutation{customer_bind_user(code:"'+this.data.code+'",phone:"'+this.data.phoneNum+'"){status}}'
-        },
-        header:{
-          "content-type": "application/json",
-          "Authorization": app.globalData.token
-        },
-        success:res=>{
-          wx.hideLoading()
-          if(res.data.errors && res.data.errors.length>0 ){
-            if (res.data.errors[0].errcode == '41017'){
-              this.setData({
-                errorTip: '手机号已绑定过'
-              })
-            } else if (res.data.errors[0].errcode == '41126'){
-              this.setData({
-                errorTip: '验证码已过期'
-              })
-            } else if (res.data.errors[0].errcode == '41011'){
-              this.setData({
-                errorTip: '验证码不存在'
-              })
-            }
+      app.req({ "query": 'mutation{customer_bind_user(code:"' + this.data.code + '",phone:"' + this.data.phoneNum + '"){status}}'},res=>{
+        wx.hideLoading()
+        if (res.data.errors && res.data.errors.length > 0) {
+          if (res.data.errors[0].errcode == '41017') {
+            this.setData({
+              errorTip: '手机号已绑定过'
+            })
+          } else if (res.data.errors[0].errcode == '41126') {
+            this.setData({
+              errorTip: '验证码已过期'
+            })
+          } else if (res.data.errors[0].errcode == '41011') {
+            this.setData({
+              errorTip: '验证码不存在'
+            })
+          }
+        } else {
+          if (this.data.id) {
+            wx.redirectTo({
+              url: '/' + this.data.url + '?product_id=' + this.data.id + '&skuId=' + this.data.skuId,
+            })
           } else {
-            if (this.data.id) {
-              wx.redirectTo({
-                url: '/' + this.data.url + '?product_id=' + this.data.id + '&skuId=' + this.data.skuId,
-              })
-            } else {
-              wx.switchTab({
-                url: '/pages/index/index',
-              })
-            }
+            wx.switchTab({
+              url: '/pages/index/index',
+            })
           }
         }
       })

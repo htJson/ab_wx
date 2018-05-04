@@ -125,31 +125,20 @@ Page({
     // })
   },
   getDefaultAddress(){
-    wx.request({
-      url: app.data.dev,
-      method:'POST',
-      header:{
-        "content-type": "application/json",
-        "Authorization": app.globalData.token
-      },
-      data:{
-        "query":'query{customer_get_default_address {customer_address_id,customer_id,username,phone,address,default_address,sub_address}}'
-      },
-      success:res=>{
-        if (res.data.errors && res.data.errors.length > 0 || res.data.data.customer_get_default_address == null){
-          this.setData({
-            isAddress:false
-          })
-        } else{
-          var ad=res.data.data.customer_get_default_address;
-          this.setData({
-            isAddress: true,
-            userName: ad.username,
-            phone: ad.phone,
-            address: ad.address + ad.sub_address,
-            addressId: ad.customer_address_id
-          })
-        }
+    app.req({ "query": 'query{customer_get_default_address {customer_address_id,customer_id,username,phone,address,default_address,sub_address}}'},res=>{
+      if (res.data.errors && res.data.errors.length > 0 || res.data.data.customer_get_default_address == null) {
+        this.setData({
+          isAddress: false
+        })
+      } else {
+        var ad = res.data.data.customer_get_default_address;
+        this.setData({
+          isAddress: true,
+          userName: ad.username,
+          phone: ad.phone,
+          address: ad.address + ad.sub_address,
+          addressId: ad.customer_address_id
+        })
       }
     })
   },  
@@ -289,21 +278,11 @@ Page({
     this.setData({
       serverPrice: this.data.count * this.data.price
     })
-    wx.request({
-      url: app.data.dev,
-      method:"POST",
-      header:{
-        "content-type": "application/json",
-        "Authorization": app.globalData.token
-      },
-      data:{"query": 'query{customer_recalculate_price(psku_id:"' + this.data.skuId + '",coupon_receive_id:"' + (this.data.couponNews.id || 0) + '",num:' + this.data.count+')}'
-      },
-      success:res=>{
-        clearInterval(this.data.sumPriceTimer)
-        this.setData({
-          allPrice: res.data.data.customer_recalculate_price
-        })
-      }
+    app.req({ "query": 'query{customer_recalculate_price(psku_id:"' + this.data.skuId + '",coupon_receive_id:"' + (this.data.couponNews.id || 0) + '",num:' + this.data.count + ')}'},res=>{
+      clearInterval(this.data.sumPriceTimer)
+      this.setData({
+        allPrice: res.data.data.customer_recalculate_price
+      })
     })
   },
   // goToCoupon(){
@@ -328,38 +307,27 @@ Page({
       })
       return false;
     }
-    wx.request({
-      url: app.data.dev,
-      method:'POST',
-      data:{
-        "query": 'mutation{customer_create_order(order_input:{product_id:"' + this.data.productId + '",psku_id:"' + this.data.skuId + '",begin_datetime:"' +this.data.time.startDate  + '",end_datatime:"' + this.data.time.endDate + '",customer_address_id:"' + this.data.addressId + '",coupon_receive_id:"' + (this.data.couponNews.id || 0) + '",num:' + this.data.count + ',remark:"' + this.data.remark +'"}){pay_order_id,name,uid,price_total,create_datetime,price_discount}}'
-      },
-      header:{
-        "content-type": "application/json",
-        "Authorization": app.globalData.token
-      },
-      success:res=>{
-        if(res.data.errors && res.data.errors.length>0 || res.data.eror){
-          console.log('接口错误')
-        }else{
-          wx.removeStorageSync('time');
-          // wx.removeStorageSync('selectedAddress')
-          wx.removeStorageSync('detail')
-          wx.removeStorageSync('coupon')
-          var vData = res.data.data.customer_create_order;
-          // 清除所有cookie
-          // 设置支付cookie
-          wx.setStorage({
-            key: 'payData',
-            data: {
-              orderId:vData.pay_order_id
-            },
-          })
-          // 跳转界面
-          wx.redirectTo({
-            url: '/pages/payOrder/payOrder',
-          })
-        }
+    app.req({ "query": 'mutation{customer_create_order(order_input:{product_id:"' + this.data.productId + '",psku_id:"' + this.data.skuId + '",begin_datetime:"' + this.data.time.startDate + '",end_datatime:"' + this.data.time.endDate + '",customer_address_id:"' + this.data.addressId + '",coupon_receive_id:"' + (this.data.couponNews.id || 0) + '",num:' + this.data.count + ',remark:"' + this.data.remark + '"}){pay_order_id,name,uid,price_total,create_datetime,price_discount}}'},res=>{
+      if (res.data.errors && res.data.errors.length > 0 || res.data.eror) {
+        console.log('接口错误')
+      } else {
+        wx.removeStorageSync('time');
+        // wx.removeStorageSync('selectedAddress')
+        wx.removeStorageSync('detail')
+        wx.removeStorageSync('coupon')
+        var vData = res.data.data.customer_create_order;
+        // 清除所有cookie
+        // 设置支付cookie
+        wx.setStorage({
+          key: 'payData',
+          data: {
+            orderId: vData.pay_order_id
+          },
+        })
+        // 跳转界面
+        wx.redirectTo({
+          url: '/pages/payOrder/payOrder',
+        })
       }
     })
   }

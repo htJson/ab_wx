@@ -16,5 +16,5 @@
     <text class="getCode {{isGetCode?'':'noCOde'}}" bindtap='getAjaxCode'>{{btnText}}</text>
   </view>
   <view class="noSubBtn" bindtap="login">登录/注册</view>
-  <view class="protocol">注册登录，即同意  <navigator src="pages/agreement/agreement"><text>《浦尔家用户协议》</text></navigator> </view>
+  <view class="protocol">注册登录，即同意  <navigator url="/pages/agreement/agreement"><text>《浦尔家用户协议》</text></navigator> </view>
 </view>

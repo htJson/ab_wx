@@ -35,5 +35,5 @@
 .orderDetail .item .price{color:#000; font-size:26rpx; float:right;}
 
  .orderAttr{overflow: hidden; background: #fff; padding-bottom:30px;}
-.orderAttr .ok{ color: #fff; border-radius:0; background:#00a0e9; border:none; float:right; margin-right:30rpx; width:300rpx; margin-top:60rpx;}
-.orderAttr .cancel{ color: #727171; border-radius:0; background:#fff; border:1px solid #727171; float:right; margin-right:30rpx; width:300rpx; margin-top:60rpx;} 
+.orderAttr .ok{ color: #fff; border-radius:0;  font-size:28rpx; font-weight: normal; background:#00a0e9; border:none; float:right; margin-right:30rpx; width:200rpx; margin-top:30rpx; height: 76rpx; }
+.orderAttr .cancel{ color: #727171; border-radius:0; background:#fff; border:1px solid #727171; font-weight: normal; float:right; margin-right:30rpx; width:200rpx; margin-top:30rpx; font-size:28rpx;} 

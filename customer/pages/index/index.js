@@ -1,11 +1,7 @@
 var app=getApp()
 Page({
   data: {
-    imgUrls: [
-      {url:'http://img02.tooopen.com/images/20150928/tooopen_sy_143912755726.jpg'},
-      {url:'http://img06.tooopen.com/images/20160818/tooopen_sy_175866434296.jpg'},
-      {url:'http://img06.tooopen.com/images/20160818/tooopen_sy_175833047715.jpg'}
-    ],
+    imgUrls: [],
     assort:[],
     skuList:[],
     isLoading:false,
@@ -22,26 +18,20 @@ Page({
         // 获取首页，列表数据
         this.getSkuList();
         this.getBanner();
+        app.getmstCode()
       }
     },300)
   },
+  
   getBanner(){
-    wx.request({
-      url: app.data.dev,
-      method:'POST',
-      header:{
-        "content-type": "application/json",
-        "Authorization": app.globalData.token
-      },
-      data:{
-        "query":'query{customer_banner_list(position:""){oss_img_id,name,url,effect,format,create_time,bucket,access_permissions}}'
-      },
-      success:res=>{
-        if (res.data.data.customer_banner_list && res.data.data.customer_banner_list.length > 0) {
-          this.setData({
-            imgUrls: res.data.data.customer_banner_list
-          })
-        }
+    app.req({ "query": 'query{customer_banner_list(position:""){oss_img_id,name,url,effect,format,create_time,bucket,access_permissions}}'},res=>{
+      if ((res.data.errors && res.data.errors.length > 0)) {
+        return false;
+      }
+      if (res.data.data.customer_banner_list && res.data.data.customer_banner_list.length > 0) {
+        this.setData({
+          imgUrls: res.data.data.customer_banner_list
+        })
       }
     })
   },
@@ -55,24 +45,13 @@ Page({
     this.getSkuList();
   },
   getTypeList() {  //获取首页产品类型
-    wx.request({
-      url: app.data.dev,
-      data: {
-        "query": 'query{customer_home_category_list{category_id,name,logo,pid,category_level_code}}',
-      },
-      method: 'POST',
-      header: {
-        "content-type": "application/json",
-        "Authorization": app.globalData.token
-      },
-      success: res => {
-        if (this.data.isReload){
-          // wx.hideNavigationBarLoading();
-        }
-        this.setData({
-          assort: res.data.data.customer_home_category_list
-        })
+    app.req({ "query": 'query{customer_home_category_list{category_id,name,logo,pid,category_level_code}}'}, res => {
+      if (this.data.isReload) {
+        // wx.hideNavigationBarLoading();
       }
+      this.setData({
+        assort: res.data.data.customer_home_category_list
+      })
     })
   },
   goToList(options){
@@ -85,33 +64,22 @@ Page({
     this.setData({
       isLoading:true
     })
-    wx.request({
-      url: app.data.dev,
-      method:'POST',
-      header: {
-        "content-type": "application/json",
-        "Authorization": app.globalData.token
-      },
-      data:{
-        "query":'query{customer_home_product_list(page_index:1,count:300){product_id,image_first,seo,name,price_first,pricev_first,base_buyed,descript}}'
-      },
-      success:res=>{
-        if (this.data.isReload) {
-          wx.hideNavigationBarLoading();
-          wx.stopPullDownRefresh()
-        }
+    app.req({"query": 'query{customer_home_product_list(page_index:1,count:300){product_id,image_first,seo,name,price_first,pricev_first,base_buyed,descript}}' }, res => {
+      if (this.data.isReload) {
+        wx.hideNavigationBarLoading();
+        wx.stopPullDownRefresh()
+      }
+      this.setData({
+        isLoading: false
+      })
+      if ((res.data.errors && res.data.errors.length > 0) || res.data.data == null) {
         this.setData({
-          isLoading:false
+          noData: true
         })
-        if ((res.data.errors && res.data.errors.length>0) || res.data.data==null){
-          this.setData({
-            noData:true
-          })
-        }else{
-          this.setData({
-            skuList: res.data.data.customer_home_product_list
-          })
-        }
+      } else {
+        this.setData({
+          skuList: res.data.data.customer_home_product_list
+        })
       }
     })
   },

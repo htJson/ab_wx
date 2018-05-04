@@ -10,7 +10,6 @@
     "pages/agreement/agreement",
     "pages/setPass/setPass",
     "pages/mine/mine",
-    "pages/demo/demo",
     "pages/orderDetail/orderDetail",
     "pages/cancel/cancel",
     "pages/payOrder/payOrder",

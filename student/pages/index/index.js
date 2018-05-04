@@ -39,26 +39,15 @@ Page({
     this.setData({
       loading:true
     })
-    wx.request({
-      url: app.data.dev,
-      method:'POST',
-      data:{
-        "query":'query{my_student_bindinfo{name,phone}}'
-      },
-      header:{
-        "content-type": 'application/json', // 默认值
-        "Authorization": app.globalData.token
-      },
-      success:res=>{
-        if (res.data.data.errors || res.data.error || res.data.data.my_student_bindinfo&&res.data.data.my_student_bindinfo.length ==0){
-          this.setData({
-            noData:true
-          })
-        }else{
-          this.setData({
-            student: res.data.data.my_student_bindinfo
-          })
-        }
+    app.req({ "query":'query{my_student_bindinfo{name,phone}}'},res=>{
+      if (res.data.data.errors || res.data.error || res.data.data.my_student_bindinfo && res.data.data.my_student_bindinfo.length == 0) {
+        this.setData({
+          noData: true
+        })
+      } else {
+        this.setData({
+          student: res.data.data.my_student_bindinfo
+        })
       }
     })
   },
@@ -86,34 +75,22 @@ Page({
       noData:false,
       taskList: []
     })
-    wx.request({
-      url: app.data.dev,
-      method:'POST',
-      header:{
-        "content-type": 'application/json', // 默认值
-        "Authorization": app.globalData.token
-      },
-      data:{
-        "query":'query{student_undone_orderinfo(page_index:1,count:10000){pay_order_id,cus_username,cus_phone,customer_address,product_id,proSku_id,c_begin_datetime,c_end_datetime,name,serviceStatus,orderStatus}}'
-      },
-      success:res=>{
-        wx.hideNavigationBarLoading()
-        wx.stopPullDownRefresh()
+    app.req({ "query": 'query{student_undone_orderinfo(page_index:1,count:10000){pay_order_id,cus_username,cus_phone,customer_address,product_id,proSku_id,c_begin_datetime,c_end_datetime,name,serviceStatus,orderStatus}}' }, res => {
+      wx.hideNavigationBarLoading()
+      wx.stopPullDownRefresh()
+      this.setData({
+        loading: false
+      })
+
+      if (res.data.data.errors || res.data.error || res.data.data.student_undone_orderinfo == null || res.data.data.student_undone_orderinfo.length == 0) {
         this.setData({
-          loading: false
+          noData: true,
+          taskList: []
         })
-        
-        if (res.data.data.errors || res.data.error || res.data.data.student_undone_orderinfo==null ||res.data.data.student_undone_orderinfo.length == 0) {
-          this.setData({
-            noData: true,
-            taskList:[]
-          })
-        } else {
-          this.setData({
-            taskList: res.data.data.student_undone_orderinfo
-          })
-        }
-     
+      } else {
+        this.setData({
+          taskList: res.data.data.student_undone_orderinfo
+        })
       }
     })
   }

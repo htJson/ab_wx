@@ -29,48 +29,37 @@ Page({
     this.setData({
       isLoading:true
     })
-    wx.request({
-      url: app.data.dev,
-      method: 'POST',
-      data: {
-        "query": 'query{customer_address_list{customer_address_id,default_address,province,city,area,customer_id,username,phone,address,lbs_lat,lbs_lng,sub_address}}'
-      },
-      header: {
-        "content-type": "application/json",
-        "Authorization": app.globalData.token
-      },
-      success: res => {
+    app.req({ "query": 'query{customer_address_list{customer_address_id,default_address,province,city,area,customer_id,username,phone,address,lbs_lat,lbs_lng,sub_address}}'},res=>{
+      this.setData({
+        isLoading: false
+      })
+      if (res.data.error != undefined || res.data.data == null || res.data.errors && res.data.errors.length > 0) {
+        console.log('接口出错')
         this.setData({
-          isLoading: false
+          noData: true,
         })
-        if (res.data.error != undefined || res.data.data == null || res.data.errors && res.data.errors.length > 0) {
-          console.log('接口出错')
-          this.setData({
-            noData:true,
-          })
-        } else if (res.data.data.customer_address_list.length == 0){
-          this.setData({
-            noData: true,
-          })
-        } else {
-          for (let i = 0; i < res.data.data.customer_address_list.length; i++) {
-            var item = res.data.data.customer_address_list[i];
-            if (item.default_address == 1) {
+      } else if (res.data.data.customer_address_list.length == 0) {
+        this.setData({
+          noData: true,
+        })
+      } else {
+        for (let i = 0; i < res.data.data.customer_address_list.length; i++) {
+          var item = res.data.data.customer_address_list[i];
+          if (item.default_address == 1) {
+            this.setData({
+              saveDefault: item.customer_address_id,
+            })
+            if (this.data.isSelected == '') {
               this.setData({
-                saveDefault: item.customer_address_id,
+                isSelected: item.customer_address_id
               })
-              if (this.data.isSelected == '') {
-                this.setData({
-                  isSelected: item.customer_address_id
-                })
-              }
-              break;
             }
+            break;
           }
-          this.setData({
-            list: res.data.data.customer_address_list
-          })
         }
+        this.setData({
+          list: res.data.data.customer_address_list
+        })
       }
     })
   },
@@ -120,24 +109,13 @@ Page({
   },
   setDefault(options) {
     var id = options.currentTarget.dataset.id;
-    wx.request({
-      url: app.data.dev,
-      method: 'POST',
-      data: {
-        "query": 'mutation{customer_set_default_address(customer_address_id:"' + id + '"){status}}'
-      },
-      header: {
-        "content-type": "application/json",
-        "Authorization": app.globalData.token
-      },
-      success: res => {
-        if (res.data.data == null || res.data.errors && res.data.errors.length > 0) {
-          console.log('不成功')
-        } else {
-          this.setData({
-            saveDefault: id
-          })
-        }
+    app.req({ "query": 'mutation{customer_set_default_address(customer_address_id:"' + id + '"){status}}'},res=>{
+      if (res.data.data == null || res.data.errors && res.data.errors.length > 0) {
+        console.log('不成功')
+      } else {
+        this.setData({
+          saveDefault: id
+        })
       }
     })
   }

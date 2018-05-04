@@ -25,34 +25,22 @@ Page({
     this.setData({
       isLoading:true
     })
-    wx.request({
-      url: app.data.dev,
-      method:'POST',
-      header:{
-        "content-type": "application/json",
-        "Authorization": app.globalData.token
-      },
-      data:{
-        "query": 'query{customer_product_list_by_category_level_code(category_level_code:"' + id +'",page_index:1,count:3000){product_id,name,image_first,price_first,pricev_first,base_buyed}}'
-      },
-      success:res=>{
+    aqq.req({ "query": 'query{customer_product_list_by_category_level_code(category_level_code:"' + id + '",page_index:1,count:3000){product_id,name,image_first,price_first,pricev_first,base_buyed}}'},res=>{
+      this.setData({
+        isLoading: false
+      })
+      if (res.data.errors != undefined && res.data.errors != null) {
         this.setData({
-          isLoading:false
+          noData: true
         })
-        if(res.data.errors !=undefined && res.data.errors !=null){
-          this.setData({
-            noData: true
-          })
-        } else if (res.data.data.customer_product_list_by_category_level_code && res.data.data.customer_product_list_by_category_level_code.length==0){
-          this.setData({
-            noData: true
-          })
-        }else{
-          console.log(res.data.data,'=======')
-          this.setData({
-            data: res.data.data.customer_product_list_by_category_level_code
-          })
-        }
+      } else if (res.data.data.customer_product_list_by_category_level_code && res.data.data.customer_product_list_by_category_level_code.length == 0) {
+        this.setData({
+          noData: true
+        })
+      } else {
+        this.setData({
+          data: res.data.data.customer_product_list_by_category_level_code
+        })
       }
     })
   }

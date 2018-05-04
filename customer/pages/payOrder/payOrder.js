@@ -45,26 +45,15 @@ Page({
     })
   },
   getOrderData(id){
-    wx.request({
-      url:app.data.dev,
-      method:'POST',
-      header:{
-        "content-type": "application/json",
-        "Authorization": app.globalData.token
-      },
-      data:{
-        "query":'query{customer_get_order_to_pay(pay_order_id:"'+id+'") {pay_order_id,name,uid,channel,price_total,price_discount,price_pay,discount_data,pay_type,pay_status,create_datetime,pay_datetime,r_fee,r_status,r_datetime,r_finish_datetime,cus_username,customer_address_id,cus_phone,cus_province,cus_city,cus_area,cus_address,lbs_lat,lbs_lng,remark,remark_cancel,status_active,expire_datetime}}'
-      },
-      success:res=>{
-        var vData = res.data.data.customer_get_order_to_pay
-        this.setData({
-          payData: vData
-        })
-        var dTime = new Date(vData.create_datetime).getTime()+30*60*1000;
-        this.data.timer=setInterval(()=>{
-          this.downTime(dTime)
-        },1000)
-      }
+    app.req({ "query": 'query{customer_get_order_to_pay(pay_order_id:"' + id + '") {pay_order_id,name,uid,channel,price_total,price_discount,price_pay,discount_data,pay_type,pay_status,create_datetime,pay_datetime,r_fee,r_status,r_datetime,r_finish_datetime,cus_username,customer_address_id,cus_phone,cus_province,cus_city,cus_area,cus_address,lbs_lat,lbs_lng,remark,remark_cancel,status_active,expire_datetime}}'},res=>{
+      var vData = res.data.data.customer_get_order_to_pay
+      this.setData({
+        payData: vData
+      })
+      var dTime = new Date(vData.create_datetime).getTime() + 30 * 60 * 1000;
+      this.data.timer = setInterval(() => {
+        this.downTime(dTime)
+      }, 1000)
     })
   },
   addStr(n){
@@ -106,25 +95,13 @@ Page({
     })
   },
   getPrepayId(orderId){
-    wx.request({
-      url: app.data.dev,
-      method:'POST',
-      header:{
-        "content-type": "application/json",
-        "Authorization": app.globalData.token
-      },
-      data:{
-        "query": 'query{customer_wx_prepay(pay_order_id: "' + orderId + '") {appId,timeStamp,nonceStr,_package,signType,sign}}'
-      },
-      success:res=>{
-        this.setData({
-          paySub:res.data.data.customer_wx_prepay
-        })
-      }
+    app.req({ "query": 'query{customer_wx_prepay(pay_order_id: "' + orderId + '") {appId,timeStamp,nonceStr,_package,signType,sign}}'},res=>{
+      this.setData({
+        paySub: res.data.data.customer_wx_prepay
+      })
     })
   },
   payNow(){
-    console.log(this.data.CountDown,'<======')
     if (this.data.CountDown == '订单超时'){
       wx.showModal({
         title: '提示',
@@ -137,7 +114,6 @@ Page({
       })
       return false;
     }
-    console.log(this.data.paySub,'<--------->')
     var _this=this;
     
     wx.requestPayment({
@@ -166,23 +142,9 @@ Page({
     })
   },
   getOrderPayStatus(){
-    wx.request({
-      url: app.data.dev,
-      method:'POST',
-      header:{
-        "content-type": "application/json",
-        "Authorization": app.globalData.token
-      },
-      data:{
-        "query": 'query{customer_confirm_pay_status(pay_order_id: "' + this.data.orderId+'") {pay_order_id,pay_status}}'
-      },
-      success:res=>{
-        console.log('getOrderStatus')
-        wx.removeStorageSync('payData')
-      },
-      fail(){
-        console.log('未获到到定单支付状态')
-      }
+    app.req({ "query": 'query{customer_confirm_pay_status(pay_order_id: "' + this.data.orderId + '") {pay_order_id,pay_status}}'},res=>{
+      console.log('getOrderStatus')
+      wx.removeStorageSync('payData')
     })
   }
 })

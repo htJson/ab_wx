@@ -1,75 +1,149 @@
+var md5=require('./utils/md5.js')
 App({
   data: {
-    url: 'https://dev-auth.aobei.com',
-    dev: 'https://dev-api.aobei.com/graphql',
+    url: 'https://auth.aobei.com',
+    dev: 'https://api.aobei.com/graphql',
     // dev: 'https://test-api.aobei.com/graphql',
     code: '',
     appid: 'wx18b2a6ed40277856',
     token: '',
     dataUserInfo: "",
     userId: '',
+    openId:'',
     systemInfo: '',
     isAgree: false,
-    isReload: false
+    updateTokenData:'',
+    isReload: false,
+    versionNum:1.4,
+    device:''
   },
   onLaunch: function () {
     var _this = this;
     wx.getSystemInfo({
       success: res => {
-        this.data.systemInfo = JSON.stringify(res)
+        this.data.device=res.model;
+        this.data.systemInfo = md5.hexMD5(JSON.stringify(res))
       }
     })
-
-    this.data.isAgree = wx.getStorage({
-      key: 'isAgree',
-      success: res => {
-        this.data.isAgree = res
-      }
-    })
-
+    setInterval(()=>{
+      this.upadteToken()
+    },72000000)
     // 登录
     wx.login({
       success: res => {
-        this.globalData.code = res.code
-        // this.getToken(res.code)
-        if (this.data.isAgree) {
-          this.getToken()
-          return false;
-        }
-        wx.getSetting({
-          success: (res) => {
-            if (res.authSetting['scope.userInfo'] == undefined) {
-              // 还未授权过
-              this.getUserINfoFn();
-              return false;
-            } else if (!res.authSetting['scope.userInfo']) {
-              //  授权过，但是被拒绝了
-              wx.showModal({
-                title: '提示',
-                content: '小程序想获得您的用户信息，以后保证用户信息正确',
-                success: res => {
-                  if (res.confirm) {
-                    wx.openSetting({
-                      success: (res) => {
-                        if (res.authSetting['scope.userInfo']) {
-                          this.getUserINfoFn()
-                        } else {
-                          this.getToken();
-                        }
-                        return false;
-                      }
-                    })
-                  } else {
-                    this.getToken();
-                    return false;
-                  }
-                }
-              })
+        this.getOpenid(res.code)
+        this.data.code=res.code
+      }
+    })
+  },
+  getmstCode(fn) {
+    wx.request({
+      url: this.data.dev,
+      method: 'POST',
+      header: {
+        "content-type": 'application/json',
+        "Authorization": this.globalData.token,
+        "channel": this.data.scene,
+        'platform': 'wxm',
+        'Duuid': this.data.systemInfo,
+        'version': this.data.versionNum,
+        'device': this.data.device,
+      },
+      success: res => {
+        return typeof fn == "function" && fn(res)
+      }
+    })
+  },
+  req(data, fn, mts) {
+    wx.request({
+      url: this.data.dev,
+      method: "POST",
+      header: {
+        "content-type": 'application/json',
+        "Authorization": this.globalData.token,
+        "channel": this.data.scene,
+        'platform': 'wxm',
+        'Duuid': this.data.systemInfo,
+        'version': this.data.versionNum,
+        'device': this.data.device,
+      },
+      data: data,
+      success: res => {
+        return typeof fn == "function" && fn(res)
+      },
+      fail: res => {
+        return typeof fn == "function" && fn(res)
+      }
+    })
+  },
+  getOpenid(vcode){
+    wx.request({
+      url: this.data.url + '/wxapi/jscode2session',
+      method: 'POST',
+      header: {
+        "content-type": 'application/x-www-form-urlencoded', // 默认值
+        "channel": this.data.scene,
+        'platform': 'wxm',
+        'Duuid': this.data.systemInfo,
+        'version': this.data.versionNum,
+        'device': this.data.device,
+      },
+      data: {
+        appid: this.data.appid,
+        js_code: vcode
+      },
+      success: res => {
+        this.data.openId = res.data.openid.toString();
+        wx.getStorage({
+          key: this.data.openId,
+          success: data => {
+            this.data.isAgree = data.data;
+            if (this.data.isAgree) {
+              this.getToken()
             } else {
-              this.getToken();
+              this.getSetting();
             }
+          },
+          fail: result => {
+            this.getSetting();
           }
         })
+      }
+    })
+  },
+  getSetting(){
+    wx.getSetting({
+      success: (res) => {
+        if (res.authSetting['scope.userInfo'] == undefined) {
+          // 还未授权过
+          this.getUserINfoFn();
+          return false;
+        } else if (!res.authSetting['scope.userInfo']) {
+          //  授权过，但是被拒绝了
+          wx.showModal({
+            title: '提示',
+            content: '小程序想获得您的用户信息，以后保证用户信息正确',
+            success: res => {
+              if (res.confirm) {
+                wx.openSetting({
+                  success: (res) => {
+                    if (res.authSetting['scope.userInfo']) {
+                      this.getUserINfoFn()
+                    } else {
+                      this.getToken();
+                    }
+                    return false;
+                  }
+                })
+              } else {
+                this.getToken();
+                return false;
+              }
+            }
+          })
+        } else {
+          this.getUserINfoFn();
+        }
       }
     })
   },
@@ -82,12 +156,11 @@ App({
         // 可以将 res 发送给后台解码出 unionId
         this.data.dataUserInfo = JSON.stringify(res);
         this.globalData.userInfo = res.userInfo
-        this.data.isAgree = true
-
         wx.setStorage({
-          key: 'isAgree',
-          data: true,
-        })
+          key: this.data.openId,
+          data: '',
+        })      
+        
         this.getToken()
         // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
         // 所以此处加入 callback 以防止这种情况
@@ -100,6 +173,29 @@ App({
       }
     })
   },
+  upadteToken() {
+    wx.request({
+      url: this.data.url + '/oauth/token', //仅为示例，并非真实的接口地址
+      method: "POST",
+      data: {
+        grant_type: 'refresh_token',
+        refresh_token: this.data.updateTokenData
+      },
+      header: {
+        "content-type": 'application/x-www-form-urlencoded', // 默认值
+        "Authorization": 'Basic d3hfbV9jdXN0b206NHg5MWI3NGUtM2I3YS1iYjZ4LWJ0djktcXpjaW83ams2Zzdm',
+        "channel": this.data.scene,
+        'platform': 'wxm',
+        'Duuid': this.data.systemInfo,
+        'version': this.data.versionNum,
+        'device': this.data.device
+      },
+      success: res => {
+        this.globalData.token = 'Bearer ' + res.data.access_token,
+        this.globalData.userId = res.data.uuid
+      }
+    })
+  },
   getToken() {
     wx.request({
       url: this.data.url + '/oauth/token',
@@ -107,17 +203,22 @@ App({
       data: {
         grant_type: 'wxm_code',
         appid: this.data.appid,
-        code: this.globalData.code,
+        code: this.data.code,
         userinfo: this.data.dataUserInfo,
       },
       header: {
         "content-type": 'application/x-www-form-urlencoded', // 默认值
         "Authorization": 'Basic d3hfbV9jdXN0b206NHg5MWI3NGUtM2I3YS1iYjZ4LWJ0djktcXpjaW83ams2Zzdm',
-        "Duuid": this.data.systemInfo
+        "channel": this.data.scene,
+        'platform': 'wxm',
+        'Duuid': this.data.systemInfo,
+        'version': this.data.versionNum,
+        'device': this.data.device,
       },
       success: res => {
         this.globalData.token = 'Bearer ' + res.data.access_token
-        this.globalData.userId = res.data.uuid
+        this.globalData.userId = res.data.uuid;
+        this.data.updateTokenData = res.data.refresh_token;
       }
     })
   },
@@ -133,7 +234,12 @@ App({
       
       header: {
         "content-type": 'application/json', // 默认值
-        "Authorization": this.globalData.token
+        "Authorization": this.globalData.token,
+        "channel": this.data.scene,
+        'platform': 'wxm',
+        'Duuid': this.data.systemInfo,
+        'version': this.data.versionNum,
+        'device': this.data.device,
       },
       success: res => {
         if (res.data.errors != undefined) {

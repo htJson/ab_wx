@@ -32,8 +32,6 @@
       <text class="title">订单备注：</text><view class="content">{{detail.remark || '无'}}</view>
     </view>
   </view>
-  {{orderStatus}}============
-  {{statusType}}+++++++
   <view class="noteTitle" wx:if="{{statusType == 'leave' && orderStatus == 'waitService'}}">服务备注 
     <text class="tips">(如果有特殊原因提前离开,请选择或填写备注)</text>
   </view>

@@ -21,7 +21,6 @@ Page({
     qqmapsdk = new QQMapWX({ key:'43DBZ-CJC6K-GVVJK-AEOQT-Y37JZ-TKFSR'})
   },
   toMap(){
-
     var address=this.data.content.school.address + this.data.content.school.name;
     qqmapsdk.reverseGeocoder({
       location: {
@@ -42,7 +41,6 @@ Page({
     qqmapsdk.geocoder({
       address: address,
       success: function (res) {
-
         wx.navigateTo({
           url: '../map/map?lat=' + res.result.location.lat+'&lng='+res.result.location.lng,
         })
@@ -56,37 +54,26 @@ Page({
     this.setData({
       loading:true
     })
-    wx.request({
-      url: app.data.dev,
-      method: 'POST',
-      data: {
-        query: 'query{train_schedule_info(train_schedule_id:"'+this.data.id+'"){trainSchedule {attendclass_date,attendclass_endtime,attendclass_starttime},chapter{headline,section_name},school{name,address},classroom {block_number},plan{train_way},course{name}}}'
-      },
-      header: {
-        "content-type": 'application/json', // 默认值
-        "Authorization": app.globalData.token
-      },
-      success:res=>{
+    app.req({ "query": 'query{train_schedule_info(train_schedule_id:"' + this.data.id +'"){trainSchedule {attendclass_date,attendclass_endtime,attendclass_starttime},chapter{headline,section_name},school{name,address},classroom {block_number},plan{train_way},course{name}}}' }, res => {
+      this.setData({
+        loading: false
+      })
+      if (res.statusCode == 401 || res.errors != undefined || res.data.data.train_schedule_info == null) {
+        console.log('asfsfs')
         this.setData({
-          loading: false
-        })
-        if (res.statusCode == 401 ||res.errors != undefined || res.data.data.train_schedule_info ==null){
-          console.log('asfsfs')
-          this.setData({
-            noData:true
-          })
-        }
-        var data = res.data.data.train_schedule_info;
-        var d = data.trainSchedule.attendclass_date.split('T')[0];
-        var t = data.trainSchedule.attendclass_starttime.split('T')[1];
-        var e = data.trainSchedule.attendclass_endtime.split('T')[1];
-        t = t.substring(0, t.length - 4);
-          data.trainSchedule.myDate =d+' '+t+'~'+e.substring(0,e.length-4);
-
-        this.setData({
-          content:data
+          noData: true
         })
       }
+      var data = res.data.data.train_schedule_info;
+      var d = data.trainSchedule.attendclass_date.split('T')[0];
+      var t = data.trainSchedule.attendclass_starttime.split('T')[1];
+      var e = data.trainSchedule.attendclass_endtime.split('T')[1];
+      t = t.substring(0, t.length - 4);
+      data.trainSchedule.myDate = d + ' ' + t + '~' + e.substring(0, e.length - 4);
+
+      this.setData({
+        content: data
+      })
     })
   }
 })

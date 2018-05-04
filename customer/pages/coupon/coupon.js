@@ -46,29 +46,18 @@ Page({
     this.setData({
       isLoading:true
     })
-    wx.request({
-      url: app.data.dev,
-      method:'POST',
-      data:{
-        "query": 'query{customer_coupon_list_by_product(psku_id:' + this.data.skuId + ',page_index:1,count:300,num:' + this.data.num +'){coupon_receive_id,name,value,condition,useStartTime,useEndTime,expire,unit}}'
-      },
-      header:{
-        "content-type": "application/json",
-        "Authorization": app.globalData.token
-      },
-      success: res => {
+    app.req({ "query": 'query{customer_coupon_list_by_product(psku_id:' + this.data.skuId + ',page_index:1,count:300,num:' + this.data.num + '){coupon_receive_id,name,value,condition,useStartTime,useEndTime,expire,unit}}'},res=>{
+      this.setData({
+        isLoading: false
+      })
+      if (res.data.data.customer_coupon_list_by_product && res.data.data.customer_coupon_list_by_product.length > 0) {
         this.setData({
-          isLoading: false
+          couponList: res.data.data.customer_coupon_list_by_product
         })
-        if (res.data.data.customer_coupon_list_by_product && res.data.data.customer_coupon_list_by_product.length>0){
-          this.setData({
-            couponList: res.data.data.customer_coupon_list_by_product
-          })
-        }else{
-          this.setData({
-            noData:true
-          })
-        }
+      } else {
+        this.setData({
+          noData: true
+        })
       }
     })
   },

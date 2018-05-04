@@ -7,7 +7,8 @@ Page({
     noData:false,
     loading:false,
     isLogin:false,
-    isLoadingTrue:true,
+    isLoadingTrue:false,
+    listTimer:null,
     statusList:{
       'waitService':'待服务',
       'cancel':'已取消',
@@ -38,8 +39,23 @@ Page({
   },
   onHide(){
     this.setData({
-      isLogin:true
+      isLogin:true,
+      isLoadingTrue: false
     })
+  },
+  tab(options) {
+    var key = options.currentTarget.dataset.key; 
+    clearInterval(this.data.listTimer)
+    if (this.data.status == key || !this.data.isLoadingTrue) { return false }
+    this.setData({
+      orderList: []
+    })
+    this.data.isLoadingTrue = false;
+    key = key == 'all' ? '' : key
+    this.setData({
+      status: key
+    })
+    this.getList();
   },
   getList(){
     this.setData({
@@ -47,53 +63,37 @@ Page({
       loading:true,
       noData:false
     })
-    wx.request({
-      url: app.data.dev,
-      method:'POST',
-      data:{
-        "query": 'query{customer_order_list(status:"' + this.data.status + '",page_index:' + this.data.page +',count:10000) {pay_order_id,name,price_pay,orderStatus,serviceStatus,product_id,proSku_id, image_first,c_begin_datetime,isEvaluate}}'
-      },
-      header:{
-        "content-type": "application/json",
-        "Authorization": app.globalData.token
-      },
-      success:res=>{
+    clearInterval(this.data.listTimer)
+    this.data.listTimer=setTimeout(()=>{
+      app.req({ "query": 'query{customer_order_list(status:"' + this.data.status + '",page_index:' + this.data.page + ',count:10000) {pay_order_id,name,price_pay,orderStatus,serviceStatus,product_id,proSku_id, image_first,c_begin_datetime,isEvaluate}}'},res=>{
+        clearInterval(this.data.listTimer)
+        this.setData({
+          loading: false,
+          orderList: null
+        })
+        if (res.data.errors && res.data.errors.length > 0) {
           this.setData({
-            loading:false
+            noData: true
           })
-          if(res.data.errors && res.data.errors.length>0){
-            this.setData({
-              noData: true
-            })
-            return false
-          }
-          if(res.data.eror){
-            console.log('请求返回出错')
-            return false;
-          }
-          if (res.data.data.customer_order_list.length == 0){
-            this.setData({
-              noData: true
-            })
-          }
-            this.data.isLoadingTrue=true;
-            this.setData({
-              orderList: res.data.data.customer_order_list
-            })
-          
-      }
-    })
+          return false
+        }
+        if (res.data.eror) {
+          console.log('请求返回出错')
+          return false;
+        }
+        if (res.data.data.customer_order_list.length == 0) {
+          this.setData({
+            noData: true
+          })
+        }
+        this.setData({
+          orderList: res.data.data.customer_order_list
+        })
+        this.data.isLoadingTrue = true;
+      })
+    },700)
   },
-  tab(options){
-    var key=options.currentTarget.dataset.key;
-    if (this.data.status == key || !this.data.isLoadingTrue){return false}
-    this.data.isLoadingTrue=false;
-    key=key =='all'?'':key
-    this.setData({
-      status:key
-    })
-    this.getList();
-  },
+  
   getInfo() {
     wx.request({
       url: app.data.dev,
@@ -130,33 +130,22 @@ Page({
   },
   
   cancelOrder(id){
-    wx.request({
-      url: app.data.dev,
-      method:'POST',
-      header:{
-        "content-type": "application/json",
-        "Authorization": app.globalData.token
-      },
-      data:{
-        "query":'mutation{customer_order_cancel(pay_order_id:"'+id+'",remark_cancel:""){status}}'
-      },
-      success:res=>{
-        if(res.data.data.errors && res.data.data.errors.length>0 || res.data.error){
-          console.log('删除失败')
-          return false; 
-        }
-        var copyList = this.data.orderList
-        for (let i = 0; i < copyList.length; i++) {
-          var item = copyList[i].pay_order_id;
-          if (item == id) {
-            copyList.splice(i, 1)
-            break;
-          }
-        }
-        this.setData({
-          orderList:copyList
-        })
+    app.req({ "query": 'mutation{customer_order_cancel(pay_order_id:"' + id + '",remark_cancel:""){status}}'},res=>{
+      if (res.data.data.errors && res.data.data.errors.length > 0 || res.data.error) {
+        console.log('删除失败')
+        return false;
       }
+      var copyList = this.data.orderList
+      for (let i = 0; i < copyList.length; i++) {
+        var item = copyList[i].pay_order_id;
+        if (item == id) {
+          copyList.splice(i, 1)
+          break;
+        }
+      }
+      this.setData({
+        orderList: copyList
+      })
     })
   },
   goToDetail(options){
@@ -196,31 +185,20 @@ Page({
   },
   okOrder(options) {
     var id = options.currentTarget.dataset.orderid;
-    wx.request({
-      url: app.data.dev,
-      method: "POST",
-      data: {
-        "query": 'mutation{customer_service_complete(pay_order_id:"' + id + '"){status}}'
-      },
-      header: {
-        "content-type": "application/json",
-        "Authorization": app.globalData.token
-      },
-      success: res => {
-        if(res.data.erros && res.data.erros.length>0){
-          wx.showToast({
-            title: '确认失败，请重试',
-            icon:'none'
-          })
-        }else{
-          wx.showToast({
-            title: '确认成功',
-            icon: 'success',
-            success:res=>{
-              this.getList();
-            }
-          })
-        }
+    app.req({ "query": 'mutation{customer_service_complete(pay_order_id:"' + id + '"){status}}'},res=>{
+      if (res.data.erros && res.data.erros.length > 0) {
+        wx.showToast({
+          title: '确认失败，请重试',
+          icon: 'none'
+        })
+      } else {
+        wx.showToast({
+          title: '确认成功',
+          icon: 'success',
+          success: res => {
+            this.getList();
+          }
+        })
       }
     })
   }

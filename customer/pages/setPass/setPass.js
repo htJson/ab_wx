@@ -49,19 +49,8 @@ Page({
     this.setData({
       isGetCode:false
     })
-    wx.request({
-      url: app.data.dev,
-      method:"POST",
-      header:{
-        "content-type": "application/json",
-        "Authorization": app.globalData.token
-      },
-      data:{
-        "query":'mutation{customer_o_send_verification_code(phone:"'+this.data.phone+'"){status}}'
-      },
-      success:res=>{
-        console.log(res)
-      }
+    app.req({ "query": 'mutation{customer_o_send_verification_code(phone:"' + this.data.phone + '"){status}}'},res=>{
+      console.log(res)
     })
   },
   getPass(options){
@@ -132,25 +121,14 @@ Page({
     this.setData({
       errorTip:''
     })
-    wx.request({
-      url: app.data.dev,
-      method:'POST',
-      data:{
-        "query": 'mutation{customer_set_password(password: "'+this.data.pass+'",repeat:"'+this.data.copypass+'", phone: "'+this.data.phone+'", code: "'+this.data.code+'") { status }}'
-      },
-      header:{
-        "content-type": "application/json",
-        "Authorization": app.globalData.token
-      },
-      success:res=>{
-        console.log(res)
-        if(res.data.errors && res.data.errors.length>0){
-          console.log('报错了')
-        }else{
-          wx.redirectTo({
-            url: '/pages/mine/mine',
-          })
-        }
+    app.req({ "query": 'mutation{customer_set_password(password: "' + this.data.pass + '",repeat:"' + this.data.copypass + '", phone: "' + this.data.phone + '", code: "' + this.data.code + '") { status }}'},res=>{
+      console.log(res)
+      if (res.data.errors && res.data.errors.length > 0) {
+        console.log('报错了')
+      } else {
+        wx.redirectTo({
+          url: '/pages/mine/mine',
+        })
       }
     })
   }

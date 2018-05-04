@@ -10,15 +10,17 @@ App({
     appid:'wxe15a4d44733c1121',
     token:'',
     openId:'',
+    updateTokenData:'',
     userId:'',
   },
-  onLaunch: function () {
+  onLaunch: function (options) {
     var _this = this;
     wx.getSystemInfo({
       success: res => {
         this.data.systemInfo = JSON.stringify(res)
       }
     })
+    this.data.scene = decodeURIComponent(options.scene)
     // 登录
     wx.login({
       success: res => {
@@ -26,7 +28,51 @@ App({
         this.data.code = res.code
       }
     })
+    setInterval(()=>{
+      this.upadteToken()
+    },7100000)
   },
+  upadteToken(){
+    wx.request({
+      // url:'http://10.10.30.70:9010/oauth/token', //仅为示例，并非真实的接口地址
+      url: this.data.url + '/oauth/token', //仅为示例，并非真实的接口地址
+      method: "POST",
+      data: {
+        grant_type: 'refresh_token',
+        refresh_token: this.data.updateTokenData
+      },
+      header: {
+        "content-type": 'application/x-www-form-urlencoded', // 默认值
+        "Authorization": 'Basic d3hfbV9jdXN0b206NHg5MWI3NGUtM2I3YS1iYjZ4LWJ0djktcXpjaW83ams2Zzdm',
+        "Duuid": this.data.systemInfo
+      },
+      success: res => {
+        this.globalData.token = 'Bearer ' + res.data.access_token,
+        this.globalData.userId = res.data.uuid
+      }
+    })
+  },
+
+  req(data,fn,headerData){
+    // Object.assig
+    wx.request({
+      url: this.data.dev,
+      method: "POST",
+      header: {
+        "content-type": "application/json",
+        "Authorization": this.globalData.token,
+        "channel": this.data.scene
+      },
+      data: data,
+      success: res => {
+        return typeof fn == "function" && fn(res)
+      },
+      fail: res => {
+        return typeof fn == "function" && fn(res)
+      }
+    })
+  },
+
   getOpenid(vcode){
     wx.request({
       url: this.data.url + '/wxapi/jscode2session',
@@ -135,7 +181,8 @@ App({
         "Duuid": this.data.systemInfo
       },
       success: res => {
-        this.globalData.token = 'Bearer ' + res.data.access_token
+        this.globalData.token = 'Bearer ' + res.data.access_token,
+        this.data.updateTokenData = res.data.refresh_token,
         this.globalData.userId = res.data.uuid
         this.getInfo();
       }

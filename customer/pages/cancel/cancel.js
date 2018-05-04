@@ -64,7 +64,6 @@ Page({
       })
       return false;
     }
-    console.log(content,'=========')
     if(content.length>50){
       wx.showModal({
         title: '提示',
@@ -87,41 +86,32 @@ Page({
     wx.showLoading({
       title: '请稍后',
     })
-    wx.request({
-      url: app.data.dev,
-      method: 'POST',
-      header: {
-        "content-type": "application/json",
-        "Authorization": app.globalData.token
-      },
-      data: {
-        "query": 'mutation{customer_order_cancel(pay_order_id:"' + id + '",remark_cancel:"'+txt+'"){status}}'
-      },
-      success: res => {
+    app.getmstCode(res=>{
+      app.req({ "query": 'mutation{customer_order_cancel(pay_order_id:"' + id + '",remark_cancel:"' + txt + '"){status}}' }, res => {
         wx.hideLoading();
-        console.log(res,'---------------')
-        if (res.data.errors && res.data.errors.length > 0 ) {
+        if (res.data.errors && res.data.errors.length > 0) {
           this.setData({
             errorTip: res.data.errors[0].message
           })
           return false;
-        }else{
+        } else {
           wx.showToast({
             title: '取消成功，3秒后跳转列表页',
-            duration:3000,
-            success:res=>{
+            duration: 3000,
+            success: res => {
               wx.switchTab({
                 url: '/pages/order/order',
-                success:function(e){
+                success: function (e) {
                   var page = getCurrentPages().pop();
-                    if (page == undefined || page == null) return;
-                    page.onLoad();
-                  } 
+                  if (page == undefined || page == null) return;
+                  page.onLoad();
+                }
               })
             }
           })
         }
-      }
+      }, { "mst": res.data.data.apicode.code})
     })
+    
   }
 })

@@ -74,50 +74,39 @@ Page({
     })
   },
   getTimeList(data){
-    wx.request({
-      url: app.data.dev,
-      method:'POST',
-      header:{
-        "content-type": "application/json",
-        "Authorization": app.globalData.token
-      },
-      data:{
-        "query": 'query{student_product_available_times(psku_id:"' + data.pskuId + '",num:' + data.count+'){dateTime,models{start,end,active,dateStart,dateEnd,dateTime}}}'
-      },
-      success:res=>{
-        if(res.data.errors && res.data.errors.length>0){
-          this.setData({
-            noData: true
-          })
-          return false;
-        } else if (res.data.data.student_product_available_times.length == 0){
-          this.setData({
-            noData:true
-          })
-          return false;
-        }else{
-          var vData = res.data.data.student_product_available_times;
-          console.log(vData.length*160)
-          this.setData({
-            widthBox:(vData.length * 220)+'rpx'
-          })
-          for(let i= 0; i <vData.length; i++){
-            vData[i].nIndex=''+i;
-            for(let a=0; a<vData[i].models.length; a++){
-              vData[i].models[a].nIndex=''+i+'-'+a;
-              if(vData[i].models[a].end == null){
-                vData[i].models[a].showTime=vData[i].models[a].start
-              }else{
-                vData[i].models[a].showTime = vData[i].models[a].start+'~'+vData[i].models[a].end;
-              }
+    app.req({ "query": 'query{student_product_available_times(psku_id:"' + data.pskuId + '",num:' + data.count + '){dateTime,models{start,end,active,dateStart,dateEnd,dateTime}}}'}, res => {
+      if (res.data.errors && res.data.errors.length > 0) {
+        this.setData({
+          noData: true
+        })
+        return false;
+      } else if (res.data.data.student_product_available_times.length == 0) {
+        this.setData({
+          noData: true
+        })
+        return false;
+      } else {
+        var vData = res.data.data.student_product_available_times;
+        console.log(vData.length * 160)
+        this.setData({
+          widthBox: (vData.length * 220) + 'rpx'
+        })
+        for (let i = 0; i < vData.length; i++) {
+          vData[i].nIndex = '' + i;
+          for (let a = 0; a < vData[i].models.length; a++) {
+            vData[i].models[a].nIndex = '' + i + '-' + a;
+            if (vData[i].models[a].end == null) {
+              vData[i].models[a].showTime = vData[i].models[a].start
+            } else {
+              vData[i].models[a].showTime = vData[i].models[a].start + '~' + vData[i].models[a].end;
             }
           }
-
-          this.setData({
-            times: vData,
-            list: vData[this.data.selectDay].models
-          })
         }
+
+        this.setData({
+          times: vData,
+          list: vData[this.data.selectDay].models
+        })
       }
     })
   }

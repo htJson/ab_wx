@@ -14,7 +14,11 @@ Page({
   onLoad: function (options) {
   
   },
-
+  backFn(){
+    wx.navigateBack({     //返回上一页面或多级页面
+      delta: 1
+    })
+  },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */

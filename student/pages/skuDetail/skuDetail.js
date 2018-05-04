@@ -41,39 +41,28 @@ Page({
   },
 
   getDetailData(id){
-    wx.request({
-      url: app.data.dev,
-      method:'POST',
-      header: {
-        "content-type": "application/json",
-        "Authorization": app.globalData.token
-      },
-      data:{
-        "query": 'query{student_product_detail(product_id:"' + id +'"){product{product_id,serviceitem_id,name,descript,images,image_first,price_first,pricev_first,base_buyed,base_buyed,content,psku_id_first},proSkus{psku_id,name,buy_multiple,buy_multiple_min,buy_multiple_max,unit,buy_multiple_o2o,price,buy_limit,pricev}}}'
-      },
-      success:res=>{
-        this.setData({
-          detailData: res.data.data.student_product_detail.product, 
-          actionSheetItems: res.data.data.student_product_detail.proSkus,
-          isStart: res.data.data.student_product_detail.proSkus.length>1
-        })
-        var arrSku = res.data.data.student_product_detail.proSkus;
-        if (this.data.selectedSkuId){  //回显，因为跳到登录之后返回要回显示
-          for (let i = 0; i < arrSku.length; i++){
-            if (this.data.selectedSkuId == arrSku[i].psku_id){
-              this.setData({
-                selectedItem:arrSku[i].name,
-                selected: arrSku[i].psku_id,
-                unit:arrSku[i].unit,
-                'detailData.price_first': arrSku[i].price
-              })
-              break;
-            }
+    app.req({ "query": 'query{student_product_detail(product_id:"' + id + '"){product{product_id,serviceitem_id,name,descript,images,image_first,price_first,pricev_first,base_buyed,base_buyed,content,psku_id_first},proSkus{psku_id,name,buy_multiple,buy_multiple_min,buy_multiple_max,unit,buy_multiple_o2o,price,buy_limit,pricev}}}' }, res => {
+      this.setData({
+        detailData: res.data.data.student_product_detail.product,
+        actionSheetItems: res.data.data.student_product_detail.proSkus,
+        isStart: res.data.data.student_product_detail.proSkus.length > 1
+      })
+      var arrSku = res.data.data.student_product_detail.proSkus;
+      if (this.data.selectedSkuId) {  //回显，因为跳到登录之后返回要回显示
+        for (let i = 0; i < arrSku.length; i++) {
+          if (this.data.selectedSkuId == arrSku[i].psku_id) {
+            this.setData({
+              selectedItem: arrSku[i].name,
+              selected: arrSku[i].psku_id,
+              unit: arrSku[i].unit,
+              'detailData.price_first': arrSku[i].price
+            })
+            break;
           }
         }
-        this.getSkuName(this.data.detailData.psku_id_first)
-        WxParse.wxParse('article', 'html', res.data.data.student_product_detail.product.content, this, 0);
       }
+      this.getSkuName(this.data.detailData.psku_id_first)
+      WxParse.wxParse('article', 'html', res.data.data.student_product_detail.product.content, this, 0);
     })
   },
   getSkuName(skuId){

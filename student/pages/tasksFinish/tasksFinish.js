@@ -41,31 +41,19 @@ Page({
       loading:true,
       complate:[]
     })
-    wx.request({
-      url: app.data.dev,
-      method:'POST',
-      data:{
-        "query": 'query{student_complete_orderinfo(dateValue:"' + this.data.date +'",page_index:1,count:1000) {pay_order_id,name,price_total,remarkList{remark}}}'
-      },
-      header:{
-        "content-type": 'application/json', // 默认值
-        "Authorization": app.globalData.token
-      },
-      success: res => {
+    app.req({ "query": 'query{student_complete_orderinfo(dateValue:"' + this.data.date + '",page_index:1,count:1000) {pay_order_id,name,price_total,remarkList{remark}}}'}, res => {
+      this.setData({
+        loading: false,
+        noData: false
+      })
+      if (res.data.errors || res.data.error || res.data.data.student_complete_orderinfo == null) {
         this.setData({
-          loading: false,
-          noData:false
+          noData: true
         })
-
-        if (res.data.errors || res.data.error || res.data.data.student_complete_orderinfo==null){
-          this.setData({
-            noData:true
-          })
-        }else{
-          this.setData({
-            complate: res.data.data.student_complete_orderinfo
-          })
-        }
+      } else {
+        this.setData({
+          complate: res.data.data.student_complete_orderinfo
+        })
       }
     })
   }

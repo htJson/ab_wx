@@ -20,7 +20,7 @@
 
   <view class="borderBottom priceBox">
     <text class='title'>产品价格</text>
-    <text class='money'>￥{{price/100}}<text wx:if="unit !=''">/</text>{{unit}}</text>
+    <text class='money'>￥{{price/100}}<text wx:if="{{unit !=''}}">/</text>{{unit}}</text>
   </view>
   <view class="borderBottom buyNum" wx:if="{{term.buy_multiple == 1}}">
     <text class="title aLeft">购买</text>

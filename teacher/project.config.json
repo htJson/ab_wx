@@ -8,8 +8,8 @@
 		"newFeature": true
 	},
 	"compileType": "miniprogram",
-	"libVersion": "1.9.1",
-	"appid": "wx731d62ae850c6c5e",
+	"libVersion": "1.9.94",
+	"appid": "wx18b2a6ed40277856",
 	"projectname": "teacher",
 	"isGameTourist": false,
 	"condition": {
