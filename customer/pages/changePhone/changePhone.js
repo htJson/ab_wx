@@ -8,9 +8,7 @@ Page({
     timeTxt:'获取验证码',
     isGetCode:true,
   },
-  onLoad: function (options) {
-    
-  },
+  onLoad: function (options) {},
   backFn() {
     wx.switchTab({
       url:'/pages/mine/mine'
@@ -65,7 +63,6 @@ Page({
         }
       }, { "mst": res.data.data.apicode.code})
     })
-    
   },
   checkPhone () {
     var reg =/^1[3|4|5|7|8]\d{9}$/;
