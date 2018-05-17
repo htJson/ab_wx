@@ -15,14 +15,12 @@ Page({
     errorTip:''
   },
   onLoad: function (options) {
-    this.setData({
-      isOrder:options.isOrder
-    })
     wx.getStorage({
       key: 'payData',
-      success: res=> {
+      success:res=>{
         this.setData({
-          orderId: res.data.orderId
+          orderId: res.data.orderId,
+          isOrder: res.data.isOrder,
         })
       },
     })
@@ -86,7 +84,7 @@ Page({
     wx.showLoading({
       title: '请稍后',
     })
-    app.getmstCode(res=>{
+    // app.getmstCode(res=>{
       app.req({ "query": 'mutation{customer_order_cancel(pay_order_id:"' + id + '",remark_cancel:"' + txt + '"){status}}' }, res => {
         wx.hideLoading();
         if (res.data.errors && res.data.errors.length > 0) {
@@ -110,8 +108,8 @@ Page({
             }
           })
         }
-      }, { "mst": res.data.data.apicode.code})
-    })
+      })
+    // })
     
   }
 })

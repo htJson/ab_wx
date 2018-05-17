@@ -17,7 +17,7 @@
         <view class="item {{selectDay==item.nIndex?'active':''}}" wx:for="{{times}}" bindtap="selected" data-index="{{item.nIndex}}" wx:key="{{index}}">
           <text class="week">{{week.getWeek(item.dateTime)}}</text>
           <text class="date">{{week.tiemFormate(item.dateTime)}}</text> 
-          <text class="icon">∨</text>
+          <!-- <text class="icon">∨</text> -->
         </view>
       </view>
     </view>

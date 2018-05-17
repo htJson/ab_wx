@@ -1,4 +1,5 @@
 var app = getApp();
+var tools=require('../../utils/util.js')
 Page({
   data: {
     radioItems: [
@@ -8,14 +9,20 @@ Page({
     phone:'',
     idCord:'',
     errorTip:'',
+    code:'',
+    dataUserInfo:'',
     isDisabled:false
   },
   onLoad: function (options) {
     this.getUserNews();
+    wx.login({
+      success: res => {
+        this.data.code = res.code
+      }
+    })
   },
 
   getphone(options){
-    
     // 获取手机号
     this.setData({
       phone: options.detail.value
@@ -47,12 +54,19 @@ Page({
     this.setData({
       errorTip:''
     })
+    this.getToken();
     app.req({ "query": 'mutation{my_teacher_binduser(phone: "' + this.data.phone + '", id_num: "' + this.data.idCord + '"){status}}'},res=>{
       var data = res.data.my_teacher_binduser;
       if (res.data.errors != undefined) {
-        this.setData({
-          errorTip: res.data.errors[0].message
-        })
+        if (res.data.errors[0].errcode =='40106'){
+          this.setData({
+            errorTip: '该老师已绑定'
+          })
+        }else{
+          this.setData({
+            errorTip: res.data.errors[0].message
+          })
+        }
         return false;
       } else {
         wx.switchTab({
@@ -61,9 +75,97 @@ Page({
       }
     })
   },
+
+  getSetting() {
+    wx.getSetting({
+      success: (res) => {
+        if (!res.authSetting['scope.userInfo']) {
+          //  授权过，但是被拒绝了
+          wx.showModal({
+            title: '提示',
+            content: '小程序想获得您的用户信息，以后保证用户信息正确',
+            showCancel:false,
+            success: res => {
+              if (res.confirm) {
+                wx.openSetting({
+                  success: (res) => {
+                    if (res.authSetting['scope.userInfo']) {
+                      this.getUserINfoFn()
+                    } else {
+                      this.getSetting();
+                    }
+                    return false;
+                  }
+                })
+              } 
+            }
+          })
+        } 
+      }
+    })
+  },
+
+  getUserINfoFn() {
+    wx.getUserInfo({
+      success: res => {
+        // 可以将 res 发送给后台解码出 unionId
+        this.data.dataUserInfo = JSON.stringify(res);
+        app.globalData.userInfo = res.userInfo
+        this.submitForm();
+      },
+      fail(){
+        this.submitForm();
+      }
+    })
+  },
+  getToken() {
+    wx.request({
+      url: app.data.url + '/oauth/token',
+      method: "POST",
+      data: {
+        grant_type: 'wxm_code',
+        appid: app.data.appid,
+        code: this.data.code,
+        userinfo: this.data.dataUserInfo,
+      },
+      header: {
+        "content-type": 'application/x-www-form-urlencoded', // 默认值
+        "Authorization": 'Basic d3hfbV90ZWFjaGVyOjQ4OTFlNzQ3LTJhOWEtNGI2OC1iMzU5LTU2YzJhNzU5NjQ3OA==',
+        "channel": this.data.scene,
+        'platform': 'wxm',
+        'Duuid': this.data.systemInfo,
+        'version': this.data.versionNum,
+        'device': this.data.device,
+      },
+      success: res => {
+        app.globalData.token = 'Bearer ' + res.data.access_token
+        app.globalData.userId = res.data.uuid;
+        app.globalData.updateTokenData = res.data.refresh_token;
+        wx.setStorage({
+          key: app.globalData.openId,
+          data:{
+            token:{
+              time: tools.getTowHoursMin(),
+              value:res.data.access_token
+            },
+            refresh_token:{
+              time: tools.getTowMonthTime(),
+              value: res.data.refresh_token
+            }
+          }
+        })
+      }
+    })
+  },
+
+
   getUserNews(){
     app.req({ "query": 'query{my_teacher_bindinfo{phone,identity_card}}'},res=>{
-      if (res.data.data.my_teacher_bindinfo == null || res.errors != undefined) { return false }
+      if (res.data.data.my_teacher_bindinfo == null || res.errors != undefined) { 
+      
+        return false 
+      }
+
       var data = res.data.data.my_teacher_bindinfo;
 
       var midden = data.phone.substring(3, data.phone.length - 3).replace(/\d/g, function (v) { return '*' });
@@ -77,5 +179,14 @@ Page({
         isDisabled: true
       })
     })
+  },
+  onGotUserInfo(e){
+    console.log(e.detail,'====')
+    if (e.detail.errMsg == 'getUserInfo:ok'){
+      this.data.dataUserInfo = JSON.stringify(e.detail);
+      this.submitForm();
+    }else{
+      this.getSetting();
+    }
   }
 })

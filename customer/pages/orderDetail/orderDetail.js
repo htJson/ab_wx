@@ -79,9 +79,26 @@ Page({
     })
   },
   cancelOrder(){
-    wx.redirectTo({
-      url: '/pages/cancel/cancel?id=' + this.data.orderId+'&isOrder=false',
+    var payDataCopy={}
+    wx.getStorage({
+      key: 'payData',
+      success: res=> {
+        payDataCopy=res.data;
+      },
     })
+    payDataCopy.orderId = this.data.orderId;
+    payDataCopy.isOrder=false;
+    console.log(payDataCopy,'======')
+    wx.setStorage({
+      key: 'payData',
+      data: payDataCopy,
+      success:res=>{
+        wx.redirectTo({
+          url: '/pages/cancel/cancel',
+        })
+      }
+    })
+    
   },
   okOrder(){
     app.req({ "query": 'mutation{customer_service_complete(pay_order_id:"' + this.data.orderId + '"){status}}'},res=>{

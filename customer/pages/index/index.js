@@ -10,6 +10,7 @@ Page({
   },
   
   onLoad: function () {
+    
     var timer=setInterval(()=>{
       if (app.globalData.token) {
         clearInterval(timer)

@@ -25,6 +25,7 @@ var addNum=function(num){
 // 不用代码结束
 
 var data = function (argu, isTime) {
+
   var time = getDate(argu);
   time = getDate(time.getTime() + time.getTimezoneOffset() * 60000);
   

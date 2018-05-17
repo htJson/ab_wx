@@ -74,5 +74,5 @@
     <text class="title">实付金额</text>
     <text class="allPrice">￥{{allPrice/100}}</text>
   </view>
-  <button class="submitBtn" bindtap='submitBtn'>确定</button>
+  <button class="submitBtn" bindtap='submitBtn' disabled="{{isDisabled}}">确定</button>
 </view>

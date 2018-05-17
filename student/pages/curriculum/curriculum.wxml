@@ -43,7 +43,7 @@
             <view class="radioBox"></view>
             <view class="line"></view>
           </view>
-          <view class="courseRight bgColor" data-id="{{item.trainSchedule.train_schedule_id}}" bindtap='toDetail'>
+          <view class="courseRight" data-id="{{item.trainSchedule.train_schedule_id}}" bindtap='toDetail'>
             <!-- <image wx:if="{{item.isRead}}" class="leftSj" src="../../images/trainActive.png"></image> -->
             <image class="leftSj" src="../../images/train.png"></image>
             <view class="cTime f24"> {{item.trainSchedule.mydate}}</view>

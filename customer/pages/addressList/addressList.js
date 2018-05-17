@@ -117,9 +117,10 @@ Page({
       setDefault:false
     })
     var id = options.currentTarget.dataset.id;
-    app.getmstCode(res=>{
-      this.setDefaultFn(res.data.data.apicode.code)
-    })
+    // app.getmstCode(res=>{
+      // this.setDefaultFn(res.data.data.apicode.code)
+      this.setDefaultFn()
+    // })
   },
   setDefaultFn(mstCode){
     app.req({ "query": 'mutation{customer_set_default_address(customer_address_id:"' + id + '"){status}}'},res=>{
@@ -133,6 +134,6 @@ Page({
           saveDefault: id
         })
       }
-    }, { "mst": mstCode })
+    })
   }
 })

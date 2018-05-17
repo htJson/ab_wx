@@ -9,19 +9,19 @@
     </view>
     <block wx:else>
     <view class="item">
-      <text class="cTitle">日期：</text>
+      <text class="cTitle">日期</text>
       <text>{{content.trainSchedule.myDate}}</text>
     </view>
     <view class="item">
-      <text class="cTitle">课程：</text>
+      <text class="cTitle">课程</text>
       <text>{{content.course.name}}</text>
     </view>
     <view class="item">
-      <text class="cTitle">章节：</text>
+      <text class="cTitle">章节</text>
       <text>第{{content.chapter.section_name}}节 {{content.chapter.headline}}</text>
     </view>
     <view class="item">
-      <text class="cTitle">授课方式：</text>
+      <text class="cTitle">授课方式</text>
       <text>{{content.plan.train_way?"在线":"面授"}}</text>
     </view>
     <!-- <view class="item">
@@ -29,15 +29,15 @@
       <text>{{content.classType}}</text>
     </view> -->
     <view class="item">
-      <text class="cTitle">学校：</text>
+      <text class="cTitle">学校</text>
       <text>{{content.school.name}}</text>
     </view>
     <view class="item">
-      <text class="cTitle">教室：</text>
+      <text class="cTitle">教室</text>
       <text>{{content.classroom.block_number}}</text>
     </view>
     <view class="item">
-      <text class="cTitle">地址：</text>
+      <text class="cTitle">地址</text>
       <view class="address">
         <text>{{content.school.address}}</text>
         <!-- <icon type="download" size="20" color="green"/> -->
@@ -46,5 +46,4 @@
     </view>
     </block>
   </view>
-  
 </view>

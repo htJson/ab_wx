@@ -1,6 +1,6 @@
 .container{padding-bottom:80rpx;}
 .borderBottom{ border-bottom:1px solid #cecfd2}
-.moreIcon{width:40rpx; height: 45rpx;}
+.moreIcon{width:20rpx; height: 22rpx;}
 .titleBox{height: 118rpx; font-size:30rpx; color:#010000; line-height: 118rpx;}
 .title{font-size:26rpx; color:#727171; width:159rpx; display: block; float:left; text-align: left;}
 .titleBox .name{display:block; margin-left:160rpx; overflow: hidden;text-overflow:ellipsis;white-space: nowrap; }
@@ -20,7 +20,7 @@
 .setTime .timeContent{margin-left:159rpx; padding-right:40rpx; font-size:26rpx; color:#000; position:relative;}
 .setTime .timeContent image{position:absolute; right:0px; top:0px;}
 .noteBox{padding:36rpx 30rpx; position:relative;}
-.noteBox .textarea{display:block; margin-left:120rpx; margin-top:20rpx; height:130rpx;}
+.noteBox .textarea{display:block; margin-left:159rpx; margin-top:20rpx; height:130rpx;}
 .noteBox .textarea textarea{width:100%; font-size:26rpx; color:#000; height: 150rpx;}
 .money{ float:right; color:#000; font-size:30rpx;}
 .allPrice{float: right; color:#ff0000; font-size:30rpx;}

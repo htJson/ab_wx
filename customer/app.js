@@ -1,11 +1,14 @@
-var http = require('utils/service.js')
 var md5 = require('utils/md5.js')
+var sha1 = require('utils/sha1.js')
+var utils =require('utils/util.js')
+// "Authorization": 'Basic d3hfbV9jdXN0b206NHg5MWI3NGUtM2I3YS1iYjZ4LWJ0djktcXpjaW83ams2Zzdm',
 App({
   data: {
     url: 'https://test-auth.aobei.com',   
     dev:'https://test-api.aobei.com/graphql', 
     // dev: 'https://test-api.aobei.com/graphql',
     code: '',
+    key:'ac928fb7-f11a-4d9f-894c-8283859bc914',
     appid: 'wx653dc689ca79ac81',
     token: '',
     dataUserInfo:"",
@@ -17,6 +20,7 @@ App({
     isReload:false,
     scene:null,
     versionNum:1.4,
+    nostr:'',
     device:''
   },
   onLaunch: function (options) {
@@ -27,18 +31,17 @@ App({
         this.data.systemInfo = md5.hexMD5(JSON.stringify(res))
       }
     })
+    this.data.nostr = utils.randomWord(false,32)
     this.data.scene = decodeURIComponent(options.scene)
     this.data.isAgree= wx.getStorage({
       key: 'isAgree',
       success: res=> {
         this.data.isAgree=res
       }
-    })
-    
+    })    
     // 登录
     wx.login({
       success: res => {
-        // this.getToken(res.code)
         this.getOpenId(res.code)
         this.globalData.code = res.code
       }
@@ -46,10 +49,11 @@ App({
     setInterval(() => {
       this.upadteToken()
     }, 7100000)
+    // }, 170000)
   },
   upadteToken() {
     wx.request({
-      url: this.data.url + '/oauth/token', //仅为示例，并非真实的接口地址
+      url: this.data.url + '/oauth/token?d='+new Date().getTime(), //仅为示例，并非真实的接口地址
       method: "POST",
       data: {
         grant_type: 'refresh_token',
@@ -66,10 +70,12 @@ App({
       },
       success: res => {
         this.globalData.token = 'Bearer ' + res.data.access_token;
-        this.globalData.userId = res.data.uuid
+        this.globalData.userId = res.data.uuid;
+        this.data.updateTokenData = res.data.refresh_token;
       }
     })
   },
+  
   getOpenId(vcode){
     wx.request({
       url: this.data.url + '/wxapi/jscode2session',
@@ -87,6 +93,7 @@ App({
         js_code: vcode
       },
       success: res => {
+        console.log(res,'====')
         this.data.openId = res.data.openid.toString();
         wx.getStorage({
           key: this.data.openId + '====wxm',
@@ -135,14 +142,19 @@ App({
       'Duuid': this.data.systemInfo,
       'version': this.data.versionNum,
       'device': this.data.device,
-    },headerData=null;
+      "nostr":this.data.nostr,
+      "sign":""
+    }, headerData = null, str ='';
 
     if(typeof mts == 'object' && mts.mts != ''){
       headerData = Object.assign({},json,mts);
+      str+='mts=' + mts.mts +'&';
     }else{
       headerData=json
     }
-
+    str += 'nostr=' + this.data.nostr + "&query=" + data.query + '&key='+this.data.key;
+    var n = sha1.sha1(str)
+    headerData.sign = n.toUpperCase();
     wx.request({
       url: this.data.dev,
       method: "POST",
@@ -221,7 +233,6 @@ App({
   getToken() {
     wx.request({
       url: this.data.url + '/oauth/token',
-      // url:'http://10.10.30.70:9010/oauth/token',
       method: "POST",
       data: {
         grant_type: 'wxm_code',

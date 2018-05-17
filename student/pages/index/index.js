@@ -21,7 +21,8 @@ Page({
     },100)
   },
   onPullDownRefresh(){
-    wx.showNavigationBarLoading()
+    wx.showNavigationBarLoading();
+    this.getStudentNews();
     this.getTaskList();
   },
   goToDetail(options) {

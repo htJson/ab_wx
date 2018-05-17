@@ -13,15 +13,16 @@
       </label>
     </view> -->
     <view>
-      <text class="">手机号：</text>
+      <text class="">手机号</text>
       <input type="Number" bindinput='phoneInupt' disabled="{{!isEditer?'disabled':''}}" value="{{phone}}" placeholder='请输入11位有效手机号'  placeholder-style="font-size:24rpx"/>
     </view>
     <view>
-      <text class="">身份证号：</text>
+      <text class="">身份证号</text>
       <input type="Number" bindinput='idNumInput' disabled="{{!isEditer?'disabled':''}}" value="{{idNum}}" placeholder='请输入有效身份证号' placeholder-style='font-size:24rpx'/>
     </view>
     <view class="btn-area">
-      <button formType="submit" class="{{isDisabled?'disStyle':''}}" bindtap="bindUser" disabled="{{isDisabled}}">绑定</button>
+      <!-- <button formType="submit" class="{{isDisabled?'disStyle':''}}" bindgetuserinfo="onGotUserInfo"  bindtap="bindUser" disabled="{{isDisabled}}">绑定</button> -->
+      <button formType="submit" class="{{isDisabled?'disStyle':''}}" open-type="getUserInfo" bindgetuserinfo="onGotUserInfo" disabled="{{isDisabled}}">绑定</button>
     </view>
     <view class="errorStyle">{{errorTip}}</view>
   </view>

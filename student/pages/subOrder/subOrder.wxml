@@ -78,7 +78,7 @@
         <text class="price">￥{{allPrice/100}}</text>
       </view>
     </view>
-    <button class="submitBtn" bindtap='submitBtn'>提交订单</button>
+    <button class="submitBtn" disabled='{{isDisabled}}' bindtap='submitBtn'>提交订单</button>
   </view>
   
 </view>

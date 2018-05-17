@@ -13,35 +13,35 @@
   <view class="item">
     <view class="title">服务项目</view>
     <view class="server">
-      <view class="serverItem {{item.name.length>6?'sixMore':'sixSmall'}}" wx:for="{{detail.serviceItems}}" data-id="{{item.category_id}}">{{item.name}}</view>
+      <view class="serverItem" wx:for="{{detail.serviceItems}}" data-id="{{item.category_id}}">{{item.name}}</view>
     </view>
   </view>
   <view class="aline"></view>
   <view class="userCard">
     <view class="title">身份证</view>
     <view class="cardImg">
-      <image src="{{detail.card_just}}"></image>
+      <image bindtap="previewFn" data-url="{{detail.card_just}}" src="{{detail.card_just}}"></image>
     </view>
   </view>
   <view class="aline"></view>
   <view class="healthy">
     <view class="title">健康证</view>
     <view class="cardImg">
-      <image src="{{detail.health}}"></image>
+      <image bindtap="previewFn" data-url="{{detail.health}}" src="{{detail.health}}"></image>
     </view>
   </view>
   <view class="aline"></view>
   <view class="skill">
     <view class="title">技能证</view>
     <view class="cardImg" wx:for="{{detail.imgs}}">
-      <image src="{{item.url}}"></image>
+      <image bindtap="previewFn" data-url="{{item.url}}" src="{{item.url}}"></image>
     </view>
   </view>
   <view class="aline"></view>
   <view class="skill">
     <view class="title">无犯罪记录</view>
     <view class="cardImg">
-      <image src="{{detail.health}}"></image>
+      <image bindtap="previewFn" data-url="{{detail.health}}" src="{{detail.health}}"></image>
     </view>
   </view>
 </view>

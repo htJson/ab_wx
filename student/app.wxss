@@ -25,6 +25,7 @@
 .mt20{margin-top:20rpx;}
 .mt10{margin-top:10rpx;}
 .mr40{margin-right:40rpx;}
+.mb40{margin-bottom:40rpx;}
 .pb20{padding-bottom:20rpx;}
 .bgColor{ background:#f7f7fa;}
 .bgBlue{background:blue}

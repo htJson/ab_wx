@@ -48,7 +48,7 @@ Page({
       isGetCode:false
     })
     this.downTime();
-    app.getmstCode(res=>{
+    // app.getmstCode(res=>{
       app.req({ "query": 'mutation{customer_n_send_verification_code(phone:"' + this.data.phone + '"){status}}' }, res => {
         if (res.data.data.errors && res.data.data.errors.length > 0) {
           wx.showToast({
@@ -61,8 +61,8 @@ Page({
             title: '获取验证码成功',
           })
         }
-      }, { "mst": res.data.data.apicode.code})
-    })
+      })
+    // })
   },
   checkPhone () {
     var reg =/^1[3|4|5|7|8]\d{9}$/;
@@ -123,7 +123,7 @@ Page({
         this.setData({
           errorTip: ''
         })
-        wx.redirectTo({
+        wx.switchTab({
           url: '/pages/mine/mine',
         })
       }

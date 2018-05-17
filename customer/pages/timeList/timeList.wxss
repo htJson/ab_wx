@@ -14,7 +14,7 @@
 .timeSelected .active{color:#fff; background:#00a0e9}
 .timeSelected .active .icon{color:#00a0e9}
 
-.bespeak{background: #fff; height: 189rpx; padding-right:189rpx; margin-bottom:30rpx; border-top:1px solid #dadadd; border-bottom:1px solid #dadada; line-height: 189rpx; text-align: center; position: relative;}
+.bespeak{background: #fff; height: 189rpx; padding-right:189rpx; border-top:1rpx solid #dadadd; line-height: 189rpx; text-align: center; position: relative;}
 .bespeak .btn{position: absolute; width:189rpx; top:0px; right:0px; height: 189rpx;}
 .bespeak .noBes{ background: #dadadd;}
 .bespeak .besBtn{ background: #fff; color:#727171; border-left:1px solid #dadadd}

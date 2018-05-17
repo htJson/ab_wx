@@ -2,7 +2,7 @@ var app=getApp();
 Page({
   data: {
     addressId:'',
-    time:'2013-09-23 8:00-9:00',
+    // time:'2013-09-23 8:00-9:00',
     isAddress:null,
     count:1,
     productId:'',
@@ -22,7 +22,8 @@ Page({
     term:null,
     sumPriceTimer:null,
     unit:'',
-    addressJson:null
+    addressJson:null,
+    isDisabled:false
   },
 
   onLoad: function (options) {
@@ -72,9 +73,13 @@ Page({
       key: 'time',
       success: res=> {
         res.data.startDate = res.data.date + ' ' + res.data.startTime;
-        res.data.endDate = res.data.date + ' ' + res.data.endTime;
+        if (res.data.endTime == null) {
+          res.data.endDate = ''
+        } else {
+          res.data.endDate = res.data.date + ' ' + res.data.endTime;
+        }
         res.data.showTime = res.data.endTime == null ? res.data.date + ' ' + res.data.startTime : res.data.date + ' ' + res.data.startTime +'~' +res.data.endTime;
-
+        console.log(res.data,'----')
         this.setData({
           time:res.data
         })
@@ -312,6 +317,7 @@ Page({
       })
       return false;
     }
+    console.log(this.data.time,'======')
     if (this.data.time.startDate == undefined && this.data.selectedTime !=0){
       wx.showModal({
         title: '提示',
@@ -324,28 +330,39 @@ Page({
         this.data.time.endDate="";
         this.data.time.startDate=""
     }
-    app.req({ "query": 'mutation{student_create_order(student_order_input:{pay_order_id:"' + this.data.oldOrderId + '"product_id:"' + this.data.productId + '",psku_id:"' + this.data.skuId + '",begin_datetime:"' + this.data.time.startDate + '",end_datatime:"' + this.data.time.endDate + '",customer_address_id:"' + this.data.addressId + '",num:' + this.data.count + ',remark:"' + this.data.remark + '",type:' + this.data.selectedTime + '}){pay_order_id,name,uid,price_total,create_datetime,price_discount}}'}, res => {
-      if (res.data.errors && res.data.errors.length > 0 || res.data.eror) {
-        console.log('接口错误')
-      } else {
-        wx.removeStorageSync('time');
-        // wx.removeStorageSync('selectedAddress')
-        wx.removeStorageSync('detail')
-        wx.removeStorageSync('coupon')
-        var vData = res.data.data.student_create_order;
-        // 清除所有cookie
-        // 设置支付cookie
-        wx.setStorage({
-          key: 'payData',
-          data: {
-            orderId: vData.pay_order_id
-          },
-        })
-        // 跳转界面
-        wx.switchTab({
-          url: '/pages/studentOrder/studentOrder',
-        })
-      }
+    
+    if (this.data.isDisabled){return false;}
+    this.setData({
+      isDisabled:true
+    })
+ 
+    app.getmstCode(res=>{
+      app.req({ "query": 'mutation{student_create_order(student_order_input:{pay_order_id:"' + this.data.oldOrderId + '"product_id:"' + this.data.productId + '",psku_id:"' + this.data.skuId + '",begin_datetime:"' + this.data.time.startDate + '",end_datatime:"' + this.data.time.endDate + '",customer_address_id:"' + this.data.addressId + '",num:' + this.data.count + ',remark:"' + this.data.remark + '",type:' + this.data.selectedTime + '}){pay_order_id,name,uid,price_total,create_datetime,price_discount}}'}, res => {
+        if (res.data.errors && res.data.errors.length > 0 || res.data.eror) {
+          this.setData({
+            isDisabled: false
+          })
+          console.log('接口错误')
+        } else {
+          wx.removeStorageSync('time');
+          // wx.removeStorageSync('selectedAddress')
+          wx.removeStorageSync('detail')
+          wx.removeStorageSync('coupon')
+          var vData = res.data.data.student_create_order;
+          // 清除所有cookie
+          // 设置支付cookie
+          wx.setStorage({
+            key: 'payData',
+            data: {
+              orderId: vData.pay_order_id
+            },
+          })
+          // 跳转界面
+          wx.switchTab({
+            url: '/pages/studentOrder/studentOrder',
+          })
+        }
+      }, { 'mts': res.data.data.apicode.code}) 
     })
   }
 })

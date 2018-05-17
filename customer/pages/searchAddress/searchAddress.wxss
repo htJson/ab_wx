@@ -1,6 +1,6 @@
 /* pages/searchAddress/searchAddress.wxss */
-.container{padding:50rpx 30rpx;}
-.search{overflow: hidden; background:#efeff4; margin-top:40rpx; border-radius:50rpx; padding:10rpx; position: relative;}
+.container{padding:40rpx 30rpx;}
+.search{overflow: hidden; background:#efeff4; border-radius:50rpx; padding:10rpx; position: relative;}
 .search .city{float:left; font-size:30rpx; color:#000; margin:10rpx; border-right:1px solid #adacaf; margin-right:20rpx; position: relative; padding-right:30rpx; margin-left:30rpx;}
 .search .Keywords{position: absolute; left:0px; top:0px; right:0px; bottom:0px; margin-left:150rpx; margin-top:17rpx; margin-right:30rpx;}
 .search .Keywords input{width:100%; font-size:28rpx; color:#727171}
@@ -18,7 +18,7 @@
 .location .content .refresh text{ float:left; font-size:30rpx;}
 
 .searchList .list{margin-left:45rpx;}
-.searchList .list .item{color:#010101; font-size:30rpx; padding:35rpx 0; border-bottom:1px solid #c7c7cc}
+.searchList .list .item{color:#010101; font-size:30rpx; padding:35rpx 0; border-bottom:1rpx solid #c7c7cc}
 
 .page-top{
   height: 100%;

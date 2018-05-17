@@ -173,7 +173,7 @@ Page({
           })
         }
       }
-    },{"mts":mtsCode})
+    }, { "mts": mtsCode})
   },
   switch1Change(options){
     this.setData({
@@ -186,9 +186,10 @@ Page({
     this.setData({
       requestOK: true
     })
-    app.getmstCode(res => {
-      this.editerSaveFn(res.data.data.apicode.code)
-    })
+    // app.getmstCode(res => {
+      // this.editerSaveFn(res.data.data.apicode.code)
+      this.editerSaveFn()
+    // })
   },
   editerSaveFn(mstCode){
     app.req({ "query": 'mutation{customer_address_update (customer_address_input:{customer_address_id:"' + this.data.addressId + '",username:"' + this.data.userName + '",phone:"' + this.data.phone + '",province:"' + this.data.ad_info.province + '",city:"' + this.data.ad_info.city + '",district:"' + this.data.ad_info.district + '",address:"' + this.data.address + '",lbs_lat:"' + this.data.location.lat + '",lbs_lng:"' + this.data.location.lng + '",default_address:' + Number(this.data.isDefault) + ',sub_address:"' + this.data.detailed + '"}){customer_address_id,customer_id}}'}, res => {
@@ -225,7 +226,7 @@ Page({
           })
         }
       }
-    }, { "mst": mstCode})
+    })
   },
   updateSelectedAddress(){
     wx.setStorage({
@@ -244,9 +245,10 @@ Page({
     this.setData({
       requestOk:true
     })
-    app.getmstCode(res => {
-      this.delAddressFn(res.data.data.apicode.code)
-    })
+    // app.getmstCode(res => {
+      // this.delAddressFn(res.data.data.apicode.code)
+      this.delAddressFn()
+    // })
   },
   delAddressFn(mstCode){
     app.req({ "query": 'mutation{customer_address_delete(customer_address_id:"' + this.data.addressId + '"){status}}'}, res => {
@@ -286,6 +288,6 @@ Page({
           duration: 2000
         })
       }
-    }, { "mst": mstCode})
+    })
   }
 })

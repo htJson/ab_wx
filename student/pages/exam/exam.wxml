@@ -30,7 +30,7 @@
           <view class="radioBox"></view>
           <view class="line"></view>
         </view>
-        <view class="courseRight bgColor" bindtap='toDetail'>
+        <view class="courseRight" bindtap='toDetail'>
           <image class="leftSj" src="../../images/train.png"></image>
           <view class="cTime f24">{{index}}</view>
           <view class="cContent">

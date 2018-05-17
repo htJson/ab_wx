@@ -55,7 +55,7 @@
     <view class="noData typeNoData" wx:if="{{actionSheetItems.length==0}}">
       <image src="../../images/noData.jpg"></image>
       <text>抱歉，暂无服务类型数据</text>
-    </view> 
+    </view>
     <view style="padding-bottom:100rpx;" catchtap=''>
       <block wx:for-items="{{actionSheetItems}}" wx:key="{{index}}">
           <action-sheet-item data-index="{{index}}" data-id="{{item.psku_id}}" class="dItem {{selected == item.psku_id?'active':''}}" catchtap="bindSelected">

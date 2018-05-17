@@ -22,7 +22,9 @@ Page({
     serverPrice:'',
     term:null,
     sumPriceTimer:null,
-    unit:''
+    unit:'',
+    isDisabled:false
+
   },
 
   onLoad: function () {
@@ -307,28 +309,38 @@ Page({
       })
       return false;
     }
-    app.req({ "query": 'mutation{customer_create_order(order_input:{product_id:"' + this.data.productId + '",psku_id:"' + this.data.skuId + '",begin_datetime:"' + this.data.time.startDate + '",end_datatime:"' + this.data.time.endDate + '",customer_address_id:"' + this.data.addressId + '",coupon_receive_id:"' + (this.data.couponNews.id || 0) + '",num:' + this.data.count + ',remark:"' + this.data.remark + '"}){pay_order_id,name,uid,price_total,create_datetime,price_discount}}'},res=>{
-      if (res.data.errors && res.data.errors.length > 0 || res.data.eror) {
-        console.log('接口错误')
-      } else {
-        wx.removeStorageSync('time');
-        // wx.removeStorageSync('selectedAddress')
-        wx.removeStorageSync('detail')
-        wx.removeStorageSync('coupon')
-        var vData = res.data.data.customer_create_order;
-        // 清除所有cookie
-        // 设置支付cookie
-        wx.setStorage({
-          key: 'payData',
-          data: {
-            orderId: vData.pay_order_id
-          },
-        })
-        // 跳转界面
-        wx.redirectTo({
-          url: '/pages/payOrder/payOrder',
-        })
-      }
+    
+    if(this.data.isDisabled){return false;}
+    this.setData({
+      isDisabled: true
+    })
+    app.getmstCode(res => {
+      app.req({ "query": 'mutation{customer_create_order(order_input:{product_id:"' + this.data.productId + '",psku_id:"' + this.data.skuId + '",begin_datetime:"' + this.data.time.startDate + '",end_datatime:"' + this.data.time.endDate + '",customer_address_id:"' + this.data.addressId + '",coupon_receive_id:"' + (this.data.couponNews.id || 0) + '",num:' + this.data.count + ',remark:"' + this.data.remark + '"}){pay_order_id,name,uid,price_total,create_datetime,price_discount}}'},res=>{
+        if (res.data.errors && res.data.errors.length > 0 || res.data.eror) {
+          console.log('接口错误')
+          this.setData({
+            isDisabled: false
+          })
+        } else {
+          wx.removeStorageSync('time');
+          // wx.removeStorageSync('selectedAddress')
+          wx.removeStorageSync('detail')
+          wx.removeStorageSync('coupon')
+          var vData = res.data.data.customer_create_order;
+          // 清除所有cookie
+          // 设置支付cookie
+          wx.setStorage({
+            key: 'payData',
+            data: {
+              orderId: vData.pay_order_id
+            },
+          })
+          // 跳转界面
+          wx.redirectTo({
+            url: '/pages/payOrder/payOrder',
+          })
+        }
+      }, { 'mts': res.data.data.apicode.code})
     })
   }
 })

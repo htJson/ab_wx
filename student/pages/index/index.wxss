@@ -1,5 +1,5 @@
 .container{background: #efeff4;}
-.header{padding:25rpx 30rpx; background: #fff; position: relative; border-bottom:1px solid #c7c7cc; font-size:26rpx; color:#727171; overflow: hidden;}
+.header{padding:25rpx 30rpx; background: #fff; position: relative; font-size:26rpx; color:#727171; overflow: hidden;}
 .header .contact{margin-right:80rpx;}
 .header image{width:41rpx; height: 47rpx; position: absolute; right:20px; top:20rpx;}
 .tab{overflow: hidden; margin-top:20rpx; background: #fff; font-size:30rpx; padding:25rpx 30rpx;}
