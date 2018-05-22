@@ -154,32 +154,22 @@ App({
   },
 
   setTokenStorage(res) {  //更新缓存token
-    wx.request({
-      url: this.data.timeUrl,
-      method: 'POST',
-      header: {
-        "content-type": 'application/x-www-form-urlencoded', // 默认值
-      },
-      success: timeData => {
-        var time = timeData.data.second;
-        this.globalData.token = 'Bearer ' + res.data.access_token;
-        this.globalData.userId = res.data.uuid;
-        this.globalData.updateTokenData = res.data.refresh_token;
-        wx.setStorage({
-          key: this.globalData.saveTokenKey + this.globalData.openId,
-          data: {
-            "token": {
-              time: time + (2 * 60),
-              value: 'Bearer ' + res.data.access_token
-            },
-            "refresh_token": {
-              time: time + (4 * 60),
-              value: res.data.refresh_token
-            }
+      this.globalData.token = 'Bearer ' + res.data.access_token;
+      this.globalData.userId = res.data.uuid;
+      this.globalData.updateTokenData = res.data.refresh_token;
+      wx.setStorage({
+        key: this.globalData.saveTokenKey + this.globalData.openId,
+        data: {
+          "token": {
+            time: this.globalData.serverTime + res.data.expires_in,
+            value: 'Bearer ' + res.data.access_token
+          },
+          "refresh_token": {
+            time: this.globalData.serverTime + (4 * 60),
+            value: res.data.refresh_token
           }
-        })
-      }
-    })
+        }
+      })
   },
 
   upadteToken(key) {  //token 更新方法

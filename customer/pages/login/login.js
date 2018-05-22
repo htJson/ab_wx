@@ -20,11 +20,6 @@ Page({
       url: options.url,
       skuId: options.skuId || ''
     })
-    // wx.login({
-    //   success: res => {
-    //     this.data.tokenCode = res.code
-    //   }
-    // })
   },
   getPhone(options) {
     this.setData({
@@ -119,20 +114,21 @@ Page({
       })
     }
   },
-  getServerTime(res){
-    wx.request({
-      url: app.data.timeUrl,
-      methods:'POST',
-      data:{},
-      header:{
-        "content-type": 'application/x-www-form-urlencoded', // 默认值
-        "Authorization": 'Basic d3hfbV9jdXN0b206NHg5MWI3NGUtM2I3YS1iYjZ4LWJ0djktcXpjaW83ams2Zzdm',
-      },
-      success:timeData=>{
-        this.resultToken(res, timeData.data.second)
-      }
-    })
-  },
+  // getServerTime(res){
+  //   console.log('index=================>>>>>>>>')
+  //   wx.request({
+  //     url: app.data.timeUrl,
+  //     methods:'POST',
+  //     data:{},
+  //     header:{
+  //       "content-type": 'application/x-www-form-urlencoded', // 默认值
+  //       "Authorization": 'Basic d3hfbV9jdXN0b206NHg5MWI3NGUtM2I3YS1iYjZ4LWJ0djktcXpjaW83ams2Zzdm',
+  //     },
+  //     success:timeData=>{
+  //       this.resultToken(res, timeData.data.second)
+  //     }
+  //   })
+  // },
   resultToken(res,time){  //获取token结果函数
     wx.hideLoading();
     if(res.data.error){
@@ -147,25 +143,24 @@ Page({
         })
       }
     }
+    console.log(app.globalData.serverTime,'===============',res,'========')
     app.globalData.token = 'Bearer ' + res.data.access_token;
     app.globalData.updateTokenData = res.data.refresh_token,
-    app.globalData.userId = res.data.uuid
+    app.globalData.userId = res.data.uuid;
+    console.log(app.globalData.serverTime + res.data.expires_in,'======')
     wx.setStorage({
       key: app.globalData.saveTokenKey + app.globalData.openId,
       data: {
         "token": {
-          "time": time+(2*60),
+          "time": app.globalData.serverTime + res.data.expires_in,
           "value": 'Bearer ' + res.data.access_token
         },
         "refresh_token": {
-          "time": time+(4*60),
+          "time": app.globalData.serverTime+(4*60),
           "value": res.data.refresh_token
         }
       },
       success:res=>{
-        setInterval(() => {
-          app.upadteToken('a')
-        }, 10000)
         if (this.data.id) {
           wx.redirectTo({
             url: '/' + this.data.url + '?product_id=' + this.data.id + '&skuId=' + this.data.skuId,
@@ -200,7 +195,7 @@ Page({
         if(key == 'code'){
           this.resultCode(res);
         }else if(key == 'token'){
-          this.getServerTime(res);
+          this.resultToken(res);
         }
       }
     })
