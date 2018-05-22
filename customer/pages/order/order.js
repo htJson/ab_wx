@@ -28,6 +28,7 @@ Page({
   onLoad: function (options) {
     this.getInfo()
     this.getList();
+    console.log('onLoad')
     var pages = getCurrentPages()    //获取加载的页面
     var currentPage = pages[pages.length - 1]    //获取当前页面的对象
     this.setData({
@@ -37,6 +38,7 @@ Page({
   onShow(){
     if(this.data.isLogin){
       this.getInfo();
+      console.log('onShow')
       this.getList();
     }
   },
@@ -48,7 +50,7 @@ Page({
   },
   tab(options) {
     var key = options.currentTarget.dataset.key; 
-    clearInterval(this.data.listTimer)
+    // clearInterval(this.data.listTimer)
     if (this.data.status == key || !this.data.isLoadingTrue) { return false }
     this.setData({
       orderList: [],
@@ -68,6 +70,7 @@ Page({
       })
       this.data.page++;
       if (!this.data.lengthData){
+        console.log('onReachBottom')
         this.getList()
       }
   },
@@ -76,10 +79,10 @@ Page({
       loading:true,
       noData:false
     })
-    clearInterval(this.data.listTimer)
-    this.data.listTimer=setTimeout(()=>{
+    // clearInterval(this.data.listTimer)
+    // this.data.listTimer=setTimeout(()=>{
       app.req({ "query": 'query{customer_order_list(status:"' + this.data.status + '",page_index:' + this.data.page + ',count:' + this.data.count+') {pay_order_id,name,price_pay,orderStatus,serviceStatus,product_id,proSku_id, image_first,c_begin_datetime,isEvaluate}}'},res=>{
-        clearInterval(this.data.listTimer)
+        // clearInterval(this.data.listTimer)
         this.setData({
           loading: false,
         })
@@ -116,7 +119,7 @@ Page({
         }
         this.data.isLoadingTrue = true;
       })
-    },700)
+    // },1000)
   },
   
   getInfo() {
@@ -204,7 +207,7 @@ Page({
       },
     })
     // 跳转界面
-    wx.redirectTo({
+    wx.navigateTo({
       url: url+'?isOrder=true',
     })
   },

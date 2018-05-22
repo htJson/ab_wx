@@ -142,11 +142,11 @@ Page({
         app.globalData.userId = res.data.uuid;
         app.globalData.updateTokenData = res.data.refresh_token;
         wx.setStorage({
-          key: app.globalData.openId,
+          key: 'token_' +app.globalData.openId,
           data:{
             token:{
               time: tools.getTowHoursMin(),
-              value:res.data.access_token
+              value: 'Bearer ' +res.data.access_token
             },
             refresh_token:{
               time: tools.getTowMonthTime(),
@@ -181,7 +181,6 @@ Page({
     })
   },
   onGotUserInfo(e){
-    console.log(e.detail,'====')
     if (e.detail.errMsg == 'getUserInfo:ok'){
       this.data.dataUserInfo = JSON.stringify(e.detail);
       this.submitForm();

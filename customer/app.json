@@ -1,5 +1,6 @@
 {
   "pages":[
+    
     "pages/index/index",
     "pages/order/order",
     "pages/skuDetail/skuDetail",
@@ -21,8 +22,8 @@
     "pages/setPassTow/setPassTow",
     "pages/about/about",
     "pages/addEditer/addEditer",
-    "pages/typeList/typeList",
-    "pages/login/login"
+    "pages/login/login",
+    "pages/typeList/typeList"
   ],
   "window":{
     "backgroundTextStyle":"light",

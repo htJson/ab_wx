@@ -87,7 +87,6 @@ Page({
             icon: 'none'
           })
         }
-
       } else {
         wx.showToast({
           title: '评价成功',

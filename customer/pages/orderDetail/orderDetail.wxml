@@ -27,7 +27,7 @@
           <image class="more" data-id="{{detail.pay_order_id}}" src="../../images/more.png"></image>
         </view>
       </view>
-      <view class="time_address">
+      <view class="time_address" wx:if="{{detail.c_begin_datetime != null}}">
         <text class="title">服务时间</text>
         <text class="time">{{myTime.forMat(detail.c_begin_datetime,1)}}<text wx:if="{{detail.c_end_datetime!=null}}">-</text>{{myTime.lastTime(detail.c_end_datetime)}}</text> 
       </view>

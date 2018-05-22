@@ -95,7 +95,7 @@ Page({
     })
   },
   getPrepayId(orderId){
-    app.req({ "query": 'query{customer_wx_prepay(pay_order_id: "' + orderId + '") {appId,timeStamp,nonceStr,_package,signType,sign}}'},res=>{
+    app.req({ "query": 'query{customer_wx_prepay(openid:"'+app.globalData.openId+'",pay_order_id: "' + orderId + '") {appId,timeStamp,nonceStr,_package,signType,sign}}'},res=>{
       this.setData({
         paySub: res.data.data.customer_wx_prepay
       })

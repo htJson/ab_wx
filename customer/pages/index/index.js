@@ -10,7 +10,7 @@ Page({
   },
   
   onLoad: function () {
-    
+    console.log(app.globalData.token,'<<<<===========index')
     var timer=setInterval(()=>{
       if (app.globalData.token) {
         clearInterval(timer)
@@ -19,7 +19,7 @@ Page({
         // 获取首页，列表数据
         this.getSkuList();
         this.getBanner();
-        app.getmstCode()
+        // app.getmstCode()
       }
     },300)
   },
@@ -34,7 +34,7 @@ Page({
           imgUrls: res.data.data.customer_banner_list
         })
       }
-    })
+    },'index')
   },
   onPullDownRefresh: function () {
     wx.showNavigationBarLoading() //在标题栏中显示加载
@@ -53,7 +53,7 @@ Page({
       this.setData({
         assort: res.data.data.customer_home_category_list
       })
-    })
+    },'index')
   },
   goToList(options){
     var id = options.currentTarget.dataset.id, name = options.currentTarget.dataset.name
@@ -65,7 +65,8 @@ Page({
     this.setData({
       isLoading:true
     })
-    app.req({"query": 'query{customer_home_product_list(page_index:1,count:300){product_id,image_first,seo,name,price_first,pricev_first,base_buyed,descript}}' }, res => {
+    app.req({ "query": 'query{customer_home_product_list(city_id:"110100",page_index:1,count:300){product_id,image_first,seo,name,price_first,pricev_first,base_buyed,descript}}' }, res => {
+    // app.req({"query": 'query{customer_home_product_list(page_index:1,city_id:"110100",count:300){product_id,image_first,seo,name,price_first,pricev_first,base_buyed,descript}}' }, res => {
       if (this.data.isReload) {
         wx.hideNavigationBarLoading();
         wx.stopPullDownRefresh()
@@ -73,7 +74,8 @@ Page({
       this.setData({
         isLoading: false
       })
-      if ((res.data.errors && res.data.errors.length > 0) || res.data.data == null) {
+      if ((res.data.errors && res.data.errors.length > 0) || (res.data.data.customer_home_product_list && res.data.data.customer_home_product_list.length == 0)) {
+        console.log('===')
         this.setData({
           noData: true
         })
@@ -82,7 +84,7 @@ Page({
           skuList: res.data.data.customer_home_product_list
         })
       }
-    })
+    },'index')
   },
   getIndex(options){
     var id=options.currentTarget.dataset.id;

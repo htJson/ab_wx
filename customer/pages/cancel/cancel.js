@@ -32,7 +32,8 @@ Page({
     })
   },
   backFn() {
-    if(this.data.isOrder == 'true'){
+    console.log(this.data.isOrder,'======>>>>>')
+    if(this.data.isOrder){
       wx.switchTab({
         url: '/pages/order/order',
       })

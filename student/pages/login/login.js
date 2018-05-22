@@ -161,24 +161,37 @@ Page({
         "Duuid": app.globalData.systemInfo
       },
       success: res => {
-        app.globalData.token = 'Bearer ' + res.data.access_token;
-        app.globalData.updateTokenData = res.data.refresh_token;
-        wx.setStorage({
-          key: app.globalData.openId,
-          data: {
-            token:{
-              value: res.data.access_token,
-              time: tools.getTowHoursMin()
-            },
-            refresh_token:{
-              value: res.data.refresh_token,
-              time: tools.getTowMonthTime()
-            }
-          }
-        })
+        this.setStorageFn(res)
         app.globalData.userId = res.data.uuid;
       }
     })
+  },
+  setStorageFn(res){
+    wx.request({
+      url: app.data.timeUrl,
+      method:'POSt',
+      header:{
+        "content-type": 'application/x-www-form-urlencoded', // 默认值
+      },
+      success:timeData=>{
+        app.globalData.token = 'Bearer ' + res.data.access_token;
+        app.globalData.updateTokenData = res.data.refresh_token;
+        wx.setStorage({
+          key: this.globalData.saveTokenKey + app.globalData.openId,
+          data: {
+            token: {
+              value: 'Bearer ' + res.data.access_token,
+              time: timeData.data.second+(2*60*60)
+            },
+            refresh_token: {
+              value: res.data.refresh_token,
+              time: timeData.data.second+(60*24*60*60)
+            }
+          }
+        })
+      }
+    })
+   
   },
   onGotUserInfo: function (e) {
     if (e.detail.errMsg == 'getUserInfo:ok'){ //如果授权成功

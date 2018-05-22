@@ -27,8 +27,26 @@ var randomWord = function(randomFlag, min, max){
   }
   return str;
 }
-
+var getTime = function () {
+  var d = new Date();
+  return d.getTime();
+}
+var getTowHoursMin = function () {
+  var addTime = 60 * 60 * 1000 * 2;
+  var nowTime = new Date().getTime();
+  var newMin = addTime + nowTime;
+  return newMin;
+}
+var getTowMonthTime = function () {
+  var addTime = 1000 * 60 * 60 * 24 * 60;
+  var nowTime = new Date().getTime();
+  var all = nowTime + addTime;
+  return all;
+}
 module.exports = {
+  getTime: getTime,
+  getTowHoursMin: getTowHoursMin,
+  getTowMonthTime: getTowMonthTime,
   formatTime: formatTime,
   randomWord: randomWord
 }

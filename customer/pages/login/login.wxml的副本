@@ -15,7 +15,6 @@
      <input type='number' placeholder-style="color:#c9caca; font-size:24rpx;" bindinput="getCode" value="{{code}}" placeholder='请输入验证码'></input> 
     <text class="getCode {{isGetCode?'':'noCOde'}}" bindtap='getAjaxCode'>{{btnText}}</text>
   </view>
-  <button class="noSubBtn" bindtap="login" >登录/注册</button>
-  <!-- <button class="noSubBtn" open-type="getUserInfo" bindgetuserinfo="onGotUserInfo" disabled="{{isDisabled}}"></button> -->
+  <view class="noSubBtn" bindtap="login"z>登录/注册</view>
   <view class="protocol">注册登录，即同意  <navigator url="/pages/agreement/agreement"><text>《浦尔家用户协议》</text></navigator> </view>
 </view>

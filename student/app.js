@@ -10,6 +10,7 @@ App({
     // url:'http://10.10.30.70:9010',
     // dev:'http://10.10.30.70:9010/graphql',
     dev:'https://dev-api.aobei.com/graphql',
+    timeUrl:'https://dev-api.aobei.com/server/time',
     key:'bc8b946d-1c3f-47a7-a28f-f692184aef67',
     code:'',
     name:'',
@@ -20,12 +21,12 @@ App({
     openId:'',
     updateTokenData:'',
     userId:'',
-    
   },
   globalData: {
     userInfo: null,
     systemInfo:null,
     updateTokenData: '',
+    saveTokenKey:'',
     userId:'',
     token:'',
     openId:'',
@@ -34,6 +35,13 @@ App({
   },
   onLaunch: function (options) {
     var _this = this;
+    if(this.data.dev.indexOf('dev') !=-1){
+      this.globalData.saveTokenKey = 'dev_Token_'
+    }else if(this.data.dev.indexOf('test') !=-1){
+      this.globalData.saveTokenKey = 'test_Token_'
+    }else{
+      this.globalData.saveTokenKey = 'formal_Token_'
+    }
     wx.getSystemInfo({
       success: res => {
         this.globalData.device = res.model;
@@ -65,7 +73,8 @@ App({
     // },7100000)
     setInterval(() => {
       this.upadteToken()
-    }, 72000000)
+    }, 30000)
+    // }, 72000000)
   },
   getOpenId(vcode) {
     wx.request({
@@ -88,36 +97,40 @@ App({
         this.globalData.systemInfo.openId =res.data.openid;
         this.globalData.systemInfo = md5.hexMD5(JSON.stringify(this.globalData.systemInfo))
         this.ifGetToken(res);
-        // 用openid 提取缓存，
-        // 有 --->判断token是否过期，如果过期执行更新，更新前也要判断refresh_token 是否过期
-        // 无 --->获取token
-        // this.getToken()
       }
     })
   },
   ifGetToken(res){
     wx.getStorage({
-      key: res.data.openid,
+      key: this.globalData.saveTokenKey+res.data.openid,
       success: res=> {
-        var nowMin = utils.getTime();
-        // console.log(nowMin,'')
-        // console.log(res, '===', utils.formatTime())
-        if (nowMin - res.data.token.time < 6000) {
-          // 如果当前时间减去 token存储时间小于一分钟则更新token
-          if (nowMin - res.data.refresh_token.time < 600) {
-            // 如果refresh_token 过期则重新请求
-            this.getToken()
-          } else {
-            this.data.updateTokenData = res.data.refresh_token.value;
-            this.upadteToken()
-          }
-        } else {
-          // 如果token还在有效期内
-          this.globalData.token = res.data.token.value
-        }
+        this.andOrTime(res)
       },
       fail: res => {
         this.getToken()
+      }
+    })
+  },
+  andOrTime(res){
+    wx.request({
+      url: this.data.timeUrl,
+      method:'POST',
+      header:{
+        "content-type": 'application/x-www-form-urlencoded', // 默认值
+      },
+      success:re=>{
+        var time=re.data.second;
+        if (res.data.token.time - time < 10) {
+          if (res.data.refresh_token.time - time < 10) {
+            this.getToken()
+          } else {
+            this.globalData.updateTokenData = res.data.refresh_token.value;
+            this.upadteToken()
+          }
+        } else {
+          this.globalData.updateTokenData = res.data.refresh_token.value;
+          this.globalData.token = res.data.token.value
+        }
       }
     })
   },
@@ -127,7 +140,7 @@ App({
       method: "POST",
       data: {
         grant_type: 'refresh_token',
-        refresh_token: this.data.updateTokenData
+        refresh_token: this.globalData.updateTokenData
       },
       header: {
         "content-type": 'application/x-www-form-urlencoded', // 默认值
@@ -135,22 +148,7 @@ App({
         "Duuid": this.globalData.systemInfo
       },
       success: res => {
-        this.globalData.token = 'Bearer ' + res.data.access_token;
-        this.globalData.refresh_token = res.data.refresh_token;
-        wx.setStorage({
-          key: app.globalData.openId,
-          data: {
-            token: {
-              value: res.data.access_token,
-              time: utils.getTowHoursMin()
-            },
-            refresh_token: {
-              value: res.data.refresh_token,
-              time: utils.getTowMonthTime()
-            }
-          }
-        })
-        this.globalData.userId = res.data.uuid;
+        this.setTokenStorage(res)
       }
     })
   },
@@ -234,18 +232,44 @@ App({
         "Authorization": 'Basic d3hfbV9zdHVkZW50OjdjMDhlMjdlLWI2NGYtNDUxOC05YzY5LTU3OTUwODE5NjgxMw==',
         "Duuid": this.globalData.systemInfo
       },
-      success: res => {
-        this.globalData.token = 'Bearer ' + res.data.access_token,
-        this.data.updateTokenData = res.data.refresh_token,
-        this.globalData.userId = res.data.uuid
+      success: res => { 
+        this.setTokenStorage(res)
         this.getInfo();
+      }
+    })
+  },
+
+  setTokenStorage(res){
+    wx.request({
+      url: this.data.timeUrl,
+      method:'POST',
+      header:{
+        "content-type": 'application/x-www-form-urlencoded', // 默认值
+      },
+      success:timeData=>{
+        this.globalData.token = 'Bearer ' + res.data.access_token;
+        this.globalData.updateTokenData = res.data.refresh_token;
+        this.globalData.userId = res.data.uuid;
+        wx.setStorage({
+          key: this.globalData.saveTokenKey + this.globalData.openId,
+          data: {
+            token: {
+              value: 'Bearer ' + res.data.access_token,
+              time: timeData.data.second+(2*60)
+            },
+            refresh_token: {
+              value: res.data.refresh_token,
+              time: timeData.data.second+(4*60)
+            }
+          }
+        })
       }
     })
   },
   getInfo(){
     // 根据是否绑定判断进入哪个界面
     this.req({ "query": 'query{my_student_bindinfo{phone,name}}'},res=>{
-      if (res.data.errors != undefined) {
+      if (res.data.errors != undefined || res.data.error) {
         wx.redirectTo({
           url: '/pages/login/login',
         })

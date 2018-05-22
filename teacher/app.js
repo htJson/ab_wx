@@ -6,8 +6,8 @@ var sha1=require('./utils/sha1.js');
 // "Authorization": 'Basic d3hfbV90ZWFjaGVyOjQ4OTFlNzQ3LTJhOWEtNGI2OC1iMzU5LTU2YzJhNzU5NjQ3OA==',
 App({
   data: {
-    url: 'https://dev-auth.aobei.com',
-    dev: 'https://dev-api.aobei.com/graphql',
+    url: 'https://test-auth.aobei.com',
+    dev: 'https://test-api.aobei.com/graphql',
     // dev: 'https://test-api.aobei.com/graphql',
     code: '',
     appid: 'wx18b2a6ed40277856',
@@ -15,8 +15,6 @@ App({
     nostr:'',
     token: '',
     dataUserInfo: "",
-    userId: '',
-    
     systemInfo: '',
     isAgree: false,
     isReload: false,
@@ -27,6 +25,8 @@ App({
     userInfo: null,
     updateTokenData: '',
     openId: '',
+    refresh_token:'',
+    userId:''
   },
   onLaunch: function () {
     var _this = this;
@@ -89,22 +89,26 @@ App({
   },
   ifGetToken(res) {
     wx.getStorage({
-      key: res.data.openid,
+      key: 'token_' + res.data.openid,
       success: res => {
-        var nowTime = utils.formatTime();
-        var nowMin = new Date(nowTime).getTime();
+        console.log(res,'====')
+        var nowMin = utils.getTime();
         // console.log(nowMin,'')
         // console.log(res, '===', utils.formatTime())
-        if (nowMin - res.data.token.time < 6000) {
+        console.log(nowMin ,'==========',res.data.token.time,'结清果====>',nowMin - res.data.token.time)
+        if (res.data.token.time - nowMin < 6000) {
+          console.log('=====')
           // 如果当前时间减去 token存储时间小于一分钟则更新token
-          if (nowMin - res.data.refresh_token.time < 600) {
+          if (res.data.refresh_token.time - nowMin < 600) {
             // 如果refresh_token 过期则重新请求
             this.getToken()
           } else {
+            console.log('++++++')
             this.data.updateTokenData = res.data.refresh_token.value;
             this.upadteToken()
           }
         } else {
+          console.log('-----')
           // 如果token还在有效期内
           this.globalData.token = res.data.token.value
         }
@@ -181,7 +185,21 @@ App({
       },
       success: res => {
         this.globalData.token = 'Bearer ' + res.data.access_token,
+        this.globalData.refresh_token = res.data.refresh_token;
         this.globalData.userId = res.data.uuid
+        wx.setStorage({
+          key: 'token_' + this.globalData.openId,
+          data: {
+            token: {
+              value: 'Bearer ' +res.data.access_token,
+              time: utils.getTowHoursMin()
+            },
+            refresh_token: {
+              value: res.data.refresh_token,
+              time: utils.getTowMonthTime()
+            }
+          }
+        })
       }
     })
   },
@@ -205,10 +223,22 @@ App({
         'device': this.data.device,
       },
       success: res => {
-        console.log('===')
         this.globalData.token = 'Bearer ' + res.data.access_token
         this.globalData.userId = res.data.uuid;
         this.globalData.updateTokenData = res.data.refresh_token;
+        wx.setStorage({
+          key: 'token_' +this.globalData.openId,
+          data: {
+            token: {
+              value: 'Bearer ' + res.data.access_token,
+              time: utils.getTowHoursMin()
+            },
+            refresh_token: {
+              value: res.data.refresh_token,
+              time: utils.getTowMonthTime()
+            }
+          }
+        })
         this.getInfo();
       }
     })

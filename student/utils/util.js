@@ -46,14 +46,6 @@ var getTowMonthTime =function(){
   var nowTime = new Date().getTime();
   var all=nowTime+addTime;
   return all;
-  // var newTime = new Date(all);
-  // var year=newTime.getFullYear();
-  // var month=newTime.getMonth()+1;
-  // var day=newTime.getDate();
-  // var hour=newTime.getHours();
-  // var minute=newTime.getMinutes()
-  // var second=newTime.getSeconds();
-  // return [year, month, day].map(formatNumber).join('/') + ' ' + [hour, minute, second].map(formatNumber).join(':')
 }
 
 module.exports = {
