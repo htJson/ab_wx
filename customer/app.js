@@ -4,17 +4,18 @@ var utils = require('utils/util.js')
 // "Authorization": 'Basic d3hfbV9jdXN0b206NHg5MWI3NGUtM2I3YS1iYjZ4LWJ0djktcXpjaW83ams2Zzdm',
 App({
   data: {
-    url: 'https://test-auth.aobei.com',
-    dev: 'https://test-api.aobei.com/graphql',
+    url: 'https://dev-auth.aobei.com',
+    dev: 'https://dev-api.aobei.com/graphql',
     // dev: 'https://test-api.aobei.com/graphql',
-    timeUrl: 'https://test-api.aobei.com/server/time',
+    timeUrl: 'https://dev-api.aobei.com/server/time',
     code: '',
     key: 'ac928fb7-f11a-4d9f-894c-8283859bc914',
     appid: 'wx653dc689ca79ac81',
     scene: null,
     versionNum: 1.4,
     nostr: '',
-    device: ''
+    device: '',
+    isChange:false,
   },
   globalData: {
     isAgree: false,
@@ -88,7 +89,6 @@ App({
         this.globalData.systemInfo = md5.hexMD5(JSON.stringify(this.globalData.systemInfo))
         this.data.openId = res.data.openid.toString();
         this.globalData.tokenStorage = wx.getStorageSync(this.globalData.saveTokenKey + this.globalData.openId)
-        console.log(this.globalData.tokenStorage)
         this.judgeToken();
       }
     })
@@ -109,8 +109,6 @@ App({
     })
   },
   judgeToken() { //判断token
-    console.log(this.globalData.serverTime, '-----------------time')
-    console.log(this.globalData.tokenStorage, '=================????????')
     var serverTime = this.globalData.serverTime, tokenStorage = this.globalData.tokenStorage;
     if (!this.globalData.tokenStorage) {  //如果没有缓存的token
       this.touristToken();
@@ -118,17 +116,14 @@ App({
     }
     // 如果有缓存的token
     if (tokenStorage.token.time - serverTime < 10) {
-      console.log(1)
       if (tokenStorage.refresh_token.time - serverTime < 10) {
-        console.log(2)
         this.touristToken()
       } else {
-        console.log(3)
         this.globalData.updateTokenData = tokenStorage.refresh_token.value
         this.upadteToken()
       }
     } else {
-      console.log(4)
+      this.data.isChange = true;
       this.globalData.updateTokenData = tokenStorage.refresh_token.value
       this.globalData.token = tokenStorage.token.value
     }
@@ -148,28 +143,30 @@ App({
         'grant_type': 'client_credentials',
       },
       success: res => {
-        this.globalData.token = 'Bearer ' + res.data.access_token
+        this.globalData.token = 'Bearer ' + res.data.access_token;
+        this.data.isChange=true;
       }
     })
   },
 
   setTokenStorage(res) {  //更新缓存token
-      this.globalData.token = 'Bearer ' + res.data.access_token;
-      this.globalData.userId = res.data.uuid;
-      this.globalData.updateTokenData = res.data.refresh_token;
-      wx.setStorage({
-        key: this.globalData.saveTokenKey + this.globalData.openId,
-        data: {
-          "token": {
-            time: this.globalData.serverTime + res.data.expires_in,
-            value: 'Bearer ' + res.data.access_token
-          },
-          "refresh_token": {
-            time: this.globalData.serverTime + (4 * 60),
-            value: res.data.refresh_token
-          }
+    this.globalData.token = 'Bearer ' +res.data.access_token;
+    this.globalData.userId = res.data.uuid;
+    this.globalData.updateTokenData = res.data.refresh_token;
+    this.data.isChange = true;
+    wx.setStorage({
+      key: this.globalData.saveTokenKey + this.globalData.openId,
+      data: {
+        "token": {
+          time: this.globalData.serverTime + res.data.expires_in,
+          value: 'Bearer ' + res.data.access_token
+        },
+        "refresh_token": {
+          time: this.globalData.serverTime + (4 * 60),
+          value: res.data.refresh_token
         }
-      })
+      }
+    })
   },
 
   upadteToken(key) {  //token 更新方法
@@ -223,11 +220,17 @@ App({
   },
 
   // 请求封装
-  req(data, fn, htmlName, mts) {
+  req(data, fn, mts) {
     // 判断token   刷新token 是否过期
     this.globalData.tokenStorage = wx.getStorageSync(this.globalData.saveTokenKey + this.globalData.openId)
     this.judgeToken();
-    this.nAjax(data, fn, mts)
+    var timer=setInterval(()=>{
+      if (this.data.isChange){
+        this.nAjax(data, fn, mts)
+        clearInterval(timer)
+      }
+    },30)
+    
   },
   nAjax(data, fn, mts) {
     var json = {
@@ -257,12 +260,13 @@ App({
       header: headerData,
       data: data,
       success: res => {
+        this.data.isChange = false;
         return typeof fn == "function" && fn(res)
       },
       fail: res => {
+        this.data.isChange = false;
         return typeof fn == "function" && fn(res)
       }
     })
   }
-
 })

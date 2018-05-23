@@ -9,7 +9,7 @@
 <!-- <button open-type="getUserInfo" bindgetuserinfo="userInfoHandler"> Click me </button> -->
   <view class="banner">
     <swiper class="" style="height:246rpx;" autoplay="true" interval="3000" duration="500" circular="true" indicator-dots="true"  indicator-color='#b7bbc1' indicator-active-color='#00a0e9'>
-      <block wx:for="{{imgUrls}}" wx:key="{{index}}" wx:key="{{index}}">
+      <block wx:for="{{imgUrls}}" wx:if="{{imgUrls.length>0}}" wx:key="{{index}}" wx:key="{{index}}">
         <swiper-item>
           <image src="{{item.url}}" class="slide-image"/>
         </swiper-item>
@@ -34,7 +34,7 @@
       <text>暂无数据</text>
     </view>
     <view wx:else>
-      <block wx:for="{{skuList}}" wx:key="{{index}}">
+      <block wx:for="{{skuList}}" wx:if="{{skuList.length>0}}" wx:key="{{index}}">
         <template is="indexItem" data="{{item,index}}"/>
       </block>
     </view>

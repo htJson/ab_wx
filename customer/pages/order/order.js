@@ -27,8 +27,7 @@ Page({
   },
   onLoad: function (options) {
     this.getInfo()
-    this.getList();
-    console.log('onLoad')
+    
     var pages = getCurrentPages()    //获取加载的页面
     var currentPage = pages[pages.length - 1]    //获取当前页面的对象
     this.setData({
@@ -38,8 +37,7 @@ Page({
   onShow(){
     if(this.data.isLogin){
       this.getInfo();
-      console.log('onShow')
-      this.getList();
+      // this.getList();
     }
   },
   onHide(){
@@ -70,7 +68,6 @@ Page({
       })
       this.data.page++;
       if (!this.data.lengthData){
-        console.log('onReachBottom')
         this.getList()
       }
   },
@@ -123,36 +120,26 @@ Page({
   },
   
   getInfo() {
-    wx.request({
-      url: app.data.dev,
-      method: "POST",
-      header: {
-        "content-type": "application/json",
-        "Authorization": app.globalData.token
-      },
-      data: {
-        "query": 'query{customer_info{customer_id}}'
-      },
-      success: res => {
-        if (res.data.errors && res.data.errors.length > 0) {
-          wx.showModal({
-            title: '用户提示',
-            content: '请先登录',
-            showCancel: false,
-            confirmColor: '#00a0e9',
-            success: res => {
-              if (res.confirm) {
-                wx.redirectTo({
-                  url: '/pages/login/login?url=' + this.data.meUrl,
-                })
-              }
+    app.req({ "query": 'query{customer_info{customer_id}}'},res=>{
+      if (res.data.errors && res.data.errors.length > 0) {
+        wx.showModal({
+          title: '用户提示',
+          content: '请先登录',
+          showCancel: false,
+          confirmColor: '#00a0e9',
+          success: res => {
+            if (res.confirm) {
+              wx.redirectTo({
+                url: '/pages/login/login?url=' + this.data.meUrl,
+              })
             }
-          })
-        } else {
-          this.setData({
-            isLogin: true
-          })
-        }
+          }
+        })
+      } else {
+        this.getList();
+        this.setData({
+          isLogin: true
+        })
       }
     })
   },

@@ -19,7 +19,7 @@
     <view class="loading" wx:if="{{loading}}">
       <image src="../../images/loading.gif"></image>
     </view>
-    <view class="item" wx:for="{{orderList}}" wx:key="{{index}}">
+    <view class="item" wx:if="{{orderList.length>0}}" wx:for="{{orderList}}" wx:key="{{index}}">
       <view class="header">
         <text class="orderType" wx:if="{{item.orderStatus == 'waitPay'}}">[{{statusList[item.orderStatus]}}]</text>
         <text class="orderServiece" wx:if="{{item.orderStatus=='waitService'}}">[{{statusList[item.orderStatus]}}]</text>

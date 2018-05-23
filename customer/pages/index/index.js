@@ -10,7 +10,6 @@ Page({
   },
   
   onLoad: function () {
-    console.log(app.globalData.token,'<<<<===========index')
     var timer=setInterval(()=>{
       if (app.globalData.token) {
         clearInterval(timer)
@@ -34,7 +33,7 @@ Page({
           imgUrls: res.data.data.customer_banner_list
         })
       }
-    },'index')
+    })
   },
   onPullDownRefresh: function () {
     wx.showNavigationBarLoading() //在标题栏中显示加载
@@ -53,7 +52,7 @@ Page({
       this.setData({
         assort: res.data.data.customer_home_category_list
       })
-    },'index')
+    })
   },
   goToList(options){
     var id = options.currentTarget.dataset.id, name = options.currentTarget.dataset.name
@@ -84,7 +83,7 @@ Page({
           skuList: res.data.data.customer_home_product_list
         })
       }
-    },'index')
+    })
   },
   getIndex(options){
     var id=options.currentTarget.dataset.id;

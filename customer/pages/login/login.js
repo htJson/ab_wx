@@ -143,11 +143,11 @@ Page({
         })
       }
     }
-    console.log(app.globalData.serverTime,'===============',res,'========')
+
     app.globalData.token = 'Bearer ' + res.data.access_token;
     app.globalData.updateTokenData = res.data.refresh_token,
     app.globalData.userId = res.data.uuid;
-    console.log(app.globalData.serverTime + res.data.expires_in,'======')
+    console.log(res.data.refresh_token,'---------------',app.globalData.serverTime)
     wx.setStorage({
       key: app.globalData.saveTokenKey + app.globalData.openId,
       data: {

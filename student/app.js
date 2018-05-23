@@ -67,14 +67,6 @@ App({
         this.getOpenId(res.code);
       }
     })
-    
-    // setInterval(()=>{
-    //   this.upadteToken()
-    // },7100000)
-    setInterval(() => {
-      this.upadteToken()
-    }, 30000)
-    // }, 72000000)
   },
   getOpenId(vcode) {
     wx.request({
@@ -234,7 +226,7 @@ App({
       },
       success: res => { 
         this.setTokenStorage(res)
-        this.getInfo();
+        
       }
     })
   },
@@ -250,6 +242,7 @@ App({
         this.globalData.token = 'Bearer ' + res.data.access_token;
         this.globalData.updateTokenData = res.data.refresh_token;
         this.globalData.userId = res.data.uuid;
+        this.getInfo();
         wx.setStorage({
           key: this.globalData.saveTokenKey + this.globalData.openId,
           data: {
@@ -267,6 +260,7 @@ App({
     })
   },
   getInfo(){
+    console.log('=============>?app.js')
     // 根据是否绑定判断进入哪个界面
     this.req({ "query": 'query{my_student_bindinfo{phone,name}}'},res=>{
       if (res.data.errors != undefined || res.data.error) {

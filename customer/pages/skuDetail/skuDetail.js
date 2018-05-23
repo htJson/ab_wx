@@ -65,7 +65,7 @@ Page({
       }
       this.getSkuName(this.data.detailData.psku_id_first)
       WxParse.wxParse('article', 'html', res.data.data.customer_product_detail.product.content, this, 0);
-    },'skuDetail')
+    })
   },
   getSkuName(skuId){
     if (this.data.actionSheetItems.length != 1){
@@ -134,7 +134,7 @@ Page({
           isLogin: true
         })
       }
-    },'skuDetail')
+    })
   },
 
   skuBtn(options){
