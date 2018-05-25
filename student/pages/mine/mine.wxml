@@ -1,9 +1,9 @@
 <!--pages/minet/minet.wxml-->
 <view class='container'>
   <view class="userlogo">
-    <image class="userImg" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
+    <image class="userImg" src="{{userInfo.logo_img}}" background-size="cover"></image>
     <view class="userName">
-      <text>{{userInfo.nickName}}</text>
+      <text>{{userInfo.name}}</text>
     </view>
   </view>
   <view class="tabs">

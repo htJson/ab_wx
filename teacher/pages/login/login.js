@@ -142,7 +142,7 @@ Page({
         app.globalData.userId = res.data.uuid;
         app.globalData.updateTokenData = res.data.refresh_token;
         wx.setStorage({
-          key: 'token_' +app.globalData.openId,
+          key: app.globalData.storageKey + app.globalData.openId,
           data:{
             token:{
               time: tools.getTowHoursMin(),
@@ -162,15 +162,11 @@ Page({
   getUserNews(){
     app.req({ "query": 'query{my_teacher_bindinfo{phone,identity_card}}'},res=>{
       if (res.data.data.my_teacher_bindinfo == null || res.errors != undefined) { 
-      
         return false 
       }
-
       var data = res.data.data.my_teacher_bindinfo;
-
       var midden = data.phone.substring(3, data.phone.length - 3).replace(/\d/g, function (v) { return '*' });
       var phone = data.phone.substr(0, 3) + midden + data.phone.substr(-3, 3);
-      console.log(data.identity_card.substring(3, data.identity_card.length - 3).length)
       var cmidden = data.identity_card.substring(3, data.identity_card.length - 3).replace(/\d/g, function (v) { return '*' });
       var card = data.identity_card.substring(0, 3) + cmidden + data.identity_card.substr(-3, 3)
       this.setData({

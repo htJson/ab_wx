@@ -13,7 +13,7 @@
     <view class="item">
       <text class="title">订单编号：</text><view class="content">{{detail.pay_order_id}}</view>
     </view>
-    <view class="item">
+    <view class="item" wx:if="{{detail.c_begin_datetime !=null}}">
       <text class="title">服务时间：</text><view class="content">{{time.getDateTime(detail.c_begin_datetime)}}<block wx:if="{{time.getTime(detail.c_end_datetime) != ''}}">-{{time.getTime(detail.c_end_datetime)}}</block></view>
     </view>
     <view class="item">

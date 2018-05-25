@@ -27,7 +27,6 @@ Page({
   },
   onLoad: function (options) {
     this.getInfo()
-    
     var pages = getCurrentPages()    //获取加载的页面
     var currentPage = pages[pages.length - 1]    //获取当前页面的对象
     this.setData({
@@ -76,47 +75,43 @@ Page({
       loading:true,
       noData:false
     })
-    // clearInterval(this.data.listTimer)
-    // this.data.listTimer=setTimeout(()=>{
-      app.req({ "query": 'query{customer_order_list(status:"' + this.data.status + '",page_index:' + this.data.page + ',count:' + this.data.count+') {pay_order_id,name,price_pay,orderStatus,serviceStatus,product_id,proSku_id, image_first,c_begin_datetime,isEvaluate}}'},res=>{
-        // clearInterval(this.data.listTimer)
+    app.req({ "query": 'query{customer_order_list(status:"' + this.data.status + '",page_index:' + this.data.page + ',count:' + this.data.count+') {pay_order_id,name,price_pay,orderStatus,serviceStatus,product_id,proSku_id, image_first,c_begin_datetime,isEvaluate}}'},res=>{
+      this.setData({
+        loading: false,
+      })
+      if (res.data.errors && res.data.errors.length > 0) {
         this.setData({
-          loading: false,
+          noData: true
         })
-        if (res.data.errors && res.data.errors.length > 0) {
+        return false
+      }
+      if (res.data.eror) {
+        console.log('请求返回出错')
+        return false;
+      }
+      if (res.data.data.customer_order_list.length == 0 ) {
+        this.setData({
+          lengthData:true,
+        })
+        if(this.data.isEmpty){
           this.setData({
             noData: true
           })
-          return false
         }
-        if (res.data.eror) {
-          console.log('请求返回出错')
-          return false;
-        }
-        if (res.data.data.customer_order_list.length == 0 ) {
-          this.setData({
-            lengthData:true,
-          })
-          if(this.data.isEmpty){
-            this.setData({
-              noData: true
-            })
-          }
-        }
-        if (!this.data.isEmpty) {
-          var arr=this.data.orderList;
-          arr = arr.concat(res.data.data.customer_order_list);
-          this.setData({
-            orderList: arr
-          })
-        }else{
-          this.setData({
-            orderList: res.data.data.customer_order_list
-          })
-        }
-        this.data.isLoadingTrue = true;
-      })
-    // },1000)
+      }
+      if (!this.data.isEmpty) {
+        var arr=this.data.orderList;
+        arr = arr.concat(res.data.data.customer_order_list);
+        this.setData({
+          orderList: arr
+        })
+      }else{
+        this.setData({
+          orderList: res.data.data.customer_order_list
+        })
+      }
+      this.data.isLoadingTrue = true;
+    })
   },
   
   getInfo() {

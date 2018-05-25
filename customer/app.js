@@ -4,10 +4,10 @@ var utils = require('utils/util.js')
 // "Authorization": 'Basic d3hfbV9jdXN0b206NHg5MWI3NGUtM2I3YS1iYjZ4LWJ0djktcXpjaW83ams2Zzdm',
 App({
   data: {
-    url: 'https://dev-auth.aobei.com',
-    dev: 'https://dev-api.aobei.com/graphql',
+    url: 'https://test-auth.aobei.com',
+    dev: 'https://test-api.aobei.com/graphql',
     // dev: 'https://test-api.aobei.com/graphql',
-    timeUrl: 'https://dev-api.aobei.com/server/time',
+    timeUrl: 'https://test-api.aobei.com/server/time',
     code: '',
     key: 'ac928fb7-f11a-4d9f-894c-8283859bc914',
     appid: 'wx653dc689ca79ac81',
@@ -116,13 +116,17 @@ App({
     }
     // 如果有缓存的token
     if (tokenStorage.token.time - serverTime < 10) {
+      console.log(1)
       if (tokenStorage.refresh_token.time - serverTime < 10) {
+        console.log(2)
         this.touristToken()
       } else {
+        console.log(3)
         this.globalData.updateTokenData = tokenStorage.refresh_token.value
         this.upadteToken()
       }
     } else {
+      console.log(4)
       this.data.isChange = true;
       this.globalData.updateTokenData = tokenStorage.refresh_token.value
       this.globalData.token = tokenStorage.token.value
@@ -162,7 +166,7 @@ App({
           value: 'Bearer ' + res.data.access_token
         },
         "refresh_token": {
-          time: this.globalData.serverTime + (4 * 60),
+          time: this.globalData.serverTime + (60 * 24 * 60 * 60),
           value: res.data.refresh_token
         }
       }

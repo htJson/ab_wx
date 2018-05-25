@@ -22,20 +22,34 @@ Page({
     this.timer=setInterval(()=>{
       if (app.globalData.token){
         clearInterval(this.timer)
+        this.getInfo();
+      }
+    },30)
+  },
+
+  getInfo() {
+    // 根据是否绑定判断进入哪个界面
+    app.req({ "query": 'query{my_teacher_bindinfo{phone,identity_card,icon,name}}'}, res => {
+      if (res.data.errors != undefined) {
+        wx.redirectTo({
+          url: '/pages/login/login',
+        })
+      }else{
+        app.globalData.userInfo = res.data.data.my_teacher_bindinfo;
         this.getImgId();
         this.getList();
       }
-    },300)
+    })
   },
+
   toDetail(options){
-    // var id = options.currentTarget.dataset.id;
-    console.log(options,'-----')
+  
     wx.navigateTo({
       url: '../coursesDetail/coursesDetail?cursore_id=' + options.currentTarget.dataset.id
     })
   },
   getImgId(){
-    app.req({ "query": 'query{teacher_cms_bannar_online_list{cms_bannar_id,img_cover,title,intro,serial_number}}'},res=>{
+    app.req({ "query": 'query{teacher_cms_bannar_online_list{cms_banner_id,img_cover,title,intro,serial_number}}'},res=>{
       var idArr = [];
       if (res.data.errors && res.data.errors.length > 0) {
         return false;
@@ -54,6 +68,7 @@ Page({
       })
     })
   },
+  
   getList(){
     this.setData({
       loading:true

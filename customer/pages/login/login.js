@@ -106,7 +106,6 @@ Page({
     }, 1000)
   },
   resultCode(res){  //获取code的结果函数
-  console.log(res.data.error_description,'=====')
     if (res.data.errors == undefined || res.data.errors == null) {
       this.setData({
         isGetCode: false,
@@ -147,7 +146,6 @@ Page({
     app.globalData.token = 'Bearer ' + res.data.access_token;
     app.globalData.updateTokenData = res.data.refresh_token,
     app.globalData.userId = res.data.uuid;
-    console.log(res.data.refresh_token,'---------------',app.globalData.serverTime)
     wx.setStorage({
       key: app.globalData.saveTokenKey + app.globalData.openId,
       data: {
@@ -156,7 +154,7 @@ Page({
           "value": 'Bearer ' + res.data.access_token
         },
         "refresh_token": {
-          "time": app.globalData.serverTime+(4*60),
+          "time": app.globalData.serverTime+(60*24*60*60),
           "value": res.data.refresh_token
         }
       },

@@ -15,15 +15,16 @@ Page({
     var timer=setInterval(()=>{
       if (app.globalData.token) {
         clearInterval(timer)
+        console.log('=====000')
         this.getStudentNews();
-        this.getTaskList();
+        // this.getTaskList();
       }
     },100)
   },
   onPullDownRefresh(){
     wx.showNavigationBarLoading();
     this.getStudentNews();
-    this.getTaskList();
+    // this.getTaskList();
   },
   goToDetail(options) {
     var orderId = options.currentTarget.dataset.orderid;
@@ -37,15 +38,14 @@ Page({
     })
   },
   getStudentNews(){
-    this.setData({
-      loading:true
-    })
-    app.req({ "query":'query{my_student_bindinfo{name,phone}}'},res=>{
-      if (res.data.data.errors || res.data.error || res.data.data.my_student_bindinfo && res.data.data.my_student_bindinfo.length == 0) {
-        this.setData({
-          noData: true
+    app.req({ "query":'query{my_student_bindinfo{name,phone,logo_img}}'},res=>{
+      if (res.data.errors || res.data.error || (res.data.data.my_student_bindinfo && res.data.data.my_student_bindinfo.length == 0)) {
+        wx.redirectTo({
+          url: '/pages/login/login',
         })
       } else {
+        this.getTaskList();
+        app.globalData.userInfo = res.data.data.my_student_bindinfo;
         this.setData({
           student: res.data.data.my_student_bindinfo
         })
@@ -82,7 +82,6 @@ Page({
       this.setData({
         loading: false
       })
-
       if (res.data.data.errors || res.data.error || res.data.data.student_undone_orderinfo == null || res.data.data.student_undone_orderinfo.length == 0) {
         this.setData({
           noData: true,

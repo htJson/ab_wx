@@ -20,10 +20,10 @@ Page({
       'partRefund':'已部分退款',
       'refunded':'已退款'
     },
-    meUrl:''
+    meUrl:'',
+    count:10
   },
   onLoad: function (options) {
-    this.getList();
     var pages = getCurrentPages()    //获取加载的页面
     var currentPage = pages[pages.length - 1]    //获取当前页面的对象
     this.setData({
@@ -34,7 +34,11 @@ Page({
   onShow(){
     if(this.data.isLogin){
       this.getInfo();
-      this.getList();
+      console.log
+      this.setData({
+        page:1,
+        orderList:[]
+      })
     }
   },
   onHide(){
@@ -42,32 +46,41 @@ Page({
       isLogin:true
     })
   },
+  onReachBottom: function () {
+    this.setData({
+      isEmpty: false
+    })
+    this.data.page++;
+    this.getList()
+  },
   getList(){
     this.setData({
       loading:true,
-      orderList:[],
       noData:false
     })
     clearInterval(this.data.listTimer)
     this.data.listTimer=setTimeout(()=>{
-      app.req({ "query": 'query{student_order_list(status:"' + this.data.status + '",page_index:' + this.data.page + ',count:10000) {pay_order_id,name,price_pay,orderStatus,serviceStatus,product_id,proSku_id, image_first,c_begin_datetime,isEvaluate}}' }, res => {
+      app.req({ "query": 'query{student_order_list(status:"' + this.data.status + '",page_index:' + this.data.page + ',count:'+this.data.count+') {pay_order_id,name,price_pay,orderStatus,serviceStatus,product_id,proSku_id, image_first,c_begin_datetime,isEvaluate}}'}, res => {
         this.setData({
           loading: false
         })
-        if ((res.data.errors && res.data.errors.length > 0) || res.data.eror) {
+        console.log(res.data.errors && res.data.errors.length > 0 && this.data.orderList.length,'======')
+        if (res.data.errors && res.data.errors.length > 0 && this.data.orderList.length == 0) {
           this.setData({
             noData: true
           })
           return false
         }
-        if (res.data.data.student_order_list.length == 0) {
+        if (res.data.data.student_order_list.length == 0 && this.data.orderList.length == 0) {
           this.setData({
             noData: true
           })
+          return false;
         }
         this.data.isLoadingTrue = true;
+        if (res.data.data.student_order_list==null){ return false;}
         this.setData({
-          orderList: res.data.data.student_order_list
+          orderList: this.data.orderList.concat(res.data.data.student_order_list)
         })
       })
     }, 700)
@@ -83,7 +96,8 @@ Page({
     clearInterval(this.data.listTimer)
     if (this.data.status == key || !this.data.isLoadingTrue){return false}
     this.setData({
-      orderList:[]
+      orderList:[],
+      page:1
     })
     this.data.isLoadingTrue=false;
     key=key =='all'?'':key
@@ -94,7 +108,6 @@ Page({
   },
 
   getInfo() { //判断是否登录
-
     app.req({ "query": 'query{my_student_bindinfo{phone,name}}' }, res => {
       if (res.data.errors && res.data.errors.length > 0) {
         wx.showModal({
@@ -111,6 +124,7 @@ Page({
           }
         })
       } else {
+        this.getList();
         this.setData({
           isLogin: true
         })

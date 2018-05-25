@@ -186,7 +186,8 @@ Page({
             refresh_token: {
               value: res.data.refresh_token,
               time: timeData.data.second+(60*24*60*60)
-            }
+            },
+            isLogin:true
           }
         })
       }

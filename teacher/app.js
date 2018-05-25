@@ -6,9 +6,10 @@ var sha1=require('./utils/sha1.js');
 // "Authorization": 'Basic d3hfbV90ZWFjaGVyOjQ4OTFlNzQ3LTJhOWEtNGI2OC1iMzU5LTU2YzJhNzU5NjQ3OA==',
 App({
   data: {
-    url: 'https://test-auth.aobei.com',
-    dev: 'https://test-api.aobei.com/graphql',
+    url: 'https://dev-auth.aobei.com',
+    dev: 'https://dev-api.aobei.com/graphql',
     // dev: 'https://test-api.aobei.com/graphql',
+    timeUrl:'https://dev-api.aobei.com/server/tjkime',
     code: '',
     appid: 'wx18b2a6ed40277856',
     key:'cce38319-116b-404d-b69a-dc2fdd36941b',
@@ -17,6 +18,7 @@ App({
     dataUserInfo: "",
     systemInfo: '',
     isAgree: false,
+    isChange:false,
     isReload: false,
     versionNum:1.4,
     device:''
@@ -25,10 +27,19 @@ App({
     userInfo: null,
     updateTokenData: '',
     openId: '',
+    storageKey:'',
     refresh_token:'',
+    serverTime:0,
     userId:''
   },
   onLaunch: function () {
+    if(this.data.dev.indexOf('dev') !=-1){
+      this.globalData.storageKey = 'devt_Token_'
+    }else if(this.data.dev.indexOf('test') !=-1){
+      this.globalData.storageKey = 'testt_Token_'
+    }else{
+      this.globalData.storageKey = 'formalt_Token_'
+    }
     var _this = this;
     wx.getSystemInfo({
       success: res => {
@@ -47,9 +58,6 @@ App({
       }
     })
     this.data.nostr = utils.randomWord(false,32)
-    setInterval(()=>{
-      this.upadteToken()
-    },72000000)
     // 登录
     wx.login({
       success: res => {
@@ -79,44 +87,49 @@ App({
         this.globalData.openId = res.data.openid;
         this.globalData.systemInfo.openId = res.data.openid;
         this.globalData.systemInfo = md5.hexMD5(JSON.stringify(this.globalData.systemInfo))
-        this.ifGetToken(res);
-        // 用openid 提取缓存，
-        // 有 --->判断token是否过期，如果过期执行更新，更新前也要判断refresh_token 是否过期
-        // 无 --->获取token
-        // this.getToken()
+        this.globalData.tokenStorage = wx.getStorageSync(this.globalData.storageKey + this.globalData.openId);
+        this.getServerTime()
       }
     })
   },
-  ifGetToken(res) {
-    wx.getStorage({
-      key: 'token_' + res.data.openid,
-      success: res => {
-        console.log(res,'====')
-        var nowMin = utils.getTime();
-        // console.log(nowMin,'')
-        // console.log(res, '===', utils.formatTime())
-        console.log(nowMin ,'==========',res.data.token.time,'结清果====>',nowMin - res.data.token.time)
-        if (res.data.token.time - nowMin < 6000) {
-          console.log('=====')
-          // 如果当前时间减去 token存储时间小于一分钟则更新token
-          if (res.data.refresh_token.time - nowMin < 600) {
-            // 如果refresh_token 过期则重新请求
-            this.getToken()
-          } else {
-            console.log('++++++')
-            this.data.updateTokenData = res.data.refresh_token.value;
-            this.upadteToken()
-          }
-        } else {
-          console.log('-----')
-          // 如果token还在有效期内
-          this.globalData.token = res.data.token.value
-        }
-      }, 
-      fail: res => {
-        this.getToken()
+  getServerTime(){
+    wx.request({
+      url: this.data.timeUrl,
+      method:'POST',
+      header:{
+        "content-type": 'application/x-www-form-urlencoded', // 默认值
+      },
+      success:res=>{
+        this.globalData.serverTime=res.data.second;
+        setInterval(()=>{
+          this.globalData.serverTime+=1;
+        },1000)
+        this.judgeToken()
       }
     })
+  },
+  judgeToken() {
+    var tokenStorage = this.globalData.tokenStorage;
+    if (!this.globalData.tokenStorage){
+      this.getToken()
+    }else{
+      if (tokenStorage.token.time - this.globalData.serverTime < 60) {
+        console.log(1)
+        if (tokenStorage.refresh_token.time - this.globalData.serverTime < 60) {
+          console.log(2)
+          this.getToken()
+        } else {
+          console.log(3)
+          this.data.updateTokenData = tokenStorage.refresh_token.value;
+          this.upadteToken()
+        }
+      } else {
+        console.log(4)
+        this.data.isChange=true;
+        this.data.updateTokenData = tokenStorage.refresh_token.value;
+        this.globalData.token = tokenStorage.token.value
+      }
+    }
   },
   getmstCode(fn) {
     wx.request({
@@ -136,7 +149,18 @@ App({
       }
     })
   },
-  req(data, fn, mts) {
+  req(data,fn,mts){
+    this.globalData.tokenStorage = wx.getStorageSync(this.globalData.storageKey + this.globalData.openId);
+    this.judgeToken();
+    console.log(this.data.isChange,'====')
+    var timer=setInterval(()=>{
+      if(this.data.isChange){
+        this.nAjax(data, fn, mts);
+        clearInterval(timer)
+      }
+    },30)
+  },
+  nAjax(data, fn, mts) {
     var json = {
       "content-type": 'application/json',
       "Authorization": this.globalData.token,
@@ -157,15 +181,15 @@ App({
       header: json,
       data: data,
       success: res => {
+        this.data.isChange=false;
         return typeof fn == "function" && fn(res)
       },
       fail: res => {
+        this.data.isChange=false;
         return typeof fn == "function" && fn(res)
       }
     })
   },
-
-  
   upadteToken() {
     wx.request({
       url: this.data.url + '/oauth/token', //仅为示例，并非真实的接口地址
@@ -184,22 +208,7 @@ App({
         'device': this.data.device
       },
       success: res => {
-        this.globalData.token = 'Bearer ' + res.data.access_token,
-        this.globalData.refresh_token = res.data.refresh_token;
-        this.globalData.userId = res.data.uuid
-        wx.setStorage({
-          key: 'token_' + this.globalData.openId,
-          data: {
-            token: {
-              value: 'Bearer ' +res.data.access_token,
-              time: utils.getTowHoursMin()
-            },
-            refresh_token: {
-              value: res.data.refresh_token,
-              time: utils.getTowMonthTime()
-            }
-          }
-        })
+        this.setTokenStorage(res)
       }
     })
   },
@@ -211,7 +220,6 @@ App({
         grant_type: 'wxm_code',
         appid: this.data.appid,
         code: this.data.code,
-        // userinfo: this.data.dataUserInfo,
       },
       header: {
         "content-type": 'application/x-www-form-urlencoded', // 默认值
@@ -223,37 +231,32 @@ App({
         'device': this.data.device,
       },
       success: res => {
-        this.globalData.token = 'Bearer ' + res.data.access_token
-        this.globalData.userId = res.data.uuid;
-        this.globalData.updateTokenData = res.data.refresh_token;
-        wx.setStorage({
-          key: 'token_' +this.globalData.openId,
-          data: {
-            token: {
-              value: 'Bearer ' + res.data.access_token,
-              time: utils.getTowHoursMin()
-            },
-            refresh_token: {
-              value: res.data.refresh_token,
-              time: utils.getTowMonthTime()
-            }
-          }
-        })
-        this.getInfo();
+        this.setTokenStorage(res)
       }
     })
   },
 
-  getInfo() {
-    // 根据是否绑定判断进入哪个界面
-    this.req({ "query": 'query{my_teacher_bindinfo{phone,identity_card}}'},res=>{
-      if (res.data.errors != undefined) {
-        wx.navigateTo({
-          url: '/pages/login/login',
-        })
+  setTokenStorage(res){
+    this.globalData.token = 'Bearer ' + res.data.access_token
+    this.globalData.userId = res.data.uuid;
+    this.globalData.updateTokenData = res.data.refresh_token;
+    this.data.isChange=true;
+    wx.setStorage({
+      key: this.globalData.storageKey + this.globalData.openId,
+      data: {
+        token: {
+          value: 'Bearer ' + res.data.access_token,
+          time: this.globalData.serverTime + res.data.expires_in
+        },
+        refresh_token: {
+          value: res.data.refresh_token,
+          time: this.globalData.serverTime + (60 * 24 * 60 * 60)
+        }
       }
     })
+
   },
+
 
   addSum(num){
       return num>9?num:'0'+num;
