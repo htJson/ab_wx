@@ -1,0 +1,110 @@
+/* pages/view/center/employeem/employee/employee.wxss */
+.employeebox {
+  margin-top:50rpx;
+}
+.employeebox:before {
+  content: " ";
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  height: 1px;
+  border-top: 20rpx solid #c7c7cc;
+  color: #727171;
+}
+.employeebox:first-child:before {
+  display: none;
+}
+
+.employeebox__info {
+  margin-top:10px;
+  padding-bottom:10px;
+  font-size:14px;
+  color:#000;
+  line-height:2.5;
+  position:relative;
+  overflow:hidden;
+}
+.employeebox__info:after {
+  content: " ";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  height: 1px;
+  border-bottom: 1rpx solid #cbcbcf;
+  color: #cbcbcf;
+  overflow: hidden;
+}
+.employeebox__info > view {
+  padding: 0 30rpx;
+  clear:both;
+}
+.employeebox__info label {
+  width:230rpx;
+  float:left;
+  color: #727171;
+}
+.employeebox__info text {
+  width:63%;
+  float:right;
+}
+.stationbox label,.datebox label {
+  width:100%;
+	line-height:90rpx;
+}
+.radio-group label {
+  white-space:normal;
+}
+.employeebox__hd {
+  /* display: -webkit-box;
+  display: -webkit-flex;
+  display: flex; */
+  padding: 0 30rpx;
+  margin-right: .8em;
+  line-height: 60px;
+}
+.employeebox__thumb {
+  width: 60px;
+  height: 60px;
+  margin-right:30rpx;
+  text-align: center;
+  vertical-align: top;
+}
+.datebox {
+  padding:20rpx;
+  overflow: hidden
+}
+.datebox text {
+  float:left
+}
+.datebox .switch {
+  width:120rpx;
+  height:70rpx;
+  float:right
+}
+.datebox .switch switch {
+  vertical-align: 4rpx
+}
+.employeebox__title {
+  font-weight: 400;
+  font-size: 17px;
+  width: auto;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  word-wrap: normal;
+  word-wrap: break-word;
+  word-break: break-all;
+}
+.employeebox__desc {
+  color: #666;
+  font-size: 13px;
+  line-height: 1.2;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+

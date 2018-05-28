@@ -6,11 +6,11 @@ var md5 =require("utils/md5.js")
 // "Authorization": 'Basic d3hfbV9zdHVkZW50OjdjMDhlMjdlLWI2NGYtNDUxOC05YzY5LTU3OTUwODE5NjgxMw==',
 App({
   data:{
-    url: 'https://dev-auth.aobei.com',
+    url: 'https://test-auth.aobei.com',
     // url:'http://10.10.30.70:9010',
     // dev:'http://10.10.30.70:9010/graphql',
-    dev:'https://dev-api.aobei.com/graphql',
-    timeUrl:'https://dev-api.aobei.com/server/time',
+    dev:'https://test-api.aobei.com/graphql',
+    timeUrl:'https://test-api.aobei.com/server/time',
     key:'bc8b946d-1c3f-47a7-a28f-f692184aef67',
     code:'',
     name:'',
@@ -36,6 +36,7 @@ App({
     tokenData:null
   },
   onLaunch: function (options) {
+    // wx.clearStorage()
     var _this = this;
     if(this.data.dev.indexOf('dev') !=-1){
       this.globalData.saveTokenKey = 'devt_Token_'
@@ -73,7 +74,6 @@ App({
     })
   },
   
-
   getOpenId(vcode) { //获得openId
     wx.request({
       url: this.data.url + '/wxapi/jscode2session',
@@ -120,20 +120,15 @@ App({
       this.getToken();
       return false;
     }
-    console.log(this.data.storageToken,'===')
     var serverTime = this.globalData.serverTime, tokenStorage = this.data.storageToken;
     if (tokenStorage.token.time -serverTime< 10) {
-      console.log('token过期')
       if (tokenStorage.refresh_token.time -serverTime < 10) {
-        console.log('刷新token过期,则走获取token,但是没有用户信息')
         this.getToken()
       } else {
-        console.log('刷新token没有过期')
         this.globalData.updateTokenData = tokenStorage.refresh_token.value;
         this.upadteToken()
       }
     } else {
-      console.log('token未过期')
       // this.getInfo();     
       this.data.isChange=true; 
       this.globalData.updateTokenData = tokenStorage.refresh_token.value;
@@ -239,10 +234,8 @@ App({
   req(data, fn, mts) { //请求封装
     this.data.storageToken = wx.getStorageSync(this.globalData.saveTokenKey + this.globalData.openId)
     this.judgeToken();
-    console.log(this.data.isChange,'><>>>>>>>>')
     var timer = setInterval(() => {
       if (this.data.isChange) {
-        console.log('=======>>>>aaa')
         this.nAjax(data, fn, mts)
         clearInterval(timer)
       }
@@ -275,6 +268,7 @@ App({
       header: headerData,
       data: data,
       success: res => {
+        console.log('======><><><><><><><><><><><><>bbb')
         this.data.isChange=false;
         if (res.data.error && res.data.error == 'sign_error') {
           wx.showToast({

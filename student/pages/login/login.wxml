@@ -22,7 +22,9 @@
     </view>
     <view class="btn-area">
       <!-- <button formType="submit" class="{{isDisabled?'disStyle':''}}" bindgetuserinfo="onGotUserInfo"  bindtap="bindUser" disabled="{{isDisabled}}">绑定</button> -->
-      <button formType="submit" class="{{isDisabled?'disStyle':''}}" open-type="getUserInfo" bindgetuserinfo="onGotUserInfo" disabled="{{isDisabled}}">绑定</button>
+      
+      <button formType="submit" class="{{isDisabled?'disStyle':''}}" wx:if="{{isDisabled}}" open-type="getUserInfo" disabled="{{isDisabled}}">已绑定</button>
+      <button formType="submit" class="{{isDisabled?'disStyle':''}}" wx:else open-type="getUserInfo" bindgetuserinfo="onGotUserInfo">绑定</button>
     </view>
     <view class="errorStyle">{{errorTip}}</view>
   </view>

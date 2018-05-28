@@ -1,0 +1,4 @@
+.weui-cells {margin:0;}
+.station_line {padding:5rpx 0;border-top:1px solid #e1e1e1}
+.station_line:first-child {border:none}
+.weui-cell__bd p {color:#939393}

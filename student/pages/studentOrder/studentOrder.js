@@ -34,7 +34,6 @@ Page({
   onShow(){
     if(this.data.isLogin){
       this.getInfo();
-      console.log
       this.setData({
         page:1,
         orderList:[]
@@ -69,13 +68,11 @@ Page({
           this.setData({
             noData: true
           })
-          return false
         }
         if (res.data.data.student_order_list.length == 0 && this.data.orderList.length == 0) {
           this.setData({
             noData: true
           })
-          return false;
         }
         this.data.isLoadingTrue = true;
         if (res.data.data.student_order_list==null){ return false;}
@@ -92,8 +89,10 @@ Page({
     })
   },
   tab(options){
+    console.log('tab')
     var key=options.currentTarget.dataset.key;
     clearInterval(this.data.listTimer)
+    console.log(this.data.status,'=====',this.data.isLoadingTrue)
     if (this.data.status == key || !this.data.isLoadingTrue){return false}
     this.setData({
       orderList:[],

@@ -1,0 +1,8 @@
+/* pages/view/message/messagelist/messagelist.wxss */
+.weui-cell__bd {
+  height:40rpx;
+  overflow:hidden;
+  white-space:nowrap;
+  text-overflow:ellipsis;
+}
+.active{color:#8b8b8b!important}

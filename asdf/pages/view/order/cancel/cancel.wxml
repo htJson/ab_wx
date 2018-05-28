@@ -1,0 +1,50 @@
+
+<view class="container">
+  <view class="weui-cell order">
+    <view class="weui-cell__bd">
+      <text class="title">订单信息</text>
+    </view>
+     <view class="weui-cell__ft">[已取消]</view> 
+  </view>
+  <view class="weui-cells">
+      <view class="weui-cell subcell">
+        <view class="weui-cell__bd">
+          <text class="title">订单号：{{detail.pay_order_id}}</text>
+        </view>
+      </view>
+  </view>
+  <view class="product">
+    <image class='logo' src="{{detail.image_first}}"></image>
+    <view class="productContent">
+      <text class="title">{{detail.name}}</text>
+      <text>{{detail.cus_username}}</text>
+      <view class="mt10">{{detail.cus_phone}}<image class="phoneIcon" src="../../../../images/phone.png" data-phone='{{detail.cus_phone}}' bindtap='makePhoneCall'></image></view>  
+    </view>
+  </view>
+  <view class="serverNews">
+    <!--<view class="item">
+      <text class="title">预约时间：</text><view class="content">{{stime}}</view>
+    </view>
+		-->
+		<view class="item">
+      <text class="title">订单件数：</text><view class="content">{{detail.num}}</view>
+    </view>
+    <view class="item">
+      <text class="title">订单金额：</text><view class="content">{{detail.price_total/100}}</view>
+    </view>
+		<view class="item">
+			<text class="title">服务时间：</text><view class="content">{{stime}} {{etime?'--':''}} {{etime}}</view>
+		</view>
+    <view class="item">
+      <text class="title">服务人员：</text>
+      <view class="content" wx:if="{{people}}">{{people}}</view>
+      <view class="content" style="color:#ccc" wx:else>无</view>
+    </view>
+		<view class="item">
+      <text class="title">服务地址：</text><view class="content">{{detail.customer_address}}</view>
+    </view>
+		<view class="item">
+			<text class="title">备注：</text><view class="content" wx:if="{{detail.remark}}">{{detail.remark}}</view><view class="content" style="color:#ccc" wx:else>无</view>
+    </view>
+  </view>
+</view>

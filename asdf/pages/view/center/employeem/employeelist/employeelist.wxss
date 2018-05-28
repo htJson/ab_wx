@@ -1,0 +1,2 @@
+/* pages/view/center/employeem/employeelist/employeelist.wxss */
+.list .weui-media-box_appmsg{align-items:center}

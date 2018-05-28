@@ -34,7 +34,7 @@
    <view class="borderBottom buyNum" wx:if="{{term.buy_multiple == 1}}">
     <text class="title aLeft">购买</text>
     <view class="aRight changeNum">
-      <text class="aRight" wx:if="{{unit!=''}}" style="margin-left:20rpx">{{unit}}</text>
+      <text class="aRight" wx:if="{{unit!=''}}" style="margin-left:20rpx; font-size:26rpx;">{{unit}}</text>
       <image class="add aRight" bindtap="countAdd" src="../../images/add.png"></image>
       <input class="num aRight" value="{{count}}" placeholder='0' bindinput="countChange" ></input>
       <image class="reduce aRight" bindtap="countRedut" src="../../images/reduce.png"></image>

@@ -9,5 +9,5 @@
 .item .content{margin-right:50rpx;}
 .item view{padding:7rpx 0px; font-size:26rpx; color:#727171}
 .item .user{font-weight: bolder; color:#000}
-.item view .title{ float:left; font-weight: normal; color:#727171}
-.item view .rightContent{margin-left:130rpx; font-weight: normal; color:#727171; display: block;}
+.item view .title{ float:left; font-weight: normal; color:#727171; line-height: 22px}
+.item view .rightContent{margin-left:130rpx; font-weight: normal; color:#727171; display: block; line-height: 22px;}

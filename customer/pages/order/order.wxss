@@ -1,19 +1,18 @@
 /* pages/order/order.wxss */
-.tab{border-bottom:2px solid #dadadd;height: 83rpx;  position: fixed; width: 100%; background: #fff; z-index: 10;}
-.tab text{ font-size:30rpx; width:20%; display: inline-block; text-align: center; padding:20rpx 0px;position: relative;}
-.tab .active{border-bottom:4rpx solid #00a0e9;}
-.list{background:#efeff4; padding-top:87rpx;}
+.tab{border-bottom:1rpx solid #dadadd;height: 82rpx; line-height: 82rpx;  position: fixed; width: 100%; background: #fff; z-index: 10;}
+.tab text{ font-size:30rpx; width:20%; display: block; float:left; text-align: center; padding:0rpx 0px;position: relative;}
+.tab .active{border-bottom:3px solid #00a0e9;height: 76rpx; line-height: 76rpx;}
+.list{background:#efeff4; padding-top:83rpx;}
 .item{padding-left:30rpx; margin-bottom:20rpx; padding-bottom:20rpx; background: #fff;}
 .item .header {padding-right:30rpx; padding-top:24rpx; padding-bottom:21rpx; font-size:26rpx; border-bottom:1px solid #c7c7cc}
 /*待付款  */
-.item .header .orderType{color:#ff4e00;  }
+.item .header .orderType{color:#ff4e00;}
 /*待服务  */
-.item .header .orderServiece{color:#ffae00; }
+.item .header .orderServiece{color:#ffae00;}
 /*待确认 */
 .item .header .orderOK{color:#09bb07;}
 /* 已取消 已完成  #727171  */
 .item .header .orderAsh{color:#727171;}
-
 .item .header .orderNum{color:#727171; font-size:26rpx;margin-left:20rpx;}
 .item .content{overflow: hidden; padding-top:25rpx;}
 .item .content image{width:180rpx; height: 180rpx; display: block; float:left;}

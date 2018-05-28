@@ -1,0 +1,46 @@
+<!--pages/view/center/index/index.wxml-->
+<view class="container">
+<view class="weui-cells nomt">
+  <view class="weui-cell" data-url="../shop/shop"  data-key="shop" bindtap='changeUrl'>
+    <view class="weui-cell__hd">
+			<p>店铺信息</p>
+		</view>
+    <view class="weui-cell__bd weui-cell_primary"></view>
+    <span class="weui-cell__ft"></span>
+  </view>
+  <view class="weui-cell" data-url="../employeem/employeelist/employeelist"  data-key="employeelist" bindtap='changeUrl'>
+    <view class="weui-cell__hd">
+			<p>员工管理</p>
+		</view>
+    <view class="weui-cell__bd weui-cell_primary"></view>
+    <span class="weui-cell__ft"></span>
+  </view>
+  <view class="weui-cell" data-url="/pages/login/login"  data-key="login" bindtap='changeUrl'>
+    <view class="weui-cell__hd">
+			<p>我的账户</p>
+		</view>
+    <view class="weui-cell__bd weui-cell_primary"></view>
+    <span class="weui-cell__ft"></span>
+  </view>
+  <!-- <view class="weui-cell" data-url="/pages/view/message/messagelist/messagelist"  data-key="messagelist" bindtap='changeUrl'>
+    <view class="weui-cell__hd"></view>
+    <view class="weui-cell__bd weui-cell_primary">
+        <p>我的消息</p>
+    </view>
+    <span class="weui-cell__ft"></span>
+  </view>
+  <view class="weui-cell" data-url="../financial/financial"  data-key="financial" bindtap='changeUrl'>
+    <view class="weui-cell__hd"></view>
+    <view class="weui-cell__bd weui-cell_primary">
+        <p>财务管理</p>
+    </view>
+    <span class="weui-cell__ft"></span>
+  </view> -->
+  <view class="weui-cell">
+    <view class="weui-cell__hd">客服电话</view>
+    <view class="weui-cell__bd weui-cell_primary" data-phone='400-036-6333' bindtap='makePhoneCall'>
+        <p>400-036-6333</p>
+    </view>
+  </view>
+</view>
+</view>

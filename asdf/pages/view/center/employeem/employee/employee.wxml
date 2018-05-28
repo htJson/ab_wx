@@ -1,0 +1,55 @@
+<!--pages/view/center/employeem/employee/employee.wxml-->
+<!--{{employee}}  -->
+<view class="container weui-textanel__bd">
+  <view class="employeebox">
+    <view class="employeebox__hd">
+      <image class="employeebox__thumb head" src="{{employee.ossImg.url?employee.ossImg.url:'/images/default.jpg'}}"></image>
+      <text>{{employee.student.name}}</text>
+    </view>
+    <view class="employeebox__bd">
+      <view class="employeebox__info">
+        <view><label>身份证号</label><text>{{employee.student.identity_card}}</text></view>
+        <view><label>籍贯地址</label><text>{{employee.student.native_place}}</text></view>
+        <!-- <view><label>现住址</label></view> -->
+        <view><label>所属合伙人公司</label><text>{{employee.partner.name}}</text></view>
+        <view><label>联系电话</label><text>{{employee.student.phone}}</text></view>
+      </view>
+      <view class="employeebox__info">
+        <view><label>员工技能</label><text><block wx:for="{{employee.serviceitem}}" wx:for-item="service">{{service.name}} {{employee.serviceitem.length -1 == index?'':'| '}} </block></text></view>
+      </view>
+      <view class="employeebox__info">
+        <view class="stationbox">
+          <view>服务站</view>
+          <radio-group class="radio-group" bindchange="stationChange">
+            <label class="radio" wx:for="{{stations}}">
+              <radio color="#00a1f0" value="{{item.station_id}}~~{{item.address}}" checked="{{item.checked}}"/>{{item.address}}
+            </label>
+          </radio-group>
+        </view>
+      </view>
+      
+      <view class="employeebox__info">
+        <view class="datebox">
+          <view>停单指定</view>
+          <label wx:for="{{dateTime}}" wx:key="leaveDate" wx:for-item="item">
+            <text>{{item.leaveDate}} </text>
+            <view class="switch">
+               <!-- <view class="switch" data-value="{{item.leaveDate}}" data-statu="{{item.statu}}" data-id="{{index}}" bindtap="switchChange" style="{{index == id || item.statu == 1?'background:url(/images/icon_switched.png) no-repeat;background-size:100%; ':'background:url(/images/icon_switch.png) no-repeat;background-size:100%; '}}"></view>  -->
+              <!-- <image class="switch" src="/images/icon_switch.png" wx:if="{{item.statu == 0}}" data-value="{{item.leaveDate}}" data-id="{{index}}" data-statu="0" bindtap="switchChange{{index + 1}}" hidden="{{index == 0 && statu1 || index == 1 && statu2 || index == 2 && statu3 || index == 3 && statu4 || index == 4 && statu5 || index == 5 && statu6 || index == 6 && statu7}}"></image>
+              <image class="switch" src="/images/icon_switched.png" wx:if="{{item.statu == 1 || index == 0 && statu1 || index == 1 && statu2 || index == 2 && statu3 || index == 3 && statu4 || index == 4 && statu5 || index == 5 && statu6 || index == 6 && statu7}}" data-value="{{item.leaveDate}}" data-id="{{index}}" data-statu="1"></image> -->
+					
+              <switch color="#00a1f0" checked="{{item.statu == 1&&true}}" wx:if="{{item.statu == 1}}" data-value="{{item.leaveDate}}" bindchange="switchChange"/>
+              <switch color="#00a1f0" checked="{{item.statu == 0&&false}}" wx:if="{{item.statu == 0}}" data-value="{{item.leaveDate}}" bindchange="switchChange" />   
+            </view>
+          </label>
+        </view>
+      </view>
+    </view>
+  </view>
+
+</view>
+<view class="body-view">
+  <loading hidden="{{hidden}}" bindchange="loadingChange">
+    加载中...
+  </loading>
+</view>

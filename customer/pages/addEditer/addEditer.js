@@ -241,7 +241,7 @@ Page({
     })
   },
   delAddress(){
-    if(!this.data.requestOk){return false;}
+    if(this.data.requestOk){return false;}
     this.setData({
       requestOk:true
     })
@@ -251,6 +251,7 @@ Page({
     // })
   },
   delAddressFn(mstCode){
+    console.log('=====')
     app.req({ "query": 'mutation{customer_address_delete(customer_address_id:"' + this.data.addressId + '"){status}}'}, res => {
       if (typeof res.data.data.customer_address_delete.status != undefined && res.data.data.customer_address_delete.status == 0) {
         

@@ -9,7 +9,7 @@
 .skuService{overflow: hidden; background: #fff; padding:30rpx; }
 .skuService text{font-size:30rpx; color:#000; float:left;}
 .skuService .selecteItem{float:right; color:#999; margin-right:30rpx;}
-.skuService image{ float:right; width:40rpx; height: 45rpx; margin-top:0rpx;}
+.skuService image{ float:right; width:20rpx; height: 23rpx; margin-top:3px;}
 .skuStandard,.skuflow,.skuTip{overflow: hidden; background: #fff; padding:30rpx; margin-top:22rpx}
 .skuStandard .title,.skuflow .title,.skuTip .title{font-size:40rpx; color:#727171; border-bottom:1px solid #c7c7cc; padding-bottom:30rpx;}
 .skuStandard .item,.skuTip .item{color:#727171; font-size:26rpx;position: relative; padding-left:30rpx;margin-top:20rpx;}

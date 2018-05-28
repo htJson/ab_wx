@@ -1,0 +1,10 @@
+<!--pages/view/message/message/message.wxml-->
+<view class="container">
+  <view class="item active">
+    <view class="overflow pb20">
+      <image class="newsIcon" src="/images/systemNews.png"></image>
+      <text class="newsTitle">{{message.msg_title}}</text><text class="newsTime">{{message.mydate}}</text>
+    </view>
+    <view>{{message.msg_content}}</view>
+  </view>
+</view>

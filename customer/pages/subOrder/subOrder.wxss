@@ -18,23 +18,13 @@
 .setTime,.priceBox,.coupon{padding:36rpx 30rpx; overflow: hidden;}
 /* .setTime .time{color:#000; font-size:26rpx;float:left;} */
 .setTime .timeContent{margin-left:159rpx; padding-right:40rpx; font-size:26rpx; color:#000; position:relative;}
-.setTime .timeContent image{position:absolute; right:0px; top:0px;}
+.setTime .timeContent image{position:absolute; right:0px; top:3px;}
 .noteBox{padding:36rpx 30rpx; position:relative;}
 .noteBox .textarea{display:block; margin-left:159rpx; margin-top:20rpx; height:130rpx;}
 .noteBox .textarea textarea{width:100%; font-size:26rpx; color:#000; height: 150rpx;}
 .money{ float:right; color:#000; font-size:30rpx;}
 .allPrice{float: right; color:#ff0000; font-size:30rpx;}
-.couponContent{margin-left:159rpx; position:relative; padding-right:50rpx; line-height:50rpx; font-size:26rpx; color:#ddbf5d; text-align: right;}
-.couponContent image{position: absolute; right:0px;}
-
-
-
-
-
-
-
-
-
-
-
+.couponContent{margin-left:159rpx; position:relative; padding-right:50rpx; font-size:26rpx; color:#ddbf5d; text-align: right;}
+.couponContent text{line-height: 0px;}
+.couponContent image{position: absolute; right:0px; top:3px}
 .submitBtn{color:#fff; background:#00a0e9;position: fixed; bottom:0px; width:100%; border-radius:0;}

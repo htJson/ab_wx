@@ -1,0 +1,36 @@
+<!--index.wxml-->
+<view class="container">
+
+  <view class="section">
+    <text class="">本月累计订单</text>
+    <view class="ordercount">{{count}}<text>单</text></view>
+  </view>
+  <view class="section weui-flex topline">
+    <view class="weui-flex__item" data-url='/pages/task/task' bindtap='changeUrl'><image src="../../images/icon_task.png"></image>任务排期</view>
+    <view class="weui-flex__item" data-url='/pages/view/center/shop/shop' bindtap='changeUrl'><image  src="../../images/icon_shop.png"></image>店铺管理</view>
+    <view class="weui-flex__item" data-url='/pages/view/center/employeem/employeelist/employeelist' bindtap='changeUrl'><image src="../../images/icon_employee.png"></image>员工管理</view>
+    <view class="weui-flex__item" data-url='/pages/view/order/index/index' bindtap='changeUrl'><image  src="../../images/icon_order.png"></image>我的订单</view>
+  </view>
+  <view class="section">
+    <view class='title'>待接订单</view>
+    <view class="weui-cells">
+      <block wx:for="{{payedOrder}}" wx:for-item="item">
+        <view class="weui-cell" data-id='{{item.pay_order_id}}' bindtap='bindViewTap'>
+          <view class="weui-cell__bd">
+            <view class='hd'>
+              <text class="title1">{{item.name}}</text>
+            </view>
+            <view class="contxt">{{item.mydate}}</view>
+            <view class="contxt">{{item.customer_address}}</view>
+          </view>
+          <view class="weui-cell__ft"></view>
+        </view>
+      </block>
+    </view>
+  </view>
+</view>
+<view class="body-view">
+  <loading hidden="{{hidden}}" bindchange="loadingChange">
+    加载中...
+  </loading>
+</view>

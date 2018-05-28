@@ -1,0 +1,7 @@
+{
+  "usingComponents": {
+    "calendar-picker": "/components/calendarPicker/calendarPicker"
+  },
+  "navigationBarTitleText": "任务排期",
+  "enablePullDownRefresh": false
+}

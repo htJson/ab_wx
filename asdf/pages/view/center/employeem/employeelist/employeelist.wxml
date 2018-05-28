@@ -1,0 +1,29 @@
+<!--textages/view/center/emtextloyeem/emtextloyeelist/emtextloyeelist.wxml-->
+<scroll-view scroll-top="{{scrollTop}}" scroll-y="true" style="height:{{scrollHeight}}px;" class="list" bindscrolltolower="bindDownLoad">
+  <view class="container weui-textanel__bd">
+    <view class="noData" wx:if="{{noData}}">
+      <image src="/images/noData.jpg"></image>
+      <text>暂无数据</text>
+    </view>
+    <block wx:for="{{employeelist}}" wx:for-item="item">
+      <view class="weui-media-box weui-media-box_appmsg" data-id="{{item.student.student_id}}" bindtap="toDetail">
+        <view class="weui-media-box__hd">
+            <image class="weui-media-box__thumb head" src="{{item.ossImg.url?item.ossImg.url:'/images/default.jpg'}}"></image>
+        </view>
+        <view class="weui-media-box__bd">
+            <text class="weui-media-box__title">{{item.student.name}}</text>
+            <text class="weui-media-box__desc">{{item.station.address||'无'}}</text>
+						<text class="weui-media-box__desc" wx:if="{{item.serviceitem.length}}">
+							<block wx:for="{{item.serviceitem}}" wx:for-item="service">{{service.name}} {{item.serviceitem.length -1 == index?'':'| '}} </block>
+						</text>
+						<text class="weui-media-box__desc" wx:if="{{!item.serviceitem.length}}">无</text>
+        </view>
+      </view>
+    </block>
+  </view>
+</scroll-view>
+<view class="body-view">
+  <loading hidden="{{hidden}}">
+    加载中...
+  </loading>
+</view>

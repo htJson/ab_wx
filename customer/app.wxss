@@ -18,7 +18,7 @@
 /*暂无数据样式 */
 .noData{text-align: center; padding-top:100rpx; background: #fff;}
 .noData text{display: block; padding-bottom:30rpx; font-size:30rpx;}
-.noData image{width:320rpx; height:240rpx;}
+.noData image{width:176rpx; height:151rpx;}
 
 /*loading样式  */
 .loading{background: #fff; padding:90rpx 0 100rpx}

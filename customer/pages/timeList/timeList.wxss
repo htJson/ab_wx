@@ -2,7 +2,7 @@
 .container{ padding-bottom:80rpx;}
 .content{background: #efeff4;}
 .header{background: #fff; line-height: 100rpx; padding:0 30rpx; font-size:34rpx; overflow: hidden;text-overflow:ellipsis;white-space: nowrap; }
-.timeSelected{background: #fff;  overflow: auto; padding:50rpx 0 100rpx; text-align: center;}
+.timeSelected{background: #fff;  overflow: auto; padding:50rpx 0 100rpx; text-align: center;border-bottom:1rpx solid #dadadd;}
 .timeSelected::-webkit-scrollbar {display:none}
 .timeSelected .item{width:160rpx; height:120rpx; padding-top:40rpx; margin:0 25rpx; border-radius:100rpx; position: relative; border:1px solid #d8d8d8; display: inline-block; }
 
@@ -14,10 +14,10 @@
 .timeSelected .active{color:#fff; background:#00a0e9}
 .timeSelected .active .icon{color:#00a0e9}
 
-.bespeak{background: #fff; height: 189rpx; padding-right:189rpx; border-top:1rpx solid #dadadd; line-height: 189rpx; text-align: center; position: relative;}
+.bespeak{background: #fff; height: 189rpx; padding-right:189rpx; border-bottom:1rpx solid #dadadd; line-height: 189rpx; text-align: center; position: relative;}
 .bespeak .btn{position: absolute; width:189rpx; top:0px; right:0px; height: 189rpx;}
 .bespeak .noBes{ background: #dadadd;}
-.bespeak .besBtn{ background: #fff; color:#727171; border-left:1px solid #dadadd}
+.bespeak .besBtn{ background: #fff; border-left:1px solid #dadadd}
 .active {color:#77d0f8;}
 .active .besBtn{background:#77d0f8; color:#fff;}
 

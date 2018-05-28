@@ -1,8 +1,8 @@
 /* pages/order/order.wxss */
 .tab{border-bottom:1px solid #dadadd;height: 83rpx;  position: fixed; width: 100%; background: #fff; z-index: 10;}
-.tab text{ font-size:30rpx; width:20%; display: inline-block; text-align: center; padding:20rpx 0px;position: relative;}
-.tab .active{border-bottom:2rpx solid #00a0e9;}
-.list{background:#efeff4; padding-top:87rpx;}
+.tab text{ font-size:30rpx; width:20%; display: inline-block; text-align: center; padding:0rpx 0px;position: relative;}
+.tab .active{border-bottom:3px solid #00a0e9; height: 77rpx; line-height: 77rpx;}
+.list{background:#efeff4; padding-top:82rpx;}
 .item{ margin-bottom:20rpx; padding-bottom:20rpx; background: #fff;}
 .item .header {padding:24rpx 30rpx 21rpx 30rpx; font-size:26rpx; border-bottom:1px solid #ededed}
 /*待付款  */

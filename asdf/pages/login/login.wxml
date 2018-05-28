@@ -1,0 +1,28 @@
+<!--Pages/login/login.wxml-->
+<view class="container">
+  <view class="tip" hidden='{{isDisabled?true:false}}'>为了保障正常的工作安排，请输入手机号进行身份验证</view>
+  <view id="submitLogin">
+    <view>
+      <text class="">联系人：</text>
+      <input type="text" bindinput='linkmanInput' value='{{linkman}}' disabled='{{isDisabled?true:false}}' placeholder='请输入联系人姓名' placeholder-style="font-size:24rpx"/>
+    </view>
+    <!-- <view>
+      <text class="">性别：</text>
+      <label class="radio" wx:for="{{radioItems}}" wx:key="{{index}}">
+        <radio value="{{item.name}}" checked="{{item.checked}}"/>{{item.value}}
+      </label>
+    </view> -->
+    <view>
+      <text class="">手机号：</text>
+      <input type="Number" bindinput='phoneInupt' value="{{phone}}" disabled='{{isDisabled?true:false}}' placeholder='请输入11位有效手机号'  placeholder-style="font-size:24rpx"/>
+    </view>
+    <!-- <view>
+      <text class="">身份证号：</text>
+      <input type="Number" bindinput='idNumInput' value="{{idNum}}" placeholder='请输入有效身份证号' placeholder-style='font-size:24rpx'/>
+    </view> -->
+    <view class="btn-area">
+      <button open-type="getUserInfo" lang="zh_CN" bindgetuserinfo="onGotUserInfo" formType="submit" class="{{isDisabled?'disStyle':''}}" disabled="{{isDisabled}}">绑定</button>
+    </view>
+    <!-- <view class="errorStyle">{{errorTip}}</view> -->
+  </view>
+</view>

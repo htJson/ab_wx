@@ -1,0 +1,34 @@
+<!--pages/view/center/shop/shop.wxml-->
+<view class="container">
+  <view class="weui-cells">
+    <view class="weui-cell">
+      <view class="weui-cell__hd">店铺名称</view>
+      <view class="weui-cell__bd weui-cell_primary">
+          <p>{{shopInfo.name}}</p>
+      </view>
+    </view>
+    <view class="weui-cell">
+      <view class="weui-cell__hd" style="">虚拟地址</view>
+      <view class="weui-cell__bd weui-cell_primary">
+          <view class="station_line" wx:for="{{stations}}">
+            <p>{{item.address}} {{item.sub_address}}</p>
+          </view>
+      </view>
+    </view>
+    <view class="weui-cell">
+      <view class="weui-cell__hd">手机</view>
+      <view class="weui-cell__bd weui-cell_primary">
+          <p>{{shopInfo.phone}}</p>
+      </view>
+    </view>
+    <!-- <view class="weui-cell">
+      <view class="weui-cell__hd">店铺电话：</view>
+      <view class="weui-cell__bd weui-cell_primary">
+          <p>400-123-1234</p>
+      </view>
+    </view> -->
+  </view>
+  <!-- <block wx:for="{{logs}}" wx:for-item="log">
+    <text class="log-item">{{index + 1}}. {{log}}</text>
+  </block> -->
+</view>

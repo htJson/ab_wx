@@ -1,0 +1,10 @@
+/* Pages/login/login.wxss */
+.container{background: #fff; padding:40rpx;}
+.tip{font-size:24rpx; background: #ffefd7; color:#f1a948; padding:20rpx;border:1px solid #fdc170; margin-bottom:50rpx;border-radius:3px;}
+#submitLogin view{padding-bottom:40rpx;}
+#submitLogin text{float:left; width:140rpx; text-align: right; display: block; font-size:26rpx; line-height: 90rpx;}
+#submitLogin input{border:1px solid #f1f1f1; padding:10rpx 10rpx; border-radius:4px; height:60rpx; line-height: 70rpx}
+#submitLogin label{font-size:24rpx;}
+#submitLogin button{width:30%; display:block; margin:0 auto; background:#0084ff; color:#fff;font-size:26rpx;}
+.errorStyle{color:#f00; text-align: center; margin-top:20rpx; border-radius:10rpx; font-size:26rpx;}
+.disStyle{background:#f8f8f8!important; color:#999!important}

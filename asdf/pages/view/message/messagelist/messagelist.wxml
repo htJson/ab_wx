@@ -1,0 +1,23 @@
+<!--pages/view/message/messagelist/messagelist.wxml-->
+<view class="container">
+  <view class="noData" wx:if="{{noData}}">
+    <image src="/images/noData.jpg"></image>
+    <text>暂无数据</text>
+  </view>
+  <block wx:for="{{messageList}}" wx:for-item="item">
+    <view class="weui-cells {{!item.status?'':'active'}}" data-id="{{item.id}}" bindtap="toDetail">
+      <view class="weui-cell">
+        <view class="weui-cell__hd"></view>
+        <view class="weui-cell__bd weui-cell_primary">
+            {{item.msg_title}} {{item.mydate}} {{item.msg_content}}
+        </view>
+        <span class="weui-cell__ft"></span>
+      </view>
+    </view>
+  </block>
+</view>
+<view class="body-view">
+  <loading hidden="{{hidden}}">
+    加载中...
+  </loading>
+</view>

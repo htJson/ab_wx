@@ -78,6 +78,7 @@ Page({
       errorTip:''
     })
     this.getToken();
+    console.log('bindUser,=============')
     app.req({ "query": ['mutation{my_student_binduser(phone:"', this.data.phone, '",id_num:"', this.data.idNum, '"){status}}'].join('') }, res => {
       if (res.data.errors != undefined) {
         if (res.data.errors[0].errcode == '40103') {
@@ -92,7 +93,7 @@ Page({
           return false;
         } else {
           this.setData({
-            errorTip: res.data.errors.message
+            errorTip: ''
           })
         }
       } else {
@@ -167,31 +168,25 @@ Page({
     })
   },
   setStorageFn(res){
-    wx.request({
-      url: app.data.timeUrl,
-      method:'POSt',
-      header:{
-        "content-type": 'application/x-www-form-urlencoded', // 默认值
-      },
-      success:timeData=>{
-        app.globalData.token = 'Bearer ' + res.data.access_token;
-        app.globalData.updateTokenData = res.data.refresh_token;
-        wx.setStorage({
-          key: this.globalData.saveTokenKey + app.globalData.openId,
-          data: {
-            token: {
-              value: 'Bearer ' + res.data.access_token,
-              time: timeData.data.second+(2*60*60)
-            },
-            refresh_token: {
-              value: res.data.refresh_token,
-              time: timeData.data.second+(60*24*60*60)
-            },
-            isLogin:true
-          }
-        })
+  
+    app.globalData.token = 'Bearer ' + res.data.access_token;
+    app.globalData.updateTokenData = res.data.refresh_token;
+    console.log(app.globalData.saveTokenKey,'=====')
+    wx.setStorage({
+      key: app.globalData.saveTokenKey + app.globalData.openId,
+      data: {
+        token: {
+          value: 'Bearer ' + res.data.access_token,
+          time: app.globalData.serverTime+(2*60*60)
+        },
+        refresh_token: {
+          value: res.data.refresh_token,
+          time: app.globalData.serverTime+(60*24*60*60)
+        },
+        isLogin:true
       }
     })
+     
    
   },
   onGotUserInfo: function (e) {

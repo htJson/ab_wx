@@ -1,0 +1,30 @@
+<!--pages/task/task.wxml-->
+<view class='choice' bindtap="showCalendarPicker">{{dateTimetxt}}</view>
+<view class="weui-cells topline">
+  <view class="noData topline" wx:if="{{noData}}">
+    <image src="/images/noData.jpg"></image>
+    <text>暂无数据</text>
+  </view>
+  <block wx:for="{{tasklist}}" wx:for-item="item" wx:if="{{item.orderList.length !== 0}}">
+    <view class='title'>{{item.student.name}}　　{{item.student.phone}} <image class="phoneIcon" src="../../images/phone.png" data-phone='{{item.student.phone}}' bindtap='makePhoneCall'></image></view>
+    <block wx:for="{{item.orderList}}" wx:for-item="order" wx:if="{{item.orderList.length !== 0}}">
+    <view class="weui-cell {{order.orderStatus == 'done'?'statusbg':''}}" data-id='{{order.pay_order_id}}' data-status='{{order.orderStatus}}' bindtap='bindViewTap' wx:if="order.length !== 0">
+      <view class="weui-cell__bd">
+        <view class='hd'>
+          <text class="title1">{{order.name}}</text>
+        </view>
+        <view class="contxt">{{order.mydate}}</view>
+        <view class="contxt">{{order.customer_address}}</view>
+        <image wx:if="{{order.orderStatus == 'done'}}" class="status" src="../../images/icon_ced.png"></image>
+      </view>
+      <view class="weui-cell__ft"></view>
+    </view>
+    </block>
+  </block>
+</view>
+<calendar-picker start-date="2018-03-07" end-date="2019-12-31" show="{{ isCalendarPickerShow }}" current="{{count1}}" current-date="{{date}}" bind:change="onChangeDate" />
+<view class="body-view">
+  <loading hidden="{{hidden}}" bindchange="loadingChange">
+    加载中...
+  </loading>
+</view>

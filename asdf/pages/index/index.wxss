@@ -1,0 +1,48 @@
+/**index.wxss**/
+.section {
+	padding:20rpx 30rpx;
+}
+.weui-cell {
+  padding:30rpx 5rpx;
+}
+.topline {
+  padding-top:50rpx;
+	position:relative
+}
+.topline:before{
+	content:" ";
+	position:absolute;
+	left:0;
+	top:0;
+	right:0;
+	height:1px;
+	border-top:20rpx solid #efeff4;
+	color:#e5e5e5
+}
+.topline:after{
+	content:" ";
+	position:absolute;
+	left:0;
+	bottom:0;
+	right:0;
+	height:3px;
+	border-bottom:3rpx solid #efeff4;
+	color:#e5e5e5
+}
+.title1 {
+  font-size:32rpx;
+  margin-bottom:20rpx;
+  font-weight: 400;
+}
+.contxt {
+  color:#666;
+}
+.ordercount {
+  text-align: center;
+  font-size: 110rpx;
+  color: #0f8af4
+}
+.ordercount text {
+  font-size: 26rpx;
+  color: #727171;
+}

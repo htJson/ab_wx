@@ -1,0 +1,54 @@
+{
+  "pages":[
+    "pages/index/index",
+    "pages/login/login",
+    "pages/task/task",
+    "pages/view/center/index/index",
+    "pages/view/center/shop/shop",
+    "pages/view/center/employeem/employee/employee",
+    "pages/view/center/employeem/employeelist/employeelist",
+    "pages/view/message/messagelist/messagelist",
+    "pages/view/message/message/message",
+    "pages/view/order/index/index",
+    "pages/view/order/complete/complete",
+    "pages/view/order/cancel/cancel",
+    "pages/view/order/reject/reject",
+    "pages/view/order/service/service",
+    "pages/view/order/confirm/confirm",
+    "pages/view/rob/index/index",
+    "pages/view/rob/roborder/roborder"
+  ],
+  "window":{
+    "backgroundTextStyle":"#717171",
+    "navigationBarBackgroundColor": "#0f8af4",
+    "navigationBarTitleText": "WeChat",
+    "navigationBarTextStyle":"white",
+    "enablePullDownRefresh": true
+  },
+  "tabBar": {
+    "backgroundColor": "#f1f1f1",
+    "borderStyle": "white",
+    "color": "#919191",
+    "selectedColor": "#0084ff",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页",
+        "iconPath": "./images/home.png",
+        "selectedIconPath": "./images/homeHL.png"
+      },
+      {
+        "pagePath": "pages/view/rob/index/index",
+        "text": "抢单",
+        "iconPath": "./images/roborder.png",
+        "selectedIconPath": "./images/roborderActive.png"
+      },
+      {
+        "pagePath": "pages/view/center/index/index",
+        "text": "我的",
+        "iconPath": "./images/mine.png",
+        "selectedIconPath": "./images/mineActive.png"
+      }
+    ]
+  }
+}

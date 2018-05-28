@@ -116,17 +116,13 @@ App({
     }
     // 如果有缓存的token
     if (tokenStorage.token.time - serverTime < 10) {
-      console.log(1)
       if (tokenStorage.refresh_token.time - serverTime < 10) {
-        console.log(2)
         this.touristToken()
       } else {
-        console.log(3)
         this.globalData.updateTokenData = tokenStorage.refresh_token.value
         this.upadteToken()
       }
     } else {
-      console.log(4)
       this.data.isChange = true;
       this.globalData.updateTokenData = tokenStorage.refresh_token.value
       this.globalData.token = tokenStorage.token.value
@@ -246,15 +242,17 @@ App({
       'version': this.data.versionNum,
       'device': this.data.device,
       "nostr": this.data.nostr,
+      // "timestamp": parseInt((new Date().getTime())/1000),
       "sign": ""
     }, headerData = null, str = '';
-
+  
     if (typeof mts == 'object' && mts.mts != '') {
       headerData = Object.assign({}, json, mts);
       str += 'mts=' + mts.mts + '&';
     } else {
       headerData = json
     }
+    // str += 'nostr=' + this.data.nostr + "&query=" + data.query +&timestamp=+ json.timestamp + '&key=' + this.data.key;
     str += 'nostr=' + this.data.nostr + "&query=" + data.query + '&key=' + this.data.key;
     var n = sha1.sha1(str)
     headerData.sign = n.toUpperCase();
