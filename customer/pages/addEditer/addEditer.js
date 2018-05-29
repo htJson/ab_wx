@@ -12,6 +12,7 @@ Page({
     isDefault:true,
     errorTip:'',
     detailed:'',
+    nType: '',
     requestOK:false
   },
   onLoad: function (options) {
@@ -19,21 +20,32 @@ Page({
     wx.getStorage({   //选择地址返回时提取缓存填充信息
       key: 'tdata',
       success: res => {
+        console.log(res,'=============tdata')
         this.setData({
           userName: res.data.userName,
           phone: res.data.phone,
+          addressId:res.data.addressId,
           address: res.data.address,
           isDefault: res.data.isDefault,
           detailed: res.data.detailed||'',
           ad_info: res.data.ad_info||'',
           location: res.data.location,
+          type:res.data.type,
+          isMine:res.data.isMine
         })
-      },
+      },fail:res=>{
+        this.setData({
+          nType: wx.getStorageSync('type')
+        })
+        this.getAddressType()
+      }
     })
-    this.getAddressType()
+    
   },
   backFn() {
     wx.removeStorageSync('editer')
+    wx.removeStorageSync('tdata')
+    wx.removeStorageSync('type')
     if (this.data.isMine) {
       wx.redirectTo({
         url: '/pages/myAddress/myAddress',
@@ -45,12 +57,11 @@ Page({
     }
   },
   getAddressType(){
-    var nType=wx.getStorageSync('type');
     this.setData({
-      type: nType.type ? nType.type : 0,
-      isMine: nType.isMine
+      type: this.data.nType.type ? this.data.nType.type : 0,
+      isMine: this.data.nType.isMine
     })
-    if (nType.type ==1){
+    if (this.data.nType.type ==1){
       var editerAddress = wx.getStorageSync('editer');
       this.setData({
         addressId: editerAddress.customer_address_id,

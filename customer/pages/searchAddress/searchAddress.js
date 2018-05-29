@@ -24,6 +24,7 @@ Page({
     wx.getStorage({
       key: 'tdata',
       success: res=> {
+        console.log(res,'============================getTdata')
         this.setData({
           addEditerContent:res.data
         })
@@ -166,6 +167,7 @@ Page({
   goToOrder(options){
     var index=options.target.dataset.index;
     var item = this.data.nearbyList[index];
+    console.log(item,'=========>>>address')
     if(item.ad_info == undefined){
       item.ad_info={
         province:item.province,
@@ -181,6 +183,7 @@ Page({
     this.data.addEditerContent.ad_info = item.ad_info
     // 坐标数据
     this.data.addEditerContent.location = item.location
+    console.log(this.data.addEditerContent,'==============')
     wx.setStorage({
       key: 'tdata',
       data: this.data.addEditerContent,

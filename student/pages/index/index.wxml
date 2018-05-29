@@ -36,8 +36,7 @@
       </view>
       <view class="address">
         <text class="title">服务地址：</text>
-         <text class="rightContent">北京市新政大飞机北京市新政大飞机北京市新政大飞机北京市新政大飞机北京市新政大飞机北京市新政大飞机北京市新政大飞机</text> 
-        <!-- <text class="rightContent">{{item.customer_address}}</text> -->
+         <text class="rightContent">{{item.customer_address}}</text> 
       </view>
     </view>
     
